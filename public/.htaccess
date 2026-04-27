@@ -1,0 +1,16 @@
+Options -Indexes
+
+RewriteEngine On
+
+# Internally serve .html for trailing slash URLs (no redirect, avoids loops)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} ^(.*)/+$
+RewriteRule ^(.+)/+$ $1.html [L]
+
+# Internally serve .html for extensionless URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+ErrorDocument 404 /404.html
