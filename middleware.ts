@@ -15,6 +15,11 @@ const publicPrefixes = ['/_next/', '/static/', '/api/', '/brand-logo.png', '/fav
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Temporary bypass while production database auth is being set up.
+  if (pathname.startsWith('/admin/')) {
+    return NextResponse.next();
+  }
+
   // Check if path is public
   if (publicPaths.includes(pathname)) {
     return NextResponse.next();
