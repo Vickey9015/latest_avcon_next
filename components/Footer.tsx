@@ -182,20 +182,20 @@ function FooterIcon({ path }: { path: string }) {
 function WorldPresenceMap() {
   return (
     <div className="md:col-span-2 lg:col-span-7">
-      <div className="relative overflow-hidden rounded-[28px] border border-white/20 bg-black shadow-2xl">
-        <div className="absolute inset-x-0 top-0 z-20 flex flex-wrap items-center justify-between gap-3 bg-gradient-to-b from-black/80 to-transparent p-5">
+      <div className="relative">
+        <div className="absolute inset-x-0 top-0 z-20 flex flex-wrap items-center justify-between gap-3 p-5">
           <p className="text-base font-semibold text-white">Serving Clients Worldwide</p>
           <span className="rounded-full bg-white px-4 py-1.5 text-xs font-extrabold uppercase tracking-wide text-[#f0571f]">
             14+ Locations
           </span>
         </div>
-        <div className="relative h-[330px] overflow-hidden bg-black sm:h-[390px] lg:h-[430px]" aria-label="AVCONEXPO global presence map">
+        <div className="relative h-[330px] overflow-hidden sm:h-[390px] lg:h-[430px]" aria-label="AVCONEXPO global presence map">
           <div className="absolute inset-[3px] top-11 sm:inset-1 sm:top-12">
             <Image
               src="/world_map_white_on_black.png"
               alt=""
               fill
-              className="scale-[1.04] object-cover object-center"
+              className="scale-[1.04] object-cover object-center mix-blend-screen"
               sizes="(max-width: 1024px) 100vw, 55vw"
               unoptimized
             />

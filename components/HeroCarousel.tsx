@@ -14,7 +14,7 @@ type Slide = {
 
 const slides: Slide[] = [
   {
-    title: "EPC - Engineering Procurement & Construction",
+    lines: ["EPC - Engineering", "Procurement &", "Construction"],
     image: "/slider1.jpg",
     alt: "Industrial piping and plant — engineering and EPC",
   },
@@ -24,12 +24,12 @@ const slides: Slide[] = [
     alt: "Industrial facility at dusk — greenfield and brownfield development",
   },
   {
-    title: "Project Feasibility & Market Research",
+    lines: ["Project Feasibility &", "Market Research"],
     image: "/slider3.jpg",
     alt: "Manufacturing and industrial solutions",
   },
   {
-    title: "Global Business & Technical Consultancy",
+    lines: ["Global Business &", "Technical Consultancy"],
     image: "/slider4.jpg",
     alt: "Construction and consultancy project",
   },
@@ -43,7 +43,7 @@ export default function HeroCarousel() {
   }, []);
 
   useEffect(() => {
-    const t = setInterval(() => go(1), 7000);
+    const t = setInterval(() => go(1), 4000);
     return () => clearInterval(t);
   }, [go]);
 
@@ -71,7 +71,7 @@ export default function HeroCarousel() {
               ))}
             </h1>
           ) : (
-            <h1 className="mx-auto max-w-4xl text-center text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[2.65rem]">
+            <h1 className="max-w-4xl text-left text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[2.65rem]">
               {slide.title}
             </h1>
           )}

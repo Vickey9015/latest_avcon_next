@@ -46,10 +46,10 @@ export default function ClientsSection() {
 
   useEffect(() => {
     if (isPaused || pageCount <= 1) return;
-    const timer = window.setInterval(() => {
+    const interval = setInterval(() => {
       setPage((currentPage) => (currentPage + 1) % pageCount);
-    }, 3500);
-    return () => window.clearInterval(timer);
+    }, 3000);
+    return () => clearInterval(interval);
   }, [isPaused, pageCount]);
 
   const visiblePartners = useMemo(() => {
@@ -95,8 +95,7 @@ export default function ClientsSection() {
           onMouseLeave={() => setIsPaused(false)}
         >
           <div
-            key={`${activePage}-${visibleCount}`}
-            className={`grid gap-5 transition-all duration-500 ${
+            className={`grid gap-5 transition-transform duration-700 ease-in-out ${
               visibleCount === 1
                 ? "grid-cols-1"
                 : visibleCount === 2
@@ -117,7 +116,7 @@ export default function ClientsSection() {
                   alt={partner.name}
                   width={180}
                   height={90}
-                  className="relative z-10 h-auto w-auto max-h-20 max-w-full object-contain transition-all duration-500 group-hover:scale-105"
+                  className="relative z-10 h-auto w-auto max-h-20 max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
             ))}

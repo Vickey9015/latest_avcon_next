@@ -24,7 +24,7 @@ export default function AboutSection() {
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-8">
         <TiltOnScroll className="relative mx-auto min-h-[470px] w-full max-w-lg lg:mx-0">
           <div className="absolute -left-4 -top-4 h-24 w-24 rounded-full border-[18px] border-[#ff8c00]/20" aria-hidden />
-          <div className="relative h-[400px] w-[82%] overflow-hidden rounded-[32px] border-[8px] border-white shadow-2xl sm:h-[470px]">
+          <div className="relative h-[440px] w-[90%] overflow-hidden rounded-[32px] border-[8px] border-white shadow-2xl sm:h-[520px]">
             <Image
               src="/slider2.jpg"
               alt="AVCONEXPO industrial factory — engineering and EPC solutions"
@@ -34,7 +34,7 @@ export default function AboutSection() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
           </div>
-          <div className="absolute bottom-2 right-0 h-56 w-[58%] overflow-hidden rounded-[28px] border-[10px] border-white shadow-2xl sm:h-72">
+          <div className="absolute bottom-[-20px] right-0 h-64 w-[65%] overflow-hidden rounded-[28px] border-[10px] border-white shadow-2xl sm:h-80">
             <Image
               src="/slider1.jpg"
               alt="AVCONEXPO power plant engineering services"
@@ -51,13 +51,23 @@ export default function AboutSection() {
               Experience
             </p>
           </div>
-          <div className="absolute bottom-10 left-0 hidden rounded-2xl bg-white px-5 py-4 shadow-xl ring-1 ring-orange-100 sm:block">
-            <p className="text-sm font-bold text-[#1a1a1a]">Concept to Consumer</p>
-            <p className="mt-1 text-xs font-semibold text-[#ff8c00]">Scratch to Shelf Solutions</p>
+          <div className="absolute bottom-10 left-0 hidden flex-col gap-2 sm:flex">
+            <a
+              href="/overview"
+              className="rounded-xl bg-gradient-to-r from-[#f0571f] to-[#faa419] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:shadow-xl"
+            >
+              Concept to Consumer
+            </a>
+            <a
+              href="/overview"
+              className="rounded-xl bg-gradient-to-r from-[#f0571f] to-[#faa419] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:shadow-xl"
+            >
+              Scratch to Shelf Solutions
+            </a>
           </div>
         </TiltOnScroll>
 
-        <div className="flex overflow-hidden rounded-[32px] border border-orange-100 bg-orange-50/45 text-center shadow-2xl lg:min-h-[470px] lg:flex-col lg:text-left">
+        <div className="flex overflow-hidden rounded-2xl border border-orange-200/50 bg-white text-center shadow-xl lg:min-h-[470px] lg:flex-col lg:text-left">
           <div className="bg-gradient-to-r from-[#f0571f] to-[#faa419] px-5 py-4 text-white sm:px-6">
             <p className="mb-2 flex items-center justify-center gap-2 text-xs font-extrabold uppercase tracking-wide lg:justify-start">
               <span className="h-2 w-8 rounded-full bg-white/80" />
@@ -71,14 +81,17 @@ export default function AboutSection() {
             </h2>
           </div>
           <div className="flex flex-1 flex-col p-5 sm:p-6">
-            <div className="mb-3 flex flex-wrap justify-center gap-2 lg:justify-start">
+            <div className="mb-4 flex flex-wrap justify-center gap-2 lg:justify-start">
               {highlights.map((item) => (
-                <span key={item} className="rounded-full border border-[#ff8c00]/20 bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-[#f0571f] shadow-sm">
+                <span
+                  key={item}
+                  className="rounded-full bg-gradient-to-r from-[#f0571f] to-[#faa419] px-5 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-md"
+                >
                   {item}
                 </span>
               ))}
             </div>
-            <div className="space-y-2 rounded-2xl border border-orange-100 bg-white p-3 text-justify text-[13px] leading-5 text-[#333] shadow-sm sm:text-sm">
+            <div className="space-y-3 rounded-xl border border-orange-100 bg-orange-50/30 p-4 text-left text-sm leading-6 text-gray-700">
               <p>
                 AVCONEXPO is an Engineering-Technology, Supply-Chain Management, Architecture-Design,
                 and industrial solution company, delivering comprehensive services across industries.
@@ -89,27 +102,27 @@ export default function AboutSection() {
                 System/Process Engineers, and other Professionals.
               </p>
             </div>
-            <ul className="mt-3 grid gap-2 text-left text-[#333] sm:grid-cols-2">
+            <ul className="mt-4 grid gap-2 text-left text-gray-800 sm:grid-cols-2">
               {bullets.map((item) => (
-                <li key={item} className="flex min-w-0 items-center gap-2 rounded-xl border border-orange-100 bg-white px-3 py-2 shadow-sm">
-                  <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#ff8c00] text-white" aria-hidden>
-                    <svg className="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <li key={item} className="flex items-center gap-2 rounded-lg border border-orange-100 bg-white px-3 py-2 shadow-sm">
+                  <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f0571f] text-white" aria-hidden>
+                    <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
                   </span>
-                  <span className="min-w-0 text-xs font-semibold leading-4">{item}</span>
+                  <span className="text-sm font-medium">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="flex flex-col gap-3 border-t border-orange-200/70 bg-white/80 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-            <p className="text-sm font-medium leading-5 text-[#333]">
+          <div className="flex flex-col gap-3 border-t border-orange-200 bg-gray-50 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+            <p className="text-sm font-medium leading-5 text-gray-700">
               End-to-end solutions from <span className="font-bold text-[#f0571f]">Concept to Consumer</span> &amp;{" "}
               <span className="font-bold text-[#f0571f]">Scratch to Shelf</span>.
             </p>
             <a
               href="/overview"
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#ff8c00] px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-[#e67e00]"
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#f0571f] to-[#faa419] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg"
             >
               Read more
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
