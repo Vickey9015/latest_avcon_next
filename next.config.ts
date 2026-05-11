@@ -1,3 +1,4 @@
+// Next.js Configuration for Avconexpo Project
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
