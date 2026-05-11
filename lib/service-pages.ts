@@ -175,14 +175,6 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
       "It is the responsibility of our global network, experts, and strategists who understand your sector to provide access to the right opportunities.",
     ],
     sections: [
-      { eyebrow: "Core Services", title: "Our Core Accelerator Services", image: "/service-details/core-accelerator-services.jpg", imageAlt: "Our Core Accelerator Services", paragraphs: ["Together, these services ensure that your startup moves from concept to market with protected ideas, a validated business model, and a clear growth path."], blocks: [
-        { title: "Idea Validation & Market Research", description: "Validate your concept against market needs and competitive landscape to ensure product-market fit." },
-        { title: "Business Model Development", description: "Craft scalable business models with clear revenue streams and growth strategies." },
-        { title: "Technical Architecture & MVP", description: "Design robust technical architecture and build minimum viable products for rapid market entry." },
-        { title: "Funding & Investor Readiness", description: "Prepare pitch decks, financial models, and investor presentations to secure funding." },
-        { title: "Go-to-Market Strategy", description: "Develop launch strategies including marketing, sales, and distribution channels." },
-        { title: "Mentorship & Network Access", description: "Connect with industry experts, founders, and potential partners in our network." },
-      ] },
     ],
     closingText: "From vision to venture, we support startups with structure, technical guidance, and market access to scale faster and sustainably.",
     ctaLabel: "Accelerate Your Startup",

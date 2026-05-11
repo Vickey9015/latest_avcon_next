@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# video files (too large for git)
+public/videos/*.mp4
+
+# zip files
+*.zip
+
+# next.js build artifacts (too large for git)
+.next/
+node_modules/

@@ -102,67 +102,67 @@ export default function ContactSection() {
                 {error}
               </p>
             ) : null}
-              <form onSubmit={onSubmit} className="grid gap-4 sm:grid-cols-2">
-                <input
-                  type="text"
-                  name="name"
+            <form onSubmit={onSubmit} className="grid gap-4 sm:grid-cols-2">
+              <input
+                type="text"
+                name="name"
+                required
+                placeholder="Full Name"
+                className="rounded-xl border border-zinc-300 bg-white px-4 py-3 text-[#333] outline-none focus:border-[#ff8c00] focus:ring-1 focus:ring-[#ff8c00]"
+              />
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="Email Address"
+                className="rounded-xl border border-zinc-300 bg-white px-4 py-3 text-[#333] outline-none focus:border-[#ff8c00] focus:ring-1 focus:ring-[#ff8c00]"
+              />
+              <input
+                type="tel"
+                name="phone"
+                required
+                placeholder="Phone Number"
+                className="rounded-xl border border-zinc-300 bg-white px-4 py-3 text-[#333] outline-none focus:border-[#ff8c00] focus:ring-1 focus:ring-[#ff8c00]"
+              />
+              <div>
+                <select
+                  id="service"
+                  name="service"
                   required
-                  placeholder="Full Name"
-                  className="rounded-xl border border-zinc-300 bg-white px-4 py-3 text-[#333] outline-none focus:border-[#ff8c00] focus:ring-1 focus:ring-[#ff8c00]"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  placeholder="Email Address"
-                  className="rounded-xl border border-zinc-300 bg-white px-4 py-3 text-[#333] outline-none focus:border-[#ff8c00] focus:ring-1 focus:ring-[#ff8c00]"
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  required
-                  placeholder="Phone Number"
-                  className="rounded-xl border border-zinc-300 bg-white px-4 py-3 text-[#333] outline-none focus:border-[#ff8c00] focus:ring-1 focus:ring-[#ff8c00]"
-                />
-                <div>
-                  <select
-                    id="service"
-                    name="service"
-                    required
-                    className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-[#333] outline-none focus:border-[#ff8c00] focus:ring-1 focus:ring-[#ff8c00]"
-                    defaultValue=""
-                  >
-                    <option value="" disabled>
-                      --Select a Service--
-                    </option>
-                    {serviceOptions.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="sm:col-span-2">
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    required
-                    placeholder="Write your message here..."
-                    className="w-full rounded-xl border border-zinc-300 px-4 py-3 text-[#333] outline-none focus:border-[#ff8c00] focus:ring-1 focus:ring-[#ff8c00]"
-                  />
-                </div>
-                <p className="text-sm text-[#444] sm:col-span-2">
-                  Have a query? Let&apos;s connect to find the best solution for your needs!
-                </p>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="rounded-xl bg-[#ff8c00] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#e67e00] disabled:cursor-not-allowed disabled:bg-[#ff8c00]/60 sm:col-span-2"
+                  className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-[#333] outline-none focus:border-[#ff8c00] focus:ring-1 focus:ring-[#ff8c00]"
+                  defaultValue=""
                 >
-                  {isSubmitting ? "Submitting..." : "Submit Now"}
-                </button>
-              </form>
+                  <option value="" disabled>
+                    --Select a Service--
+                  </option>
+                  {serviceOptions.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="sm:col-span-2">
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={5}
+                  required
+                  placeholder="Write your message here..."
+                  className="w-full rounded-xl border border-zinc-300 px-4 py-3 text-[#333] outline-none focus:border-[#ff8c00] focus:ring-1 focus:ring-[#ff8c00]"
+                />
+              </div>
+              <p className="text-sm text-[#444] sm:col-span-2">
+                Have a query? Let&apos;s connect to find the best solution for your needs!
+              </p>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="rounded-xl bg-[#ff8c00] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#e67e00] disabled:cursor-not-allowed disabled:bg-[#ff8c00]/60 sm:col-span-2"
+              >
+                {isSubmitting ? "Submitting..." : "Submit Now"}
+              </button>
+            </form>
           </div>
 
           <TiltOnScroll intensity={0.72} className="space-y-0 overflow-hidden rounded-[28px] bg-white shadow-2xl ring-1 ring-zinc-200">
@@ -193,8 +193,8 @@ export default function ContactSection() {
                   </a>
                 </p>
                 <p className="text-white/75">
-                  <a href="mailto:consult@avconexpo.com" className="hover:text-[#ff8c00]">
-                    consult@avconexpo.com
+                  <a href="mailto:solutions@avconexpo.com" className="hover:text-[#ff8c00]">
+                    solutions@avconexpo.com
                   </a>
                 </p>
               </address>

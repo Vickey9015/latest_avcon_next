@@ -20,13 +20,13 @@ const stats = [
     value: 30,
     suffix: "+",
     label: "Years of Industry Experience",
-    description: "Since 1994",
+    description: "Since 2001",
     icon: (
       <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
-    gradient: "from-blue-400 to-blue-600",
+    gradient: "from-orange-400 to-orange-600",
   },
   {
     value: 100,
@@ -94,15 +94,9 @@ export default function StatsSection() {
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-orange-500" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <div className="mb-12 text-center">
-          <p className="mb-3 text-sm font-bold uppercase tracking-wider text-orange-400">Our Impact</p>
-          <h2 className="text-3xl font-bold text-white sm:text-4xl">Numbers That Speak Excellence</h2>
-        </div>
-
         {/* Stats grid */}
         <div className="grid gap-6 sm:grid-cols-3">
-          {stats.map((s, index) => (
+          {stats.map((s) => (
             <TiltOnScroll key={s.label} intensity={0.3}>
               <div className="group relative overflow-hidden rounded-2xl bg-white/5 p-8 text-center backdrop-blur-sm transition-all duration-500 hover:bg-white/10 hover:shadow-2xl">
                 {/* Gradient border effect */}

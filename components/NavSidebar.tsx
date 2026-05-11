@@ -110,18 +110,16 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
     <div className="fixed inset-0 z-[2000]" role="dialog" aria-modal="true" aria-label="Menu">
       <button
         type="button"
-        className={`absolute inset-0 bg-black/50 backdrop-blur-[2px] transition-opacity duration-400 ease-out motion-reduce:transition-none ${
-          visible ? "opacity-100" : "opacity-0"
-        }`}
+        className={`absolute inset-0 bg-black/50 backdrop-blur-[2px] transition-opacity duration-400 ease-out motion-reduce:transition-none ${visible ? "opacity-100" : "opacity-0"
+          }`}
         aria-label="Close menu"
         onClick={onClose}
         onTransitionEnd={onBackdropTransitionEnd}
       />
       <aside
         onTransitionEnd={onPanelTransitionEnd}
-        className={`absolute right-0 top-0 flex h-full w-full max-w-[min(100%,420px)] flex-col border-l-[3px] border-[#f37021] bg-white shadow-2xl will-change-transform transition-transform duration-[420ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none sm:max-w-[26rem] ${
-          visible ? "translate-x-0" : "translate-x-[102%]"
-        }`}
+        className={`absolute right-0 top-0 flex h-full w-full max-w-[min(100%,420px)] flex-col border-l-[3px] border-[#f37021] bg-white shadow-2xl will-change-transform transition-transform duration-[420ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none sm:max-w-[26rem] ${visible ? "translate-x-0" : "translate-x-[102%]"
+          }`}
       >
         <div className="flex items-start justify-between gap-4 border-b border-zinc-100 px-5 py-5">
           <Logo variant="onLight" size="sm" />
@@ -138,9 +136,8 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
         </div>
 
         <div
-          className={`flex flex-1 flex-col overflow-y-auto px-5 py-6 transition-all duration-500 ease-out delay-100 motion-reduce:transition-none motion-reduce:delay-0 ${
-            visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
-          }`}
+          className={`flex flex-1 flex-col overflow-y-auto px-5 py-6 transition-all duration-500 ease-out delay-100 motion-reduce:transition-none motion-reduce:delay-0 ${visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+            }`}
         >
           <p className="text-sm leading-relaxed text-[#444]">
             We engage with customers across their value chain helping to design, build, operate, and
@@ -197,8 +194,8 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
                     />
                   </svg>
                 </span>
-                <a href="mailto:consult@avconexpo.com" className="hover:text-[#f37021]">
-                  consult@avconexpo.com
+                <a href="mailto:solutions@avconexpo.com" className="hover:text-[#f37021]">
+                  solutions@avconexpo.com
                 </a>
               </li>
               <li className="flex gap-3">

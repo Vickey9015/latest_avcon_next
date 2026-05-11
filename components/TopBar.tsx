@@ -156,7 +156,7 @@ export default function TopBar() {
           </div>
           <span className="hidden h-4 w-px shrink-0 bg-white/50 sm:block" aria-hidden />
           <a
-            href="mailto:consult@avconexpo.com"
+            href="mailto:solutions@avconexpo.com"
             className="flex items-center gap-2 opacity-95 hover:opacity-100"
           >
             <svg
@@ -172,7 +172,7 @@ export default function TopBar() {
                 d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
               />
             </svg>
-            <span className="hidden sm:inline">consult@avconexpo.com</span>
+            <span className="hidden sm:inline">solutions@avconexpo.com</span>
           </a>
         </div>
         <div className="flex flex-wrap items-center gap-3 sm:gap-4">

@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import HeroCarousel from "@/components/HeroCarousel";
 import SectionEnter from "@/components/SectionEnter";
 import Navbar from "@/components/Navbar";
+import ParallaxDivider from "@/components/ParallaxDivider";
+import VideoSection from "@/components/VideoSection";
 import SectorsSection from "@/components/SectorsSection";
 import ServicesSection from "@/components/ServicesSection";
 import StatsSection from "@/components/StatsSection";
@@ -27,6 +29,7 @@ export default function Home() {
       <SectionEnter variant="fade-up">
         <ServicesSection />
       </SectionEnter>
+      <ParallaxDivider />
       <SectionEnter variant="fade-down">
         <StatsSection />
       </SectionEnter>
@@ -38,6 +41,9 @@ export default function Home() {
       </SectionEnter>
       <SectionEnter variant="fade-up">
         <TestimonialsSection />
+      </SectionEnter>
+      <SectionEnter variant="fade">
+        <VideoSection />
       </SectionEnter>
       <SectionEnter variant="fade">
         <BlogSection />

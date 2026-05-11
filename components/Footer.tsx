@@ -101,8 +101,8 @@ export default function Footer() {
                 </p>
                 <p className="flex gap-3">
                   <FooterIcon path="M2.94 6.34A2 2 0 014.89 5h10.22a2 2 0 011.95 1.34L10 10.76 2.94 6.34zM18 8.12l-7.47 4.67a1 1 0 01-1.06 0L2 8.12V14a2 2 0 002 2h12a2 2 0 002-2V8.12z" />
-                  <a href="mailto:consult@avconexpo.com" className="hover:text-white">
-                    consult@avconexpo.com
+                  <a href="mailto:solutions@avconexpo.com" className="hover:text-white">
+                    solutions@avconexpo.com
                   </a>
                 </p>
               </address>

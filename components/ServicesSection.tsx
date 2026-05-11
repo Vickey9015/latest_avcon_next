@@ -61,9 +61,9 @@ const services = [
   },
   {
     title: "Talent Management Services",
-    image: "/service-details/talent-management-services.jpg",
+    image: "/service-details/teammeeting.jpg",
     body:
-      "We empower industries by building organisational framework, managing human resources, workforce training & development, aligning with the goals of the organisation.",
+      "We empower industries by building organisational framework, managing human resources, workforce training & development, aligning with the goals of organisation.",
     href: `/services/talent-management`,
     icon: "M12 12a4 4 0 100-8 4 4 0 000 8zm-7 9a7 7 0 0114 0M18 8h3m-1.5-1.5v3",
   },

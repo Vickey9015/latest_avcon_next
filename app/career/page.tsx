@@ -169,8 +169,8 @@ export default function CareerPage() {
                       </svg>
                     </span>
                     <p className="font-semibold text-[#273339]">
-                      <a href="mailto:consult@avconexpo.com" className="hover:text-[#f37021]">
-                        consult@avconexpo.com
+                      <a href="mailto:solutions@avconexpo.com" className="hover:text-[#f37021]">
+                        solutions@avconexpo.com
                       </a>
                     </p>
                   </div>

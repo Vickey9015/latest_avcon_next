@@ -20,8 +20,8 @@ export default function AnnouncementBar() {
             <p className="font-medium text-white/90">Contact Info</p>
             <p>1/6/55, Sector J, Sushant Golf City, Lucknow - 226030, UP</p>
             <p>
-              <a href="mailto:consult@avconexpo.com" className="hover:text-white">
-                consult@avconexpo.com
+              <a href="mailto:solutions@avconexpo.com" className="hover:text-white">
+                solutions@avconexpo.com
               </a>
               {" · "}
               <a href="tel:+917007729873" className="hover:text-white">
