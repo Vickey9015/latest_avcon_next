@@ -7,8 +7,8 @@ const testimonials = [
   {
     quote:
       "AVCONEXPO exceeded our expectations with their turnkey project solutions. The team's technical expertise and attention to detail made our entire plant setup seamless and efficient.",
-    name: "Nandita Rawat",
-    image: "/reviewer_1.jpg",
+    name: "Phyllis Kerubo",
+    image: "/phyllis.jpeg",
     role: "CEO, Manufacturing Unit",
   },
   {
@@ -29,7 +29,7 @@ const testimonials = [
     quote:
       "I started with Avconexpo for a feasibility study, but the scope quickly grew into much more. They supported the project end-to-end - from concept and planning to technical decisions and execution support.",
     name: "Yahya Shakiru",
-    image: "/reviewer_1.jpg",
+    image: "/yahya.jpeg",
     role: "Project Owner",
   },
   {
@@ -45,6 +45,27 @@ const testimonials = [
     name: "John Boscow",
     image: "/reviewer_3.jpg",
     role: "Managing Director",
+  },
+  {
+    quote:
+      "The supply chain optimization provided by AVCONEXPO transformed our distribution network. Their strategic approach to vendor management and logistics is unparalleled in the industry.",
+    name: "Spondon Phukan",
+    image: "/spondon.png",
+    role: "Supply Chain Director",
+  },
+  {
+    quote:
+      "Their expertise in waste-to-energy conversion helped us implement a sustainable solution that significantly reduced our environmental footprint while generating substantial energy savings.",
+    name: "Ahmad Malim",
+    image: "/ahmed.jpeg",
+    role: "Sustainability Manager",
+  },
+  {
+    quote:
+      "AVCONEXPO's project management team ensured our complex greenfield project was completed on time and within budget. Their technical governance and attention to detail are world-class.",
+    name: "Hitesh Mahajan",
+    image: "/hitesh.png",
+    role: "Infrastructure Lead",
   },
 ];
 

@@ -15,17 +15,17 @@ type Slide = {
 const slides: Slide[] = [
   {
     lines: ["EPC - Engineering", "Procurement &", "Construction"],
-    image: "/slider1.jpg",
+    image: "/assets/docs/img/real_one.jpeg",
     alt: "Industrial piping and plant — engineering and EPC",
   },
   {
     lines: ["Greenfield And", "Brownfield", "Project", "Development"],
-    image: "/slider2.jpg",
+    image: "/assets/docs/img/real_two.jpeg",
     alt: "Industrial facility at dusk — greenfield and brownfield development",
   },
   {
     lines: ["Project Feasibility &", "Market Research"],
-    image: "/slider3.jpg",
+    image: "/assets/docs/img/real_five.jpeg",
     alt: "Manufacturing and industrial solutions",
   },
   {

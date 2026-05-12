@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
 
 const partners = [
   { name: "ABB", image: "/brands/abb.jpeg" },
@@ -18,47 +17,8 @@ const partners = [
 ];
 
 export default function ClientsSection() {
-  const [page, setPage] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(4);
-  const [isPaused, setIsPaused] = useState(false);
-
-  useEffect(() => {
-    const updateVisibleCount = () => {
-      const width = window.innerWidth;
-      if (width < 640) {
-        setVisibleCount(1);
-      } else if (width < 1024) {
-        setVisibleCount(2);
-      } else if (width < 1280) {
-        setVisibleCount(3);
-      } else {
-        setVisibleCount(4);
-      }
-    };
-
-    updateVisibleCount();
-    window.addEventListener("resize", updateVisibleCount);
-    return () => window.removeEventListener("resize", updateVisibleCount);
-  }, []);
-
-  const pageCount = Math.ceil(partners.length / visibleCount);
-  const activePage = Math.min(page, pageCount - 1);
-
-  useEffect(() => {
-    if (isPaused || pageCount <= 1) return;
-    const interval = setInterval(() => {
-      setPage((currentPage) => (currentPage + 1) % pageCount);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [isPaused, pageCount]);
-
-  const visiblePartners = useMemo(() => {
-    const start = activePage * visibleCount;
-    return partners.slice(start, start + visibleCount);
-  }, [activePage, visibleCount]);
-
-  const prev = () => setPage((currentPage) => (currentPage - 1 + pageCount) % pageCount);
-  const next = () => setPage((currentPage) => (currentPage + 1) % pageCount);
+  // Triple the partners array to ensure seamless looping
+  const duplicatedPartners = [...partners, ...partners, ...partners];
 
   return (
     <section
@@ -76,8 +36,8 @@ export default function ClientsSection() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 text-center">
+      <div className="relative z-10 mx-auto max-w-[100vw] px-0">
+        <div className="mb-8 px-4 text-center sm:px-6 lg:px-8">
           <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-[#f0571f]">Clients And Partners</p>
           <h2
             id="clients-heading"
@@ -89,26 +49,12 @@ export default function ClientsSection() {
 
         <div className="mb-6 h-0.5 w-full bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-60" />
 
-        <div
-          className="relative py-4"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <div
-            className={`grid gap-5 transition-transform duration-700 ease-in-out ${
-              visibleCount === 1
-                ? "grid-cols-1"
-                : visibleCount === 2
-                  ? "grid-cols-2"
-                  : visibleCount === 3
-                    ? "grid-cols-3"
-                    : "grid-cols-4"
-            }`}
-          >
-            {visiblePartners.map((partner) => (
+        <div className="relative overflow-hidden py-4">
+          <div className="flex w-max animate-marquee gap-8 px-8">
+            {duplicatedPartners.map((partner, index) => (
               <div
-                key={partner.name}
-                className="group relative flex h-28 items-center justify-center overflow-hidden rounded-2xl border-b-4 border-t-4 border-orange-500 border-b-blue-500 bg-white/90 p-5 shadow-sm backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:scale-105 hover:shadow-xl sm:h-32"
+                key={`${partner.name}-${index}`}
+                className="group relative flex h-28 w-48 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-b-4 border-t-4 border-orange-500 border-b-blue-500 bg-white/90 p-5 shadow-sm backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:scale-105 hover:shadow-xl sm:h-32 sm:w-56"
               >
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-orange-100/40 via-blue-50/40 to-orange-50/30 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <Image
@@ -122,42 +68,9 @@ export default function ClientsSection() {
             ))}
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <button
-              type="button"
-              onClick={prev}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#1a1a1a] shadow-lg ring-1 ring-zinc-200 transition hover:bg-[#f0571f] hover:text-white"
-              aria-label="Previous clients"
-            >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <div className="flex items-center justify-center gap-2">
-            {Array.from({ length: pageCount }).map((_, dot) => (
-              <button
-                key={dot}
-                type="button"
-                onClick={() => setPage(dot)}
-                className={`h-2.5 rounded-full transition-all ${
-                  dot === activePage ? "w-8 bg-[#f0571f]" : "w-2.5 bg-zinc-300 hover:bg-zinc-400"
-                }`}
-                aria-label={`Go to clients page ${dot + 1}`}
-                aria-current={dot === activePage}
-              />
-            ))}
-            </div>
-            <button
-              type="button"
-              onClick={next}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#1a1a1a] shadow-lg ring-1 ring-zinc-200 transition hover:bg-[#f0571f] hover:text-white"
-              aria-label="Next clients"
-            >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
+          {/* Gradient Overlays for smooth entry/exit */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-50 to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-orange-50/30 to-transparent z-10" />
         </div>
 
         <div className="mt-6 h-0.5 w-full bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-60" />

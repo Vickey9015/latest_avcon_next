@@ -41,7 +41,7 @@ export default function ProjectPage() {
       <div className="relative">
         <section className="relative min-h-[62vh] overflow-hidden">
           <Image
-            src="/bg/heroBg3_2.jpg"
+            src="/assets/docs/img/real_four.jpeg"
             alt="Projects hero backdrop"
             fill
             priority

@@ -17,6 +17,7 @@ type DetailSection = {
   paragraphs?: string[];
   image?: string;
   imageAlt?: string;
+  imageMaxWidth?: string;
   blocks?: DetailBlock[];
   comparison?: {
     leftTitle: string;
@@ -29,8 +30,8 @@ type DetailSection = {
 export type ServiceDetailTemplateProps = {
   title: string;
   subtitle: string;
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
   introTitle: string;
   introParagraphs: string[];
   highlight?: string;
@@ -92,9 +93,11 @@ export default function ServiceDetailTemplate({
       <section className="bg-white py-16 lg:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="overflow-hidden rounded-[28px] bg-white shadow-2xl ring-1 ring-orange-100">
-            <div className="relative aspect-[16/7] min-h-[280px]">
-              <Image src={image} alt={imageAlt} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 1200px" />
-            </div>
+            {image ? (
+              <div className="relative aspect-[16/7] min-h-[280px]">
+                <Image src={image} alt={imageAlt || title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 1200px" />
+              </div>
+            ) : null}
 
             <div className="space-y-10 p-5 sm:p-8 lg:p-10">
               <div>
@@ -133,7 +136,7 @@ export default function ServiceDetailTemplate({
                     </div>
                   ) : null}
                   {section.image ? (
-                    <div className="mt-6 overflow-hidden rounded-[24px] shadow-xl ring-1 ring-orange-100">
+                    <div className={`mt-6 overflow-hidden rounded-[24px] shadow-xl ring-1 ring-orange-100 ${section.imageMaxWidth || "w-full"}`}>
                       <Image
                         src={section.image}
                         alt={section.imageAlt ?? section.title}

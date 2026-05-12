@@ -14,7 +14,7 @@ export default function ParallaxDivider() {
       style={{
         height: "650px",
         backgroundImage:
-          "url('https://avconexpo.com/assets/img/factoryOuter.jpg')",
+          "url('/assets/docs/img/factoryOuter_new.jpg')",
         backgroundAttachment: "fixed",
         backgroundSize: "cover",
         backgroundPosition: "center",

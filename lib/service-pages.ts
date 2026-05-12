@@ -46,7 +46,7 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
   projectManagement: {
     title: "Project Management",
     subtitle: "Comprehensive end-to-end project management for Greenfield, Brownfield, and expansion projects.",
-    image: "/service-details/projectmanagement.jpg",
+    image: "/assets/docs/img/real_three.jpeg",
     imageAlt: "Project Management",
     introTitle: "Project Management",
     highlight: "Budget, time, quality, safety",
@@ -76,8 +76,8 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
   architecture: {
     title: "Architecture & Designing",
     subtitle: "Design solutions that suit client needs while considering environment, function, comfort, and long-term value.",
-    image: "/service-details/architecture.jpg",
-    imageAlt: "Architecture and Designing",
+    image: "/service-details/architecture-plan.png",
+    imageAlt: "Architecture and Designing - Technical Plan",
     introTitle: "Architecture & Designing",
     highlight: "Concept to creation",
     introParagraphs: [
@@ -165,8 +165,6 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
   startup: {
     title: "Startup Accelerator",
     subtitle: "Built by founders, for the founders.",
-    image: "/service-details/startup.jpg",
-    imageAlt: "Startup Accelerator",
     introTitle: "Built by Founders, for the Founders",
     highlight: "Vision to venture",
     introParagraphs: [
@@ -175,6 +173,14 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
       "It is the responsibility of our global network, experts, and strategists who understand your sector to provide access to the right opportunities.",
     ],
     sections: [
+      { eyebrow: "Core Services", title: "Our Core Accelerator Services", image: "/service-details/startup.jpg", imageAlt: "Our Core Accelerator Services", paragraphs: ["From vision to venture, we provide comprehensive startup support with tailored solutions to accelerate your growth journey."], blocks: [
+        { title: "Vision to venture", description: "Transform your innovative ideas into successful business ventures with our expert guidance and structured support." },
+        { title: "Market Analysis", description: "Deep market research and competitive analysis to validate your business model and identify growth opportunities." },
+        { title: "Funding Strategy", description: "Strategic funding roadmap and investor connections to secure the capital needed for scaling your startup." },
+        { title: "Technical Development", description: "End-to-end technical support from MVP development to scalable architecture implementation." },
+        { title: "Business Growth", description: "Comprehensive business development services including marketing, sales, and operational excellence." },
+        { title: "Network Access", description: "Connect with our extensive network of mentors, partners, and industry experts for collaborative growth." },
+      ] },
     ],
     closingText: "From vision to venture, we support startups with structure, technical guidance, and market access to scale faster and sustainably.",
     ctaLabel: "Accelerate Your Startup",
@@ -242,7 +248,7 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
       "We understood what businesses needed most - consistent quality, reliable timelines, and dependable after-sales support - and built our solutions to deliver exactly that.",
     ],
     sections: [
-      { eyebrow: "Network Impact", title: "A Supply Chain Network Impacts Overall Performance", image: "/service-details/supply-chain-illustration.jpg", imageAlt: "Supply Chain Illustration", paragraphs: ["A strong supply chain fuels efficiency, lowers costs, strengthens cash flows, and drives overall business performance.", "Today, Avconexpo has evolved from addressing regional challenges to shaping a global supply chain ecosystem that spans industries and borders. Instead of settling for the way things are, we empower industries with the assurance that when your business needs it, we ensure it is there. You ask, we provide."] },
+      { eyebrow: "Network Impact", title: "A Supply Chain Network Impacts Overall Performance", image: "/service-details/supply-chain-illustration.jpg", imageAlt: "Supply Chain Illustration", imageMaxWidth: "max-w-2xl mx-auto", paragraphs: ["A strong supply chain fuels efficiency, lowers costs, strengthens cash flows, and drives overall business performance.", "Today, Avconexpo has evolved from addressing regional challenges to shaping a global supply chain ecosystem that spans industries and borders. Instead of settling for the way things are, we empower industries with the assurance that when your business needs it, we ensure it is there. You ask, we provide."] },
       { eyebrow: "Solutions", title: "Supply-Chain Management Solution", description: "Avconexpo's Supply Chain Management services provide an end-to-end solution for businesses seeking reliable partners in sourcing, procurement, and logistics. Our expertise ensures efficiency, cost-effectiveness, and high quality throughout the entire supply chain.", blocks: [
         { title: "Sourcing", description: "Sourcing is more than just selecting vendors; it's about building sustainable, transparent supply relationships that reduce risks and enhance your operational efficiency.", items: ["Connecting businesses with pre-vetted manufacturers and suppliers across diverse industries, locally and globally.", "Reducing sourcing cycle time.", "Identifying suppliers who meet the highest standards for quality and reliability.", "Negotiating pricing and terms to ensure optimum value while maintaining product quality.", "Leveraging our extensive global network of pre-qualified manufacturers, vendors, and OEMs."] },
         { title: "Vendor Management", description: "Our comprehensive vendor management service handles contract negotiations and supplier communications.", items: ["Streamlining the vendor management cycle, reducing lead times, and mitigating risks related to delays, defects, or shortages.", "Secure timely availability of critical spares and consumables while ensuring minimum downtime.", "Contract management, compliance verification, and quality assurance.", "Initiate and manage competitive quotes for clear apple-to-apple comparisons."] },
