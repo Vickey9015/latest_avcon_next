@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   title: "AVCONEXPO | Global Engineering, EPC & Sourcing Solutions",
   description:
     "Engineering-Technology, Supply-Chain Management, Architecture-Design, EPC, and industrial solutions — concept to consumer, scratch to shelf.",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

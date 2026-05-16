@@ -91,10 +91,10 @@ export default async function CareerPage() {
                   </td>
                   <td className="max-w-[240px] px-6 py-4 text-sm text-gray-700">{application.position}</td>
                   <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-700">
-                    {application.resume_url ? (
+                    {application.resume_name ? (
                       <a
                         className="rounded-full bg-orange-50 px-3 py-1.5 font-semibold text-orange-700 hover:bg-orange-100"
-                        href={application.resume_url}
+                        href={`/api/career/resume/${application.id}`}
                         target="_blank"
                         rel="noreferrer"
                       >
