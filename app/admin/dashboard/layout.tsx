@@ -95,13 +95,8 @@ export default function DashboardLayout({
         const data = await response.json();
         setUser(data.user);
       } catch {
-        // Temporary bypass while production database auth is being set up.
-        setUser({
-          id: 1,
-          email: 'admin@avconexpo.com',
-          name: 'Admin',
-          role: 'super_admin',
-        });
+        // Redirect to login if not authenticated
+        router.push('/admin');
       } finally {
         setIsLoading(false);
       }

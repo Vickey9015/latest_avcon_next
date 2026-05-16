@@ -52,8 +52,8 @@ export default function BusinessTechnicalConsultingPhpPage() {
           <div className="overflow-hidden rounded-[28px] bg-white shadow-2xl ring-1 ring-orange-100">
             <div className="relative aspect-[16/7] min-h-[280px]">
               <Image
-                src={page.image}
-                alt={page.imageAlt}
+                src={page.image || "/service-details/business-technical.jpg"}
+                alt={page.imageAlt || "Business and Technical Consultancy"}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 1200px"
