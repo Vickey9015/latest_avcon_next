@@ -45,6 +45,8 @@ CREATE TABLE IF NOT EXISTS career_applications (
   position VARCHAR(255) NOT NULL,
   resume_url VARCHAR(500) NULL,
   resume_name VARCHAR(255) NULL,
+  resume_mime_type VARCHAR(120) NULL,
+  resume_data LONGBLOB NULL,
   status ENUM('New', 'Reviewed', 'Shortlisted', 'Rejected') DEFAULT 'New',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -63,11 +65,15 @@ CREATE TABLE IF NOT EXISTS admin_logs (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Insert default admin user (password: admin123 - change in production!)
--- The password hash is for 'admin123' - generated with bcrypt (10 rounds)
+-- Insert default admin user (password: admin@9015 - change in production!)
+-- The password hash is for 'admin@9015' - generated with bcrypt (10 rounds)
 INSERT INTO users (email, password, name, role) VALUES (
   'admin@avconexpo.com',
-  '$2a$10$YourHashedPasswordHereChangeThisInProduction',
+  '$2b$10$bIwC0L4mnrZtHPUblEIDxOvbsReWoU.pVp1MENBv1VgLT3lSM4Ki.',
   'Super Admin',
   'super_admin'
-) ON DUPLICATE KEY UPDATE updated_at = CURRENT_TIMESTAMP;
+) ON DUPLICATE KEY UPDATE
+  password = VALUES(password),
+  name = VALUES(name),
+  role = VALUES(role),
+  updated_at = CURRENT_TIMESTAMP;

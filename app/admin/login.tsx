@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -9,27 +9,56 @@ export default function AdminLogin() {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Check if already logged in
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth/me');
+        if (response.ok) {
+          router.push('/admin/dashboard');
+        }
+      } catch {
+        // Not authenticated, stay on login page
+      }
+    };
+    checkAuth();
+  }, [router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
 
-    const demoUser = {
-      id: 1,
-      email,
-      name: 'Admin',
-      role: 'super_admin',
-    };
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (rememberMe) {
-      localStorage.setItem('admin_user', JSON.stringify(demoUser));
-    }
+      const data = await response.json();
 
-    window.setTimeout(() => {
+      if (!response.ok) {
+        throw new Error(data.error || 'Login failed');
+      }
+
+      // Store user info in localStorage if remember me is checked
+      if (rememberMe) {
+        localStorage.setItem('admin_user', JSON.stringify(data.user));
+      }
+
+      // Redirect to dashboard
       router.push('/admin/dashboard');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
       setIsLoading(false);
-    }, 250);
+    }
   };
 
   return (
@@ -49,6 +78,18 @@ export default function AdminLogin() {
             />
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-600 flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {error}
+              </p>
+            </div>
+          )}
+
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -62,6 +103,7 @@ export default function AdminLogin() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                 placeholder="Enter your email"
+                required
               />
             </div>
 
@@ -76,6 +118,7 @@ export default function AdminLogin() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                 placeholder="Enter your password"
+                required
               />
             </div>
 

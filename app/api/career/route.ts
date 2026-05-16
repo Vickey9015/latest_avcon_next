@@ -1,10 +1,9 @@
-import { randomUUID } from "node:crypto";
-import { mkdir, writeFile } from "node:fs/promises";
-import { extname, join } from "node:path";
+import { extname } from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 import { createCareerApplication } from "@/lib/career-applications";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 const allowedExtensions = new Set([".doc", ".docx", ".pdf", ".png", ".jpg", ".jpeg", ".webp"]);
 const maxResumeSize = 500 * 1024;
@@ -13,12 +12,11 @@ function readText(value: FormDataEntryValue | null) {
   return typeof value === "string" ? value.trim() : "";
 }
 
-function cleanFileName(fileName: string) {
-  return fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
-}
-
 async function saveResume(file: File) {
-  if (!file.name || file.size === 0) return { resumeUrl: null, resumeName: null };
+  if (!file.name || file.size === 0) {
+    return { resumeData: null, resumeMimeType: null, resumeName: null };
+  }
+
   if (file.size > maxResumeSize) {
     throw new Error("Resume file must be 500KB or smaller.");
   }
@@ -28,16 +26,9 @@ async function saveResume(file: File) {
     throw new Error("Only DOC, DOCX, PDF, and image files are allowed.");
   }
 
-  const uploadsDir = join(process.cwd(), "public", "uploads", "careers");
-  await mkdir(uploadsDir, { recursive: true });
-
-  const storedName = `${Date.now()}-${randomUUID()}-${cleanFileName(file.name)}`;
-  const filePath = join(uploadsDir, storedName);
-  const bytes = Buffer.from(await file.arrayBuffer());
-  await writeFile(filePath, bytes);
-
   return {
-    resumeUrl: `/uploads/careers/${storedName}`,
+    resumeData: Buffer.from(await file.arrayBuffer()),
+    resumeMimeType: file.type || "application/octet-stream",
     resumeName: file.name,
   };
 }
@@ -58,14 +49,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const resumeInfo = resume instanceof File ? await saveResume(resume) : { resumeUrl: null, resumeName: null };
+    const resumeInfo =
+      resume instanceof File ? await saveResume(resume) : { resumeData: null, resumeMimeType: null, resumeName: null };
 
     await createCareerApplication({
       fullName,
       email,
       phone,
       position,
-      resumeUrl: resumeInfo.resumeUrl,
+      resumeData: resumeInfo.resumeData,
+      resumeMimeType: resumeInfo.resumeMimeType,
       resumeName: resumeInfo.resumeName,
     });
 
