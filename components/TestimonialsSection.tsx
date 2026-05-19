@@ -11,11 +11,27 @@ type TestimonialsSectionProps = {
 export default function TestimonialsSection({ testimonials: initialTestimonials = [] }: TestimonialsSectionProps) {
   const [testimonials, setTestimonials] = useState(initialTestimonials);
   const [index, setIndex] = useState(0);
+  const [slidesPerView, setSlidesPerView] = useState(1);
 
   useEffect(() => {
     setTestimonials(initialTestimonials ?? []);
     setIndex(0);
   }, [initialTestimonials]);
+
+  useEffect(() => {
+    const update = () => {
+      if (window.innerWidth >= 1024) {
+        setSlidesPerView(3);
+      } else if (window.innerWidth >= 768) {
+        setSlidesPerView(2);
+      } else {
+        setSlidesPerView(1);
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   if (testimonials.length === 0) {
     return (
@@ -36,10 +52,18 @@ export default function TestimonialsSection({ testimonials: initialTestimonials 
 
   const prev = () => setIndex((x) => (x - 1 + testimonials.length) % testimonials.length);
   const next = () => setIndex((x) => (x + 1) % testimonials.length);
+
   const visibleTestimonials = Array.from(
-    { length: Math.min(3, testimonials.length) },
+    { length: Math.min(slidesPerView, testimonials.length) },
     (_, offset) => testimonials[(index + offset) % testimonials.length],
   );
+
+  const testimonialGridClass =
+    slidesPerView === 1
+      ? "grid-cols-1"
+      : slidesPerView === 2
+        ? "grid-cols-1 sm:grid-cols-2"
+        : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_0.5fr]";
 
   return (
     <section
@@ -89,19 +113,11 @@ export default function TestimonialsSection({ testimonials: initialTestimonials 
         </div>
 
         <div className="min-w-0 overflow-visible lg:col-span-7">
-          <div
-            className={`grid gap-4 overflow-visible ${
-              visibleTestimonials.length === 1
-                ? "grid-cols-1"
-                : visibleTestimonials.length === 2
-                  ? "grid-cols-2"
-                  : "grid-cols-[1fr_1fr_0.5fr]"
-            }`}
-          >
+          <div className={`grid gap-4 overflow-visible ${testimonialGridClass}`}>
             {visibleTestimonials.map((testimonial, cardIndex) => (
               <figure
                 key={testimonial.id}
-                className={`relative flex flex-col ${cardIndex === 2 ? "opacity-50" : ""}`}
+                className={`relative flex flex-col ${cardIndex === 2 && slidesPerView === 3 ? "opacity-50" : ""}`}
               >
                 <div className="relative flex h-[180px] flex-col bg-white px-5 pb-8 pt-5 shadow-sm">
                   <div
@@ -129,7 +145,7 @@ export default function TestimonialsSection({ testimonials: initialTestimonials 
                     height={48}
                     className="relative h-12 w-12 rounded-full border-[3px] border-[#f0571f] object-cover shadow-md"
                   />
-                  <div className={cardIndex === 2 ? "hidden" : ""}>
+                  <div className={cardIndex === 2 && slidesPerView === 3 ? "hidden lg:block" : ""}>
                     <p className="text-sm font-bold text-[#f0571f]">{testimonial.name}</p>
                     <p className="text-xs text-gray-500">{testimonial.role}</p>
                   </div>

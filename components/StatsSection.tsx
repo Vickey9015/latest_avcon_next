@@ -112,7 +112,7 @@ export default function StatsSection() {
                   </div>
 
                   {/* Value */}
-                  <p className={`text-5xl font-black sm:text-6xl bg-gradient-to-r ${s.gradient} bg-clip-text text-transparent`}>
+                  <p className={`text-4xl font-black sm:text-5xl lg:text-6xl bg-gradient-to-r ${s.gradient} bg-clip-text text-transparent`}>
                     <AnimatedCounter value={s.value} suffix={s.suffix} />
                   </p>
 

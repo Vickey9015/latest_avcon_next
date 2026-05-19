@@ -22,9 +22,9 @@ export default function AboutSection() {
       <div className="absolute -right-24 bottom-10 h-72 w-72 rounded-full bg-[#030f80]/10 blur-3xl" aria-hidden />
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-8">
-        <TiltOnScroll className="relative mx-auto min-h-[470px] w-full max-w-lg lg:mx-0">
-          <div className="absolute -left-4 -top-4 h-24 w-24 rounded-full border-[18px] border-[#ff8c00]/20" aria-hidden />
-          <div className="relative h-[440px] w-[90%] overflow-hidden rounded-[32px] border-[8px] border-white shadow-2xl sm:h-[520px]">
+        <TiltOnScroll className="relative mx-auto min-h-[340px] w-full max-w-lg sm:min-h-[470px] lg:mx-0">
+          <div className="absolute -left-2 -top-2 h-16 w-16 rounded-full border-[12px] border-[#ff8c00]/20 sm:-left-4 sm:-top-4 sm:h-24 sm:w-24 sm:border-[18px]" aria-hidden />
+          <div className="relative h-[280px] w-full overflow-hidden rounded-[24px] border-[6px] border-white shadow-2xl sm:h-[440px] sm:w-[90%] sm:rounded-[32px] sm:border-[8px] lg:h-[520px]">
             <Image
               src="/slider2.jpg"
               alt="AVCONEXPO industrial factory — engineering and EPC solutions"
@@ -34,7 +34,7 @@ export default function AboutSection() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
           </div>
-          <div className="absolute bottom-[-20px] right-0 h-64 w-[65%] overflow-hidden rounded-[28px] border-[10px] border-white shadow-2xl sm:h-80">
+          <div className="absolute bottom-[-12px] right-0 h-48 w-[72%] overflow-hidden rounded-[20px] border-[6px] border-white shadow-2xl sm:bottom-[-20px] sm:h-64 sm:w-[65%] sm:rounded-[28px] sm:border-[10px] lg:h-80">
             <Image
               src="/slider1.jpg"
               alt="AVCONEXPO power plant engineering services"
@@ -51,7 +51,7 @@ export default function AboutSection() {
               Experience
             </p>
           </div>
-          <div className="absolute bottom-10 left-0 hidden flex-col gap-2 sm:flex">
+          <div className="absolute bottom-6 left-0 flex w-full max-w-[calc(100%-1rem)] flex-col gap-2 sm:bottom-10 sm:max-w-none">
             <a
               href="/overview"
               className="rounded-xl bg-gradient-to-r from-[#f0571f] to-[#faa419] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:shadow-xl"
@@ -67,7 +67,7 @@ export default function AboutSection() {
           </div>
         </TiltOnScroll>
 
-        <div className="flex overflow-hidden rounded-2xl border border-orange-200/50 bg-white text-center shadow-xl lg:min-h-[470px] lg:flex-col lg:text-left">
+        <div className="flex flex-col overflow-hidden rounded-2xl border border-orange-200/50 bg-white text-center shadow-xl lg:min-h-[470px] lg:text-left">
           <div className="bg-gradient-to-r from-[#f0571f] to-[#faa419] px-5 py-4 text-white sm:px-6">
             <p className="mb-2 flex items-center justify-center gap-2 text-xs font-extrabold uppercase tracking-wide lg:justify-start">
               <span className="h-2 w-8 rounded-full bg-white/80" />

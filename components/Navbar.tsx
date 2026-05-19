@@ -2,30 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { aboutNavLinks, servicesNavLinks } from "@/lib/nav-links";
 import Logo from "./Logo";
 import NavSidebar from "./NavSidebar";
-//test
 
 const linkBase =
   "px-3 py-2 text-sm font-medium text-white/95 transition-colors hover:text-white";
-
-const aboutSub = [
-  { label: "Overview", href: "/overview" },
-  { label: "Team", href: "/team" },
-  { label: "What we do", href: "/what-we-do" },
-];
-
-const servicesSub = [
-  { label: "Business & Technical Consultancy", href: "/services/business-technical-consulting" },
-  { label: "Project Management", href: "/services/project-management" },
-  { label: "Architecture & Designing", href: "/services/architecture-designing" },
-  { label: "Industrial Revival & Growth", href: "/services/industrial-revival" },
-  { label: "Startup Accelerator", href: "/services/startup-accelerator" },
-  { label: "Waste Management", href: "/services/waste-management" },
-  { label: "Agro Value Chain", href: "/services/agro-value-chain" },
-  { label: "Talent Management Services", href: "/services/talent-management" },
-  { label: "Supply-Chain Management", href: "/services/supply-chain" },
-];
 
 export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -35,7 +17,10 @@ export default function Navbar() {
       <header className="absolute inset-x-0 top-0 z-[999]">
         <div className="border-b border-white/10 bg-black/50 backdrop-blur-md">
           <nav className="relative mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
-            <Logo variant="onDark" />
+            <div className="max-w-[140px] shrink-0 sm:max-w-none">
+              <Logo variant="onDark" size="sm" className="sm:hidden" />
+              <Logo variant="onDark" className="hidden sm:flex" />
+            </div>
 
             <ul className="hidden items-center lg:flex">
               <li>
@@ -49,7 +34,7 @@ export default function Navbar() {
                   <span className="text-white/70">+</span>
                 </button>
                 <ul className="invisible absolute left-0 top-full z-[1000] min-w-[240px] rounded-b-2xl border border-orange-100 bg-white py-2 opacity-0 shadow-2xl transition-all group-hover:visible group-hover:opacity-100">
-                  {aboutSub.map((item) => (
+                  {aboutNavLinks.map((item) => (
                     <li key={item.label}>
                       <a
                         href={item.href}
@@ -67,7 +52,7 @@ export default function Navbar() {
                   <span className="text-white/70">+</span>
                 </button>
                 <ul className="invisible fixed left-1/2 top-[4.5rem] z-[1000] w-[340px] -translate-x-1/2 rounded-b-2xl border border-orange-100 bg-white py-2 opacity-0 shadow-2xl transition-all group-hover:visible group-hover:opacity-100">
-                  {servicesSub.map((item) => (
+                  {servicesNavLinks.map((item) => (
                     <li key={item.label}>
                       <Link
                         href={item.href}
@@ -113,7 +98,7 @@ export default function Navbar() {
               </Link>
               <button
                 type="button"
-                className="flex h-10 w-10 items-center justify-center text-white transition-opacity hover:opacity-90"
+                className="flex h-10 w-10 items-center justify-center text-white transition-opacity hover:opacity-90 lg:hidden"
                 aria-expanded={sidebarOpen}
                 aria-label={sidebarOpen ? "Close menu" : "Open menu"}
                 onClick={() => setSidebarOpen((o) => !o)}

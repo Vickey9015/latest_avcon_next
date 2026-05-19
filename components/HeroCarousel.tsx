@@ -33,7 +33,7 @@ export default function HeroCarousel({ slides: initialSlides }: HeroCarouselProp
 
   if (slides.length === 0) {
     return (
-      <section className="relative flex min-h-[min(88vh,860px)] w-full items-center justify-center bg-gray-900">
+      <section className="relative flex min-h-[min(70vh,640px)] w-full items-center justify-center bg-gray-900 sm:min-h-[min(88vh,860px)]">
         <p className="text-white/80">No banners available.</p>
       </section>
     );
@@ -42,7 +42,7 @@ export default function HeroCarousel({ slides: initialSlides }: HeroCarouselProp
   const slide = slides[index];
 
   return (
-    <section className="relative min-h-[min(88vh,860px)] w-full overflow-hidden">
+    <section className="relative min-h-[min(70vh,640px)] w-full overflow-hidden sm:min-h-[min(88vh,860px)]">
       <Image
         src={slide.image}
         alt={slide.alt}
@@ -52,9 +52,9 @@ export default function HeroCarousel({ slides: initialSlides }: HeroCarouselProp
         sizes="100vw"
       />
       <div className="absolute inset-0 bg-black/55" aria-hidden />
-      <div className="relative z-10 flex min-h-[min(88vh,860px)] flex-col justify-center px-6 pb-24 pt-24 sm:px-8 md:pt-28 lg:pt-32">
+      <div className="relative z-10 flex min-h-[min(70vh,640px)] flex-col justify-center px-4 pb-20 pt-28 sm:min-h-[min(88vh,860px)] sm:px-8 sm:pb-24 sm:pt-32 md:pt-28 lg:pt-32">
         <div className="mx-auto w-full max-w-7xl md:pl-4 lg:pl-8">
-          <h1 className="max-w-xl text-left text-3xl font-bold leading-[1.15] tracking-tight text-white sm:max-w-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem]">
+          <h1 className="max-w-xl text-left text-2xl font-bold leading-[1.15] tracking-tight text-white sm:max-w-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem]">
             {slide.lines.map((line) => (
               <span key={`${slide.id}-${line}`} className="block">
                 {line}
@@ -64,7 +64,7 @@ export default function HeroCarousel({ slides: initialSlides }: HeroCarouselProp
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-0 right-0 z-10 flex items-center justify-center gap-6">
+      <div className="absolute bottom-6 left-0 right-0 z-10 flex items-center justify-center gap-4 sm:bottom-8 sm:gap-6">
         <button
           type="button"
           aria-label="Previous slide"

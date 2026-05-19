@@ -135,9 +135,9 @@ export default function TopBar() {
 
   return (
     <div className="bg-[#f37021] text-white">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-2 text-sm sm:px-6 lg:px-8">
-        <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-          <div className="flex items-center gap-3">
+      <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2 text-sm sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3 sm:px-6 lg:px-8">
+        <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:flex-wrap sm:justify-start sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3">
             {topBarSocial.map((s) => (
               <a
                 key={s.name}
@@ -158,10 +158,29 @@ export default function TopBar() {
               </a>
             ))}
           </div>
+          <a
+            href="tel:+917007729873"
+            className="flex shrink-0 items-center gap-1.5 whitespace-nowrap text-xs font-medium sm:hidden"
+          >
+            <svg
+              className="h-4 w-4 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
+            +91-7007729873
+          </a>
           <span className="hidden h-4 w-px shrink-0 bg-white/50 sm:block" aria-hidden />
           <a
             href="mailto:solutions@avconexpo.com"
-            className="flex items-center gap-2 opacity-95 hover:opacity-100"
+            className="hidden items-center gap-2 opacity-95 hover:opacity-100 sm:flex"
           >
             <svg
               className="h-4 w-4 shrink-0"
@@ -179,10 +198,29 @@ export default function TopBar() {
             <span className="hidden sm:inline">solutions@avconexpo.com</span>
           </a>
         </div>
-        <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+          <a
+            href="mailto:solutions@avconexpo.com"
+            className="flex min-w-0 flex-1 items-center gap-2 truncate opacity-95 hover:opacity-100 sm:hidden"
+          >
+            <svg
+              className="h-4 w-4 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
+            </svg>
+            <span className="truncate text-xs">solutions@avconexpo.com</span>
+          </a>
           <a
             href="tel:+917007729873"
-            className="flex items-center gap-1.5 whitespace-nowrap"
+            className="hidden items-center gap-1.5 whitespace-nowrap sm:flex"
           >
             <svg
               className="h-4 w-4 shrink-0"
@@ -201,7 +239,7 @@ export default function TopBar() {
           </a>
           <a
             href="tel:+917860563231"
-            className="flex items-center gap-1.5 whitespace-nowrap"
+            className="hidden items-center gap-1.5 whitespace-nowrap sm:flex"
           >
             <svg
               className="h-4 w-4 shrink-0"
@@ -222,11 +260,11 @@ export default function TopBar() {
             Select language
           </label>
           <div id="google_translate_element" className="hidden" aria-hidden />
-          <div className="relative min-w-[12.5rem]">
+          <div className="relative w-full min-w-0 flex-1 sm:min-w-[12.5rem] sm:flex-none sm:w-auto">
             <select
               id="lang"
               name="lang"
-              className="w-full cursor-pointer appearance-none rounded border-0 bg-white py-1.5 pl-3 pr-8 text-sm text-[#333] shadow-sm outline-none ring-1 ring-white/40"
+              className="w-full cursor-pointer appearance-none rounded border-0 bg-white py-1.5 pl-3 pr-8 text-xs text-[#333] shadow-sm outline-none ring-1 ring-white/40 sm:text-sm"
               value={language}
               onChange={(event) => changeLanguage(event.target.value)}
             >

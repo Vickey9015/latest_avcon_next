@@ -66,7 +66,7 @@ export default function ContactSection() {
       <div className="relative overflow-hidden bg-[#101827] py-16 text-white sm:py-20 lg:py-24">
         <Image src="/slider4.jpg" alt="" fill className="object-cover opacity-30" sizes="100vw" />
         <div className="absolute inset-0 bg-[#101827]/80" aria-hidden />
-        <div className="relative mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
+        <div className="relative mx-auto grid max-w-7xl gap-6 px-4 py-12 sm:gap-8 sm:px-6 sm:py-16 lg:grid-cols-[1.1fr_0.9fr] lg:px-8 lg:py-24">
           <div>
             <p className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15">
@@ -87,7 +87,7 @@ export default function ContactSection() {
         </div>
       </div>
 
-      <div className="mx-auto -mt-16 max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto -mt-10 max-w-7xl px-4 sm:-mt-16 sm:px-6 lg:px-8">
         <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="rounded-[28px] bg-white p-6 shadow-2xl ring-1 ring-zinc-200 sm:p-8">
             <h3 className="mb-6 text-2xl font-extrabold text-[#1a1a1a]">Get in Touch</h3>
