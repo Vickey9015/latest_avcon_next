@@ -72,7 +72,7 @@ export default async function BlogsPage() {
                     className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-orange-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-[#f0571f]/60 hover:shadow-2xl"
                   >
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100">
-                      <Link href={href} aria-label={post.title}>
+                      <Link href={href} className="relative block h-full w-full" aria-label={post.title}>
                         <Image
                           src={post.image}
                           alt={post.title}

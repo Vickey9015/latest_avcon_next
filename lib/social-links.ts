@@ -17,8 +17,7 @@ export const socialLinks = [
   },
 ] as const;
 
-/** Instagram placeholder — same as footer until a profile URL is added. */
 export const instagramLink = {
   label: "Instagram",
-  href: "#",
+  href: "https://www.instagram.com/avconexpo?igsh=dDltcDJqb2FtcWl6",
 } as const;
