@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { aboutNavLinks, primaryNavLinks, servicesNavLinks } from "@/lib/nav-links";
 import { instagramLink, socialLinks } from "@/lib/social-links";
 import Logo from "./Logo";
 
@@ -38,14 +40,38 @@ const drawerSocial = [
   },
 ];
 
+const drawerLinkClass =
+  "block rounded-lg px-3 py-2.5 text-sm font-semibold text-[#273339] transition-colors hover:bg-orange-50 hover:text-[#f37021]";
+
 type NavSidebarProps = {
   open: boolean;
   onClose: () => void;
 };
 
+function Chevron({ open }: { open: boolean }) {
+  return (
+    <svg
+      className={`h-4 w-4 shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+    </svg>
+  );
+}
+
 export default function NavSidebar({ open, onClose }: NavSidebarProps) {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [portalReady, setPortalReady] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+
+  useEffect(() => {
+    setPortalReady(true);
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -59,6 +85,13 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
     }
     const closeId = window.setTimeout(() => setVisible(false), 0);
     return () => clearTimeout(closeId);
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) {
+      setAboutOpen(false);
+      setServicesOpen(false);
+    }
   }, [open]);
 
   const finishClose = useCallback(() => {
@@ -105,22 +138,24 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
     if (!open && !visible) finishClose();
   }
 
-  if (!mounted) return null;
+  if (!mounted || !portalReady) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[2000]" role="dialog" aria-modal="true" aria-label="Menu">
       <button
         type="button"
-        className={`absolute inset-0 bg-black/50 backdrop-blur-[2px] transition-opacity duration-400 ease-out motion-reduce:transition-none ${visible ? "opacity-100" : "opacity-0"
-          }`}
+        className={`absolute inset-0 bg-black/50 backdrop-blur-[2px] transition-opacity duration-400 ease-out motion-reduce:transition-none ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}
         aria-label="Close menu"
         onClick={onClose}
         onTransitionEnd={onBackdropTransitionEnd}
       />
       <aside
         onTransitionEnd={onPanelTransitionEnd}
-        className={`absolute right-0 top-0 flex h-full w-full max-w-[min(100%,420px)] flex-col border-l-[3px] border-[#f37021] bg-white shadow-2xl will-change-transform transition-transform duration-[420ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none sm:max-w-[26rem] ${visible ? "translate-x-0" : "translate-x-[102%]"
-          }`}
+        className={`absolute right-0 top-0 flex h-full w-full max-w-[min(100%,420px)] flex-col border-l-[3px] border-[#f37021] bg-white shadow-2xl will-change-transform transition-transform duration-[420ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none sm:max-w-[26rem] ${
+          visible ? "translate-x-0" : "translate-x-[102%]"
+        }`}
       >
         <div className="flex items-start justify-between gap-4 border-b border-zinc-100 px-5 py-5">
           <Logo variant="onLight" size="sm" />
@@ -137,21 +172,77 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
         </div>
 
         <div
-          className={`flex flex-1 flex-col overflow-y-auto px-5 py-6 transition-all duration-500 ease-out delay-100 motion-reduce:transition-none motion-reduce:delay-0 ${visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
-            }`}
+          className={`flex flex-1 flex-col overflow-y-auto px-5 py-6 transition-all duration-500 ease-out delay-100 motion-reduce:transition-none motion-reduce:delay-0 ${
+            visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+          }`}
         >
-          <p className="text-sm leading-relaxed text-[#444]">
-            We engage with customers across their value chain helping to design, build, operate, and
-            maintain the products and services that make them leaders and respected brands in their
-            industries and markets.
-          </p>
+          <nav aria-label="Site navigation">
+            <ul className="space-y-1">
+              <li>
+                <Link href="/" onClick={onClose} className={drawerLinkClass}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className={`${drawerLinkClass} flex w-full items-center justify-between gap-2 text-left`}
+                  aria-expanded={aboutOpen}
+                  onClick={() => setAboutOpen((value) => !value)}
+                >
+                  About Us
+                  <Chevron open={aboutOpen} />
+                </button>
+                {aboutOpen ? (
+                  <ul className="mt-1 space-y-0.5 border-l-2 border-orange-100 pl-3">
+                    {aboutNavLinks.map((item) => (
+                      <li key={item.href}>
+                        <Link href={item.href} onClick={onClose} className={`${drawerLinkClass} text-[13px] font-medium`}>
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className={`${drawerLinkClass} flex w-full items-center justify-between gap-2 text-left`}
+                  aria-expanded={servicesOpen}
+                  onClick={() => setServicesOpen((value) => !value)}
+                >
+                  Services
+                  <Chevron open={servicesOpen} />
+                </button>
+                {servicesOpen ? (
+                  <ul className="mt-1 max-h-48 space-y-0.5 overflow-y-auto border-l-2 border-orange-100 pl-3">
+                    {servicesNavLinks.map((item) => (
+                      <li key={item.href}>
+                        <Link href={item.href} onClick={onClose} className={`${drawerLinkClass} text-[13px] font-medium`}>
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </li>
+              {primaryNavLinks.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} onClick={onClose} className={drawerLinkClass}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           <Link
             href="/#contact"
             onClick={onClose}
             className="mt-6 inline-flex w-full items-center justify-center gap-2 bg-[#f37021] px-5 py-3.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-[#d96516]"
           >
-            Contact Us
+            Get In Touch
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
@@ -161,6 +252,12 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
               />
             </svg>
           </Link>
+
+          <p className="mt-6 text-sm leading-relaxed text-[#444]">
+            We engage with customers across their value chain helping to design, build, operate, and
+            maintain the products and services that make them leaders and respected brands in their
+            industries and markets.
+          </p>
 
           <div className="mt-8">
             <h3 className="text-sm font-bold text-[#f37021]">Contact Info</h3>
@@ -242,6 +339,7 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
           </div>
         </div>
       </aside>
-    </div>
+    </div>,
+    document.body,
   );
 }

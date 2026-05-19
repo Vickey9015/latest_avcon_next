@@ -7,7 +7,7 @@ export default function FloatingActions() {
         href="https://wa.me/918423923769"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-24 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-xl ring-1 ring-black/10 transition-transform hover:scale-105 md:bottom-6"
+        className="fixed bottom-[5.5rem] right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-xl ring-1 ring-black/10 transition-transform hover:scale-105 md:bottom-6 md:right-5"
         aria-label="WhatsApp +91-8423923769"
       >
         <svg className="h-9 w-9 text-[#25D366]" viewBox="0 0 24 24" fill="currentColor" aria-hidden>

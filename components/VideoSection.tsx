@@ -38,11 +38,11 @@ export default function VideoSection() {
     <section aria-label="Featured videos" className="py-16 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="mb-8 text-3xl font-bold text-center text-gray-900">Our Latest Videos</h2>
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 lg:grid-cols-6">
           {videos.map((v, i) => (
             <div key={i} className="group relative overflow-hidden rounded-lg shadow-lg">
               <video
-                className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
+                className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-64 lg:h-80"
                 src={v.src}
                 poster={v.poster}
                 autoPlay

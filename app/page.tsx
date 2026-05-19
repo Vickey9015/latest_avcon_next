@@ -26,7 +26,7 @@ export default async function Home() {
   ]);
 
   return (
-    <>
+    <main className="overflow-x-clip pb-[4.75rem] md:pb-0">
       <TopBar />
       <div className="relative">
         <HeroCarousel slides={banners} />
@@ -62,6 +62,6 @@ export default async function Home() {
       </SectionEnter>
       <Footer />
       <FloatingActions />
-    </>
+    </main>
   );
 }

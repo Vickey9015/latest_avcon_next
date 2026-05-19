@@ -10,15 +10,9 @@ export default function ParallaxDivider() {
   return (
     <div
       aria-hidden="true"
-      className="relative w-full"
+      className="relative h-[280px] w-full bg-cover bg-center bg-no-repeat sm:h-[420px] lg:h-[650px] lg:bg-fixed"
       style={{
-        height: "650px",
-        backgroundImage:
-          "url('/assets/docs/img/factoryOuter_new.jpg')",
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
+        backgroundImage: "url('/assets/docs/img/factoryOuter_new.jpg')",
       }}
     >
       {/* very subtle darkening so the two "windows" feel seamless with StatsSection */}
