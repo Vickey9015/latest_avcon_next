@@ -6,6 +6,7 @@ import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
+import { formatJobDate, getActiveJobs } from "@/lib/jobs";
 
 export const metadata: Metadata = {
   title: "Career | AVCONEXPO",
@@ -13,18 +14,18 @@ export const metadata: Metadata = {
     "Explore careers at AVCONEXPO and apply for Business Development Executive and future engineering roles.",
 };
 
-const jobs = [
-  {
-    title: "Business Development Executive",
-    date: "Dec 24, 2025",
-    short:
-      "Avconexpo is seeking a proactive Business Development Manager to drive growth through CRM management, LinkedIn lead generation, email outreach, and digital business development.",
-    full:
-      "Based at our Lucknow office, the role involves coordinating with technical teams, managing leads and follow-ups, supporting online marketing initiatives, and assisting with proposals and presentations. The ideal candidate has strong communication skills, a structured working approach, and a basic understanding of technical or engineering services.",
-  },
-];
+export const dynamic = "force-dynamic";
 
-export default function CareerPage() {
+type CareerPageProps = {
+  searchParams: Promise<{ job?: string }>;
+};
+
+export default async function CareerPage({ searchParams }: CareerPageProps) {
+  const { job: jobParam } = await searchParams;
+  const jobs = await getActiveJobs();
+  const jobOptions = jobs.map((job) => ({ id: job.id, title: job.title }));
+  const defaultJobId = jobParam ? Number(jobParam) : null;
+
   return (
     <>
       <TopBar />
@@ -57,46 +58,60 @@ export default function CareerPage() {
       <section className="relative overflow-hidden bg-white py-16 sm:py-20">
         <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-[#f0571f]/10 blur-3xl" aria-hidden />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {jobs.map((job) => (
-              <article
-                key={job.title}
-                className="rounded-[24px] border border-orange-100 bg-gradient-to-br from-white to-orange-50/45 p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-[#f0571f]/60 hover:shadow-xl"
-              >
-                <p className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-sm font-bold text-[#f37021] ring-1 ring-orange-100">
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10m2 10H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                  {job.date}
-                </p>
-                <h2 className="mt-4 text-2xl font-extrabold text-[#1a1a1a]">{job.title}</h2>
-                <p className="mt-4 text-sm leading-6 text-[#4b5563]">
-                  {job.short} <span className="font-bold text-[#f0571f]">View More</span>
-                </p>
-                <details className="group mt-4">
-                  <summary className="cursor-pointer list-none text-sm font-extrabold text-[#f0571f]">
-                    Full Description <span className="transition group-open:hidden">+</span>
-                    <span className="hidden group-open:inline">-</span>
-                  </summary>
-                  <p className="mt-3 text-sm leading-6 text-[#4b5563]">{job.full}</p>
-                </details>
-                <a
-                  href="#apply"
-                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#f0571f] to-[#faa419] px-5 py-3 text-sm font-bold text-white shadow-lg transition hover:-translate-y-0.5"
+          {jobs.length === 0 ? (
+            <p className="rounded-2xl border border-orange-100 bg-orange-50/50 p-8 text-center text-gray-600">
+              No open positions at the moment. Please check back soon.
+            </p>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {jobs.map((job) => (
+                <article
+                  key={job.id}
+                  className="rounded-[24px] border border-orange-100 bg-gradient-to-br from-white to-orange-50/45 p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-[#f0571f]/60 hover:shadow-xl"
                 >
-                  Apply Now
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M9 7h8v8" />
-                  </svg>
-                </a>
-              </article>
-            ))}
-          </div>
+                  <p className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-sm font-bold text-[#f37021] ring-1 ring-orange-100">
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 7V3m8 4V3m-9 8h10m2 10H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                    {formatJobDate(job.publishDate)}
+                  </p>
+                  <h2 className="mt-4 text-2xl font-extrabold text-[#1a1a1a]">{job.title}</h2>
+                  {(job.location || job.department || job.jobType) && (
+                    <p className="mt-2 text-sm font-semibold text-[#f37021]">
+                      {[job.department, job.location, job.jobType].filter(Boolean).join(" · ")}
+                    </p>
+                  )}
+                  {job.experience ? (
+                    <p className="mt-1 text-xs font-medium text-gray-500">Experience: {job.experience}</p>
+                  ) : null}
+                  <p className="mt-4 text-sm leading-6 text-[#4b5563]">
+                    {job.shortDescription} <span className="font-bold text-[#f0571f]">View More</span>
+                  </p>
+                  <details className="group mt-4">
+                    <summary className="cursor-pointer list-none text-sm font-extrabold text-[#f0571f]">
+                      Full Description <span className="transition group-open:hidden">+</span>
+                      <span className="hidden group-open:inline">-</span>
+                    </summary>
+                    <p className="mt-3 text-sm leading-6 text-[#4b5563]">{job.fullDescription}</p>
+                  </details>
+                  <a
+                    href={`/career?job=${job.id}#apply`}
+                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#f0571f] to-[#faa419] px-5 py-3 text-sm font-bold text-white shadow-lg transition hover:-translate-y-0.5"
+                  >
+                    Apply Now
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M9 7h8v8" />
+                    </svg>
+                  </a>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -119,7 +134,10 @@ export default function CareerPage() {
           </div>
 
           <div className="mt-10 grid items-stretch gap-8 lg:grid-cols-[1.05fr_1fr]" data-reveal-group>
-            <CareerApplicationForm />
+            <CareerApplicationForm
+              jobs={jobOptions}
+              defaultJobId={Number.isInteger(defaultJobId) && defaultJobId! > 0 ? defaultJobId : null}
+            />
 
             <div className="flex h-full flex-col gap-5">
               <div className="relative h-[240px] overflow-hidden rounded-[28px] bg-zinc-200 shadow-2xl ring-1 ring-orange-100 sm:h-[280px] lg:h-[300px]">

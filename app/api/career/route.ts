@@ -1,6 +1,7 @@
 import { extname } from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 import { createCareerApplication } from "@/lib/career-applications";
+import { getActiveJobs } from "@/lib/jobs";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -45,6 +46,15 @@ export async function POST(request: NextRequest) {
     if (!fullName || !email || !phone || !position) {
       return NextResponse.json(
         { error: "Please fill all required fields." },
+        { status: 400 },
+      );
+    }
+
+    const activeJobs = await getActiveJobs();
+    const validPositions = new Set(activeJobs.map((job) => job.title));
+    if (!validPositions.has(position)) {
+      return NextResponse.json(
+        { error: "Please select a valid job position from the list." },
         { status: 400 },
       );
     }

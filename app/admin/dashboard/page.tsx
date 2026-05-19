@@ -1,29 +1,67 @@
-import Link from 'next/link';
+import Link from "next/link";
+import { getBannerCount } from "@/lib/banners";
+import { getBlogCount } from "@/lib/blogs";
+import { getContactCount } from "@/lib/contact-submissions";
+import { getProjectCount } from "@/lib/projects";
 
-const statsCards = [
-  { title: 'Total Banner', count: 5, listLabel: 'Banner List', href: '/admin/dashboard/banner', color: 'bg-blue-700' },
-  { title: 'Total Projects', count: 3, listLabel: 'Project List', href: '/admin/dashboard/project', color: 'bg-blue-700' },
-  { title: 'Total Blogs', count: 5, listLabel: 'Blog List', href: '/admin/dashboard/blog', color: 'bg-blue-700' },
-];
+export const dynamic = "force-dynamic";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const [bannerCount, projectCount, blogCount, contactCount] = await Promise.all([
+    getBannerCount(),
+    getProjectCount(),
+    getBlogCount(),
+    getContactCount(),
+  ]);
+
+  const statsCards = [
+    {
+      title: "Total Banner",
+      count: bannerCount,
+      listLabel: "Banner List",
+      href: "/admin/dashboard/banner",
+      color: "bg-blue-700",
+    },
+    {
+      title: "Total Projects",
+      count: projectCount,
+      listLabel: "Project List",
+      href: "/admin/dashboard/project",
+      color: "bg-blue-700",
+    },
+    {
+      title: "Total Blogs",
+      count: blogCount,
+      listLabel: "Blog List",
+      href: "/admin/dashboard/blog",
+      color: "bg-blue-700",
+    },
+    {
+      title: "Contact Enquiries",
+      count: contactCount,
+      listLabel: "Contact List",
+      href: "/admin/dashboard/contact",
+      color: "bg-orange-600",
+    },
+  ];
+
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="mx-auto max-w-7xl">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {statsCards.map((card) => (
-          <div key={card.title} className={`${card.color} rounded-xl overflow-hidden text-white`}>
+          <div key={card.title} className={`${card.color} overflow-hidden rounded-xl text-white`}>
             <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
+              <div className="mb-4 flex items-center justify-between">
                 <h3 className="text-lg font-semibold">{card.title}</h3>
-                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                  <span className="text-gray-800 text-xl font-bold">{card.count}</span>
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white">
+                  <span className="text-xl font-bold text-gray-800">{card.count}</span>
                 </div>
               </div>
             </div>
             <div className="border-t border-white/20">
               <Link
                 href={card.href}
-                className="block py-3 text-center text-sm font-medium hover:bg-white/10 transition-colors"
+                className="block py-3 text-center text-sm font-medium transition-colors hover:bg-white/10"
               >
                 {card.listLabel}
               </Link>

@@ -1,0 +1,174 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import BlogArticleContent from "@/components/BlogArticleContent";
+import FloatingActions from "@/components/FloatingActions";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import TopBar from "@/components/TopBar";
+import { blogExcerpt, formatBlogDate, getPublishedBlogBySlug, getPublishedBlogs } from "@/lib/blogs";
+
+export const dynamic = "force-dynamic";
+
+type BlogDetailPageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPublishedBlogBySlug(slug);
+
+  if (!post) {
+    return { title: "Blog Not Found | AVCONEXPO" };
+  }
+
+  const description = blogExcerpt(post, 160) || post.title;
+
+  return {
+    title: `${post.title} | AVCONEXPO`,
+    description,
+  };
+}
+
+export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
+  const { slug } = await params;
+  const post = await getPublishedBlogBySlug(slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  const relatedPosts = (await getPublishedBlogs())
+    .filter((item) => item.id !== post.id)
+    .slice(0, 3);
+
+  return (
+    <>
+      <TopBar />
+
+      <div className="relative">
+        <section className="relative min-h-[52vh] overflow-hidden">
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/65" aria-hidden />
+          <Navbar />
+
+          <div className="relative z-10 mx-auto flex min-h-[52vh] w-full max-w-4xl flex-col justify-end px-4 pb-12 pt-36 sm:px-6 lg:px-8">
+            <nav aria-label="Breadcrumb" className="mb-4 text-sm font-semibold text-white/85">
+              <Link href="/" className="hover:text-white">
+                Home
+              </Link>{" "}
+              /{" "}
+              <Link href="/blogs" className="hover:text-white">
+                Blogs
+              </Link>{" "}
+              / <span className="text-white">{post.category || "Article"}</span>
+            </nav>
+            {post.category ? (
+              <span className="mb-3 inline-flex w-fit rounded-full bg-white/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white ring-1 ring-white/25">
+                {post.category}
+              </span>
+            ) : null}
+            <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              {post.title}
+            </h1>
+            <div className="mt-5 flex flex-wrap items-center gap-4 text-sm font-semibold text-white/90">
+              <span className="inline-flex items-center gap-2">
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 7V3m8 4V3m-9 8h10m2 10H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z"
+                  />
+                </svg>
+                {formatBlogDate(post.publishDate)}
+              </span>
+              {post.author ? <span>By {post.author}</span> : null}
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section className="bg-[#f7f7f7] py-12 sm:py-16">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="overflow-hidden rounded-[28px] border border-orange-100 bg-white shadow-xl">
+            <div className="relative aspect-[16/9] w-full bg-zinc-100">
+              <Image
+                src={post.image}
+                alt={post.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 896px) 100vw, 896px"
+              />
+            </div>
+
+            <div className="space-y-8 p-6 sm:p-10">
+              {post.excerpt ? (
+                <p className="text-lg font-semibold leading-8 text-[#1a1a1a]">{post.excerpt}</p>
+              ) : null}
+
+              <BlogArticleContent content={post.content} tags={post.tags} />
+
+              <div className="flex flex-wrap items-center justify-between gap-4 border-t border-orange-100 pt-6">
+                <Link
+                  href="/blogs"
+                  className="inline-flex items-center gap-2 font-extrabold text-[#f37021] transition-colors hover:text-[#d96516]"
+                >
+                  <svg className="h-4 w-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                  Back to all blogs
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {relatedPosts.length > 0 ? (
+            <div className="mt-12">
+              <h2 className="mb-6 text-2xl font-extrabold text-[#1a1a1a]">More from our blog</h2>
+              <div className="grid gap-6 md:grid-cols-3">
+                {relatedPosts.map((related) => (
+                  <article
+                    key={related.id}
+                    className="overflow-hidden rounded-2xl border border-orange-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    <Link href={`/blogs/${related.slug}`} className="relative block aspect-[16/10] bg-zinc-100">
+                      <Image
+                        src={related.image}
+                        alt={related.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                    </Link>
+                    <div className="p-5">
+                      <p className="text-xs font-bold uppercase tracking-wide text-[#f37021]">
+                        {formatBlogDate(related.publishDate)}
+                      </p>
+                      <h3 className="mt-2 text-lg font-extrabold text-[#1a1a1a]">
+                        <Link href={`/blogs/${related.slug}`} className="hover:text-[#f0571f]">
+                          {related.title}
+                        </Link>
+                      </h3>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </section>
+
+      <Footer />
+      <FloatingActions />
+    </>
+  );
+}

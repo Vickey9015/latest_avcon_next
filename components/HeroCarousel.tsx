@@ -2,50 +2,42 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+import type { Banner } from "@/lib/banner-types";
 
-type Slide = {
-  /** Single-line title (centered) */
-  title?: string;
-  /** Multi-line stack, left-weighted (reference layout) */
-  lines?: string[];
-  image: string;
-  alt: string;
+type HeroCarouselProps = {
+  slides: Banner[];
 };
 
-const slides: Slide[] = [
-  {
-    lines: ["EPC - Engineering", "Procurement &", "Construction"],
-    image: "/assets/docs/img/real_one.jpeg",
-    alt: "Industrial piping and plant — engineering and EPC",
-  },
-  {
-    lines: ["Greenfield And", "Brownfield", "Project", "Development"],
-    image: "/assets/docs/img/real_two.jpeg",
-    alt: "Industrial facility at dusk — greenfield and brownfield development",
-  },
-  {
-    lines: ["Project Feasibility &", "Market Research"],
-    image: "/assets/docs/img/real_five.jpeg",
-    alt: "Manufacturing and industrial solutions",
-  },
-  {
-    lines: ["Global Business &", "Technical Consultancy"],
-    image: "/slider4.jpg",
-    alt: "Construction and consultancy project",
-  },
-];
-
-export default function HeroCarousel() {
+export default function HeroCarousel({ slides: initialSlides }: HeroCarouselProps) {
+  const [slides, setSlides] = useState(initialSlides);
   const [index, setIndex] = useState(0);
 
-  const go = useCallback((dir: -1 | 1) => {
-    setIndex((i) => (i + dir + slides.length) % slides.length);
-  }, []);
+  useEffect(() => {
+    setSlides(initialSlides);
+    setIndex(0);
+  }, [initialSlides]);
+
+  const go = useCallback(
+    (dir: -1 | 1) => {
+      if (slides.length === 0) return;
+      setIndex((i) => (i + dir + slides.length) % slides.length);
+    },
+    [slides.length],
+  );
 
   useEffect(() => {
-    const t = setInterval(() => go(1), 4000);
-    return () => clearInterval(t);
-  }, [go]);
+    if (slides.length <= 1) return;
+    const timer = setInterval(() => go(1), 4000);
+    return () => clearInterval(timer);
+  }, [go, slides.length]);
+
+  if (slides.length === 0) {
+    return (
+      <section className="relative flex min-h-[min(88vh,860px)] w-full items-center justify-center bg-gray-900">
+        <p className="text-white/80">No banners available.</p>
+      </section>
+    );
+  }
 
   const slide = slides[index];
 
@@ -62,19 +54,13 @@ export default function HeroCarousel() {
       <div className="absolute inset-0 bg-black/55" aria-hidden />
       <div className="relative z-10 flex min-h-[min(88vh,860px)] flex-col justify-center px-6 pb-24 pt-24 sm:px-8 md:pt-28 lg:pt-32">
         <div className="mx-auto w-full max-w-7xl md:pl-4 lg:pl-8">
-          {slide.lines ? (
-            <h1 className="max-w-xl text-left text-3xl font-bold leading-[1.15] tracking-tight text-white sm:max-w-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem]">
-              {slide.lines.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </h1>
-          ) : (
-            <h1 className="max-w-4xl text-left text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[2.65rem]">
-              {slide.title}
-            </h1>
-          )}
+          <h1 className="max-w-xl text-left text-3xl font-bold leading-[1.15] tracking-tight text-white sm:max-w-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem]">
+            {slide.lines.map((line) => (
+              <span key={`${slide.id}-${line}`} className="block">
+                {line}
+              </span>
+            ))}
+          </h1>
         </div>
       </div>
 
@@ -90,9 +76,9 @@ export default function HeroCarousel() {
           </svg>
         </button>
         <div className="flex gap-2">
-          {slides.map((_, i) => (
+          {slides.map((item, i) => (
             <button
-              key={i}
+              key={item.id}
               type="button"
               aria-label={`Go to slide ${i + 1}`}
               aria-current={i === index}

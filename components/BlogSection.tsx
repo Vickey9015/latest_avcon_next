@@ -1,26 +1,14 @@
 import Image from "next/image";
+import Link from "next/link";
 import { HoverTiltCard3D } from "@/components/motion";
-import { SITE } from "@/lib/site";
+import type { Blog } from "@/lib/blog-types";
+import { blogHref } from "@/lib/blog-types";
 
-const posts = [
-  {
-    title: "Sustainable Energy Solutions for 2026",
-    href: `${SITE}/blog/sustainable-energy-solutions-2026`,
-    image: "/slider1.jpg",
-  },
-  {
-    title: "Business Technical Consultants in Kenya—Why Avconexpo Is Your Growth Partner",
-    href: `${SITE}/blog/business-technical-consultants-kenya`,
-    image: "/slider2.jpg",
-  },
-  {
-    title: "Industrial Plant Setup & Consultancy in Africa | Avconexpo",
-    href: `${SITE}/blog/industrial-plant-setup-consultancy-africa`,
-    image: "/slider3.jpg",
-  },
-];
+type BlogSectionProps = {
+  posts: Blog[];
+};
 
-export default function BlogSection() {
+export default function BlogSection({ posts }: BlogSectionProps) {
   return (
     <section id="blog" className="bg-white py-16 sm:py-20 lg:py-24" aria-labelledby="blog-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -38,39 +26,52 @@ export default function BlogSection() {
               Our Latest Blog
             </h2>
           </div>
-          <a
-            href={`${SITE}/blogs.php`}
+          <Link
+            href="/blogs"
             className="inline-flex w-fit items-center gap-2 rounded-full bg-[#ff8c00] px-6 py-3 font-semibold text-white shadow-md hover:bg-[#e67e00]"
           >
             Read More
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M9 7h8v8" />
             </svg>
-          </a>
+          </Link>
         </div>
-        <div className="grid gap-6 md:grid-cols-3" data-reveal-group>
-          {posts.map((p) => (
-            <HoverTiltCard3D key={p.href} className="h-full min-w-0" maxTilt={8}>
-            <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-zinc-200 transition hover:-translate-y-1 hover:shadow-xl">
-              <a href={p.href} className="relative aspect-[16/10] overflow-hidden">
-                <Image src={p.image} alt={p.title} fill className="object-cover transition duration-500 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 33vw" />
-              </a>
-              <div className="flex flex-1 flex-col p-6">
-                <h3 className="mb-5 flex-1 text-lg font-extrabold leading-snug text-[#1a1a1a]">{p.title}</h3>
-                <a
-                  href={p.href}
-                  className="inline-flex items-center gap-2 text-sm font-bold text-[#ff8c00] hover:text-[#e67e00]"
-                >
-                  Read more
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
-            </article>
-            </HoverTiltCard3D>
-          ))}
-        </div>
+        {posts.length === 0 ? (
+          <p className="text-center text-gray-600">No blog posts available.</p>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-3" data-reveal-group>
+            {posts.map((post) => {
+              const href = blogHref(post);
+              return (
+                <HoverTiltCard3D key={post.id} className="h-full min-w-0" maxTilt={8}>
+                  <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-zinc-200 transition hover:-translate-y-1 hover:shadow-xl">
+                    <Link href={href} className="relative aspect-[16/10] overflow-hidden">
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                        sizes="(max-width: 1024px) 100vw, 33vw"
+                      />
+                    </Link>
+                    <div className="flex flex-1 flex-col p-6">
+                      <h3 className="mb-5 flex-1 text-lg font-extrabold leading-snug text-[#1a1a1a]">{post.title}</h3>
+                      <Link
+                        href={href}
+                        className="inline-flex items-center gap-2 text-sm font-bold text-[#ff8c00] hover:text-[#e67e00]"
+                      >
+                        Read more
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                    </div>
+                  </article>
+                </HoverTiltCard3D>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
