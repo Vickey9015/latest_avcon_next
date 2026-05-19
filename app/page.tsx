@@ -1,4 +1,7 @@
 import AboutSection from "@/components/AboutSection";
+import { getActiveBanners } from "@/lib/banners";
+import { getPublishedBlogs } from "@/lib/blogs";
+import { getActiveTestimonials } from "@/lib/testimonials";
 import BlogSection from "@/components/BlogSection";
 import ClientsSection from "@/components/ClientsSection";
 import ContactSection from "@/components/ContactSection";
@@ -15,12 +18,18 @@ import StatsSection from "@/components/StatsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import TopBar from "@/components/TopBar";
 
-export default function Home() {
+export default async function Home() {
+  const [banners, blogPosts, testimonials] = await Promise.all([
+    getActiveBanners(),
+    getPublishedBlogs(3),
+    getActiveTestimonials(),
+  ]);
+
   return (
     <>
       <TopBar />
       <div className="relative">
-        <HeroCarousel />
+        <HeroCarousel slides={banners} />
         <Navbar />
       </div>
       <SectionEnter variant="fade-up">
@@ -40,13 +49,13 @@ export default function Home() {
         <ClientsSection />
       </SectionEnter>
       <SectionEnter variant="fade-up">
-        <TestimonialsSection />
+        <TestimonialsSection testimonials={testimonials} />
       </SectionEnter>
       <SectionEnter variant="fade">
         <VideoSection />
       </SectionEnter>
       <SectionEnter variant="fade">
-        <BlogSection />
+        <BlogSection posts={blogPosts} />
       </SectionEnter>
       <SectionEnter variant="scale">
         <ContactSection />

@@ -5,6 +5,7 @@ import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
+import { getActiveProjects } from "@/lib/projects";
 
 export const metadata: Metadata = {
   title: "Projects | AVCONEXPO",
@@ -12,28 +13,11 @@ export const metadata: Metadata = {
     "Explore AVCONEXPO's latest industrial and EPC projects including sustainable energy, water bottling, and milk processing facilities.",
 };
 
-const projects = [
-  {
-    title: "Sustainable Energy Facility",
-    image: "/slider2.jpg",
-    text: "Avconexpo proudly establishes a state-of-the-art sustainable industrial facility dedicated to producing clean energy and materials through advanced technology and eco-friendly practices. This project supports local infrastructure, economic growth, and a resilient industrial ecosystem.",
-    tag: "Clean Energy",
-  },
-  {
-    title: "Water Bottling Plant",
-    image: "/sectors/utilities.jpg",
-    text: "AVCONEXPO successfully installed a state-of-the-art water bottling line in Rwanda, delivering clean and efficiently packaged drinking water. The turnkey setup includes automated purification, filling, and packaging systems for hygiene, reliability, and cost efficiency.",
-    tag: "Turnkey Plant",
-  },
-  {
-    title: "Milk processing plant",
-    image: "/sectors/Agro_Processing.jpg",
-    text: "A milk processing plant transforms fresh raw milk into safe, high-quality dairy products through intake, testing, clarification, pasteurization, homogenization, and hygienic packaging. The setup ensures product consistency while preserving nutritional quality.",
-    tag: "Agro Processing",
-  },
-];
+export const dynamic = "force-dynamic";
 
-export default function ProjectPage() {
+export default async function ProjectPage() {
+  const projects = await getActiveProjects();
+
   return (
     <>
       <TopBar />
@@ -74,44 +58,50 @@ export default function ProjectPage() {
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Our Latest Projects</h2>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3" data-reveal-group>
-            {projects.map((project) => (
-              <article
-                key={project.title}
-                className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-orange-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-[#f0571f]/60 hover:shadow-2xl"
-              >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                    sizes="(max-width: 1280px) 100vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#101827]/60 via-transparent to-transparent" />
-                  <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-[#f0571f] shadow">
-                    {project.tag}
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col border-t-4 border-[#f0571f] bg-gradient-to-br from-white to-orange-50/45 p-6">
-                  <h3 className="text-xl font-extrabold text-[#1a1a1a]">{project.title}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-6 text-[#4b5563]">{project.text}</p>
-                  <details className="group/details mt-5">
-                    <summary className="inline-flex cursor-pointer list-none items-center gap-2 font-extrabold text-[#f0571f] transition-colors hover:text-[#d94818]">
-                      See More
-                      <svg className="h-4 w-4 transition group-open/details:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </summary>
-                    <div className="mt-4 rounded-2xl border border-orange-100 bg-white p-4 text-sm leading-6 text-[#4b5563] shadow-sm">
-                      <p className="font-bold text-[#273339]">Project Details</p>
-                      <p className="mt-2">{project.text}</p>
-                    </div>
-                  </details>
-                </div>
-              </article>
-            ))}
-          </div>
+          {projects.length === 0 ? (
+            <p className="rounded-2xl border border-orange-100 bg-white p-8 text-center text-gray-600">
+              No projects available at the moment.
+            </p>
+          ) : (
+            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3" data-reveal-group>
+              {projects.map((project) => (
+                <article
+                  key={project.id}
+                  className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-orange-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-[#f0571f]/60 hover:shadow-2xl"
+                >
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                      sizes="(max-width: 1280px) 100vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#101827]/60 via-transparent to-transparent" />
+                    <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-[#f0571f] shadow">
+                      {project.tag}
+                    </span>
+                  </div>
+                  <div className="flex flex-1 flex-col border-t-4 border-[#f0571f] bg-gradient-to-br from-white to-orange-50/45 p-6">
+                    <h3 className="text-xl font-extrabold text-[#1a1a1a]">{project.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-6 text-[#4b5563]">{project.description}</p>
+                    <details className="group/details mt-5">
+                      <summary className="inline-flex cursor-pointer list-none items-center gap-2 font-extrabold text-[#f0571f] transition-colors hover:text-[#d94818]">
+                        See More
+                        <svg className="h-4 w-4 transition group-open/details:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </summary>
+                      <div className="mt-4 rounded-2xl border border-orange-100 bg-white p-4 text-sm leading-6 text-[#4b5563] shadow-sm">
+                        <p className="font-bold text-[#273339]">Project Details</p>
+                        <p className="mt-2">{project.description}</p>
+                      </div>
+                    </details>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
 
           <div className="mt-12 rounded-[26px] border border-orange-100 bg-white p-6 shadow-sm">
             <p className="text-sm font-extrabold uppercase tracking-wide text-[#f37021]">Project Details</p>

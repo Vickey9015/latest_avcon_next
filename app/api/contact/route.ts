@@ -23,6 +23,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
+    }
+
     await createContactSubmission({
       name,
       email,

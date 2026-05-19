@@ -62,3 +62,26 @@ export async function getContactSubmissions() {
      ORDER BY created_at DESC`,
   );
 }
+
+export async function getContactCount() {
+  await ensureContactSubmissionsTable();
+
+  const rows = await query<{ count: number }>(
+    `SELECT COUNT(*) AS count FROM contact_submissions`,
+  );
+  return rows[0]?.count ?? 0;
+}
+
+export async function updateContactSubmissionStatus(
+  id: number,
+  status: ContactSubmission["status"],
+) {
+  await ensureContactSubmissionsTable();
+
+  const result = await execute(
+    `UPDATE contact_submissions SET status = ? WHERE id = ?`,
+    [status, id],
+  );
+
+  return result.affectedRows > 0;
+}
