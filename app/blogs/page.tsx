@@ -6,12 +6,17 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
 import { blogHref, formatBlogDate, getPublishedBlogs } from "@/lib/blogs";
+import { seoForRoute } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Blogs | AVCONEXPO",
-  description:
-    "Read AVCONEXPO blogs on sustainable energy, industrial consulting, and plant setup across global markets.",
-};
+export function generateMetadata(): Metadata {
+  return seoForRoute({
+    pathname: "/blogs",
+    title: "Blogs | AVCONEXPO",
+    description:
+      "Read AVCONEXPO blogs on sustainable energy, industrial consulting, and plant setup across global markets.",
+    imageUrl: "/bg/heroBg3_3.jpg",
+  });
+}
 
 export const dynamic = "force-dynamic";
 

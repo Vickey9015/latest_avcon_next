@@ -142,9 +142,8 @@ export default function TopBar() {
               <a
                 key={s.name}
                 href={s.href}
-                {...(s.href !== "#"
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={s.name}
                 className="opacity-95 transition-opacity hover:opacity-100"
               >

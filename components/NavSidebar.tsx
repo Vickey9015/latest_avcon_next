@@ -325,9 +325,8 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
               <a
                 key={s.name}
                 href={s.href}
-                {...(s.href !== "#"
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={s.name}
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1a1a1a] text-white transition-opacity hover:opacity-85"
               >

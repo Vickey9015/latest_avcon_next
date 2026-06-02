@@ -5,12 +5,17 @@ import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
+import { seoForRoute } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "What We Do | AVCONEXPO",
-  description:
-    "Discover AVCONEXPO tailored solutions, process optimisation, execution support, and cross-functional delivery model.",
-};
+export function generateMetadata(): Metadata {
+  return seoForRoute({
+    pathname: "/what-we-do",
+    title: "What We Do | AVCONEXPO",
+    description:
+      "Discover AVCONEXPO tailored solutions, process optimisation, execution support, and cross-functional delivery model.",
+    imageUrl: "/bg/breadcrumb.jpg",
+  });
+}
 
 const industries = [
   "Plastic factory",

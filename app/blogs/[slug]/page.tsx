@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
 import { blogExcerpt, formatBlogDate, getPublishedBlogBySlug, getPublishedBlogs } from "@/lib/blogs";
+import { seoForRoute } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -25,10 +26,12 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
 
   const description = blogExcerpt(post, 160) || post.title;
 
-  return {
+  return seoForRoute({
+    pathname: `/blogs/${post.slug}`,
     title: `${post.title} | AVCONEXPO`,
     description,
-  };
+    imageUrl: post.image,
+  });
 }
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {

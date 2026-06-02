@@ -54,13 +54,13 @@ export default function AboutSection() {
           <div className="absolute bottom-6 left-0 flex w-full max-w-[calc(100%-1rem)] flex-col gap-2 sm:bottom-10 sm:max-w-none">
             <a
               href="/overview"
-              className="rounded-xl bg-gradient-to-r from-[#f0571f] to-[#faa419] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:shadow-xl"
+              className="w-1/2 rounded-xl bg-gradient-to-r from-[#f0571f] to-[#faa419] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:shadow-xl"
             >
               Concept to Consumer
             </a>
             <a
               href="/overview"
-              className="rounded-xl bg-gradient-to-r from-[#f0571f] to-[#faa419] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:shadow-xl"
+              className="w-1/2 rounded-xl bg-gradient-to-r from-[#f0571f] to-[#faa419] px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:shadow-xl"
             >
               Scratch to Shelf Solutions
             </a>

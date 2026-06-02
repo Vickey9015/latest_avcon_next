@@ -5,12 +5,18 @@ import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
+import { seoForRoute } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Overview | AVCONEXPO",
-  description:
-    "AVCONEXPO overview: engineering-technology, architecture-design, supply-chain management, and EPC consultancy services.",
-};
+export function generateMetadata(): Metadata {
+  return seoForRoute({
+    pathname: "/overview",
+    title: "Overview | AVCONEXPO",
+    description:
+      "AVCONEXPO overview: engineering-technology, architecture-design, supply-chain management, and EPC consultancy services.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80",
+  });
+}
 
 const points = [
   "Greenfield & Brownfield Projects",

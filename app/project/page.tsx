@@ -6,12 +6,17 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
 import { getActiveProjects } from "@/lib/projects";
+import { seoForRoute } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Projects | AVCONEXPO",
-  description:
-    "Explore AVCONEXPO's latest industrial and EPC projects including sustainable energy, water bottling, and milk processing facilities.",
-};
+export function generateMetadata(): Metadata {
+  return seoForRoute({
+    pathname: "/project",
+    title: "Projects | AVCONEXPO",
+    description:
+      "Explore AVCONEXPO's latest industrial and EPC projects including sustainable energy, water bottling, and milk processing facilities.",
+    imageUrl: "/assets/docs/img/real_four.jpeg",
+  });
+}
 
 export const dynamic = "force-dynamic";
 

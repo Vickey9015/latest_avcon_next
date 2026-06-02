@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import AboutSection from "@/components/AboutSection";
 import { getActiveBanners } from "@/lib/banners";
 import { getPublishedBlogs } from "@/lib/blogs";
@@ -17,6 +18,17 @@ import ServicesSection from "@/components/ServicesSection";
 import StatsSection from "@/components/StatsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import TopBar from "@/components/TopBar";
+import { seoForRoute } from "@/lib/seo";
+
+export function generateMetadata(): Metadata {
+  return seoForRoute({
+    pathname: "/",
+    title: "AVCONEXPO | Global Engineering, EPC & Sourcing Solutions",
+    description:
+      "Engineering-Technology, Supply-Chain Management, Architecture-Design, EPC, and industrial solutions — concept to consumer, scratch to shelf.",
+    imageUrl: "/slider2.jpg",
+  });
+}
 
 export default async function Home() {
   const [banners, blogPosts, testimonials] = await Promise.all([

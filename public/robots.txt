@@ -1,0 +1,7 @@
+User-agent: *
+Disallow:
+Crawl-delay: 10
+Disallow: /cgi-bin/
+Disallow: /admin/
+Sitemap: https://www.avconexpo.com/sitemap.xml
+LLMs.txt file: https://www.avconexpo.com/llms.txt
