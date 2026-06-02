@@ -5,12 +5,17 @@ import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
+import { seoForRoute } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Team Members | AVCONEXPO",
-  description:
-    "Meet AVCONEXPO's team members and experts across engineering, architecture, project management, and business consulting.",
-};
+export function generateMetadata(): Metadata {
+  return seoForRoute({
+    pathname: "/team",
+    title: "Team Members | AVCONEXPO",
+    description:
+      "Meet AVCONEXPO's team members and experts across engineering, architecture, project management, and business consulting.",
+    imageUrl: "/bg/videoBg4_3.jpg",
+  });
+}
 
 const members = [
   {

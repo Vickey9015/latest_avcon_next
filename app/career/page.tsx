@@ -7,12 +7,17 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
 import { formatJobDate, getActiveJobs } from "@/lib/jobs";
+import { seoForRoute } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Career | AVCONEXPO",
-  description:
-    "Explore careers at AVCONEXPO and apply for Business Development Executive and future engineering roles.",
-};
+export function generateMetadata(): Metadata {
+  return seoForRoute({
+    pathname: "/career",
+    title: "Career | AVCONEXPO",
+    description:
+      "Explore careers at AVCONEXPO and apply for Business Development Executive and future engineering roles.",
+    imageUrl: "/service-details/talent-management-services.jpg",
+  });
+}
 
 export const dynamic = "force-dynamic";
 
