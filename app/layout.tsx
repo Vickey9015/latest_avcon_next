@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
+import JsonLd from "@/components/JsonLd";
 import ScrollReveal from "@/components/ScrollReveal";
+import { organizationSchema } from "@/lib/structured-data";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -85,16 +87,7 @@ export default function RootLayout({
           name="google-site-verification"
           content="2idd2VAY98jmcTtnQzeyulmi8LSM3zcbjO4PQNe8OO4"
         />
-      </head>
-      <body suppressHydrationWarning className="min-h-screen antialiased">
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-MJR9RZ7G"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
+        <JsonLd data={organizationSchema} />
         <Script
           id="gtm-head"
           strategy="beforeInteractive"
@@ -116,6 +109,16 @@ gtag('config', 'G-033K77JK27');`}</Script>
     t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 })(window, document, "clarity", "script", "wx2xxs19p3");`}</Script>
+      </head>
+      <body suppressHydrationWarning className="min-h-screen antialiased">
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MJR9RZ7G"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <ScrollReveal />
         {children}
       </body>
