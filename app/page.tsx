@@ -6,8 +6,10 @@ import { getActiveTestimonials } from "@/lib/testimonials";
 import BlogSection from "@/components/BlogSection";
 import ClientsSection from "@/components/ClientsSection";
 import ContactSection from "@/components/ContactSection";
+import FaqSection from "@/components/FaqSection";
 import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import HeroCarousel from "@/components/HeroCarousel";
 import SectionEnter from "@/components/SectionEnter";
 import Navbar from "@/components/Navbar";
@@ -19,6 +21,7 @@ import StatsSection from "@/components/StatsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import TopBar from "@/components/TopBar";
 import { seoForRoute } from "@/lib/seo";
+import { faqSchema, reviewSchema, webpageSchema } from "@/lib/structured-data";
 
 export function generateMetadata(): Metadata {
   return seoForRoute({
@@ -39,6 +42,9 @@ export default async function Home() {
 
   return (
     <main className="overflow-x-clip pb-[4.75rem] md:pb-0">
+      <JsonLd data={webpageSchema} />
+      <JsonLd data={reviewSchema} />
+      <JsonLd data={faqSchema} />
       <TopBar />
       <div className="relative">
         <HeroCarousel slides={banners} />
@@ -71,6 +77,9 @@ export default async function Home() {
       </SectionEnter>
       <SectionEnter variant="scale">
         <ContactSection />
+      </SectionEnter>
+      <SectionEnter variant="fade-up">
+        <FaqSection />
       </SectionEnter>
       <Footer />
       <FloatingActions />
