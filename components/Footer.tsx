@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import ContactScrollLink from "@/components/ContactScrollLink";
 import { instagramLink, socialLinks } from "@/lib/social-links";
 
 const quickLinks = [
@@ -42,7 +43,12 @@ export default function Footer() {
               <ul className="space-y-3 text-sm">
                 {quickLinks.map((l) => (
                   <li key={l.label}>
-                    {l.href.startsWith("/") && !l.href.startsWith("//") ? (
+                    {l.href === "/#contact" ? (
+                      <ContactScrollLink className="group inline-flex items-center gap-2 text-white hover:text-white">
+                        <span className="text-white transition group-hover:translate-x-1">›</span>
+                        {l.label}
+                      </ContactScrollLink>
+                    ) : l.href.startsWith("/") && !l.href.startsWith("//") ? (
                       <Link href={l.href} className="group inline-flex items-center gap-2 text-white hover:text-white">
                         <span className="text-white transition group-hover:translate-x-1">›</span>
                         {l.label}
@@ -88,15 +94,12 @@ export default function Footer() {
                   </a>
                 </p>
               </address>
-              <Link
-                href="/#contact"
-                className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#f0571f] px-6 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-[#f0571f]"
-              >
+              <ContactScrollLink className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#f0571f] px-6 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-[#f0571f]">
                 Contact Us
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M13 5l7 7-7 7" />
                 </svg>
-              </Link>
+              </ContactScrollLink>
               <div className="mt-6 flex items-center gap-3">
                 <a
                   href={instagramLink.href}

@@ -19,6 +19,7 @@ import SectorsSection from "@/components/SectorsSection";
 import ServicesSection from "@/components/ServicesSection";
 import StatsSection from "@/components/StatsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import ScrollToHashOnLoad from "@/components/ScrollToHashOnLoad";
 import TopBar from "@/components/TopBar";
 import { seoForRoute } from "@/lib/seo";
 import { faqSchema, reviewSchema, webpageSchema } from "@/lib/structured-data";
@@ -42,6 +43,7 @@ export default async function Home() {
 
   return (
     <main className="overflow-x-clip pb-[4.75rem] md:pb-0">
+      <ScrollToHashOnLoad />
       <JsonLd data={webpageSchema} />
       <JsonLd data={reviewSchema} />
       <JsonLd data={faqSchema} />
