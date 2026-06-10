@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { instagramLink, socialLinks } from "@/lib/social-links";
-import { SITE } from "@/lib/site";
 
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/overview" },
-  { label: "Contact Us", href: `${SITE}/contact.php` },
+  { label: "Contact Us", href: "/#contact" },
   { label: "Our Services", href: "/#services" },
   { label: "Projects", href: "/project" },
   { label: "Our Blogs", href: "/blogs" },
@@ -89,15 +88,15 @@ export default function Footer() {
                   </a>
                 </p>
               </address>
-              <a
-                href={`${SITE}/contact.php`}
+              <Link
+                href="/#contact"
                 className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#f0571f] px-6 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-[#f0571f]"
               >
                 Contact Us
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M13 5l7 7-7 7" />
                 </svg>
-              </a>
+              </Link>
               <div className="mt-6 flex items-center gap-3">
                 <a
                   href={instagramLink.href}
