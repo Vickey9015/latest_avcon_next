@@ -91,7 +91,7 @@ export default function ContactSubmissionsTable({ submissions }: ContactSubmissi
             {submissions.length === 0 ? (
               <tr>
                 <td colSpan={8} className="px-6 py-10 text-center text-gray-500">
-                  No contact submissions found. Submissions from the homepage &quot;Feel Free To Contact Us&quot; form
+                  No contact submissions found. Submissions from the website contact form
                   will appear here.
                 </td>
               </tr>

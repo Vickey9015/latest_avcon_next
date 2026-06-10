@@ -25,4 +25,5 @@ export const primaryNavLinks: NavLink[] = [
   { label: "Projects", href: "/project" },
   { label: "Blogs", href: "/blogs" },
   { label: "Career", href: "/career" },
+  { label: "Contact", href: "/contact" },
 ];

@@ -79,11 +79,16 @@ export default function Navbar() {
                   Career
                 </Link>
               </li>
+              <li>
+                <Link href="/contact" className={linkBase}>
+                  Contact
+                </Link>
+              </li>
             </ul>
 
             <div className="flex items-center gap-3">
               <Link
-                href="/#contact"
+                href="/contact"
                 className="hidden items-center gap-2 rounded border border-white/50 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/15 sm:inline-flex"
               >
                 Get In Touch

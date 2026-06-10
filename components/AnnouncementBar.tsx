@@ -11,7 +11,7 @@ export default function AnnouncementBar() {
         </p>
         <div className="flex shrink-0 flex-wrap items-center gap-4">
           <Link
-            href="/#contact"
+            href="/contact"
             className="inline-flex items-center justify-center rounded bg-[#ff8c00] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#e67e00]"
           >
             Contact Us

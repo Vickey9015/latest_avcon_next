@@ -29,7 +29,7 @@ export default async function ContactPage() {
           <div>
             <h2 className="text-xl font-bold text-gray-800">Contact List</h2>
             <p className="mt-1 text-sm text-gray-500">
-              Enquiries from the homepage &quot;Feel Free To Contact Us&quot; form.
+              Enquiries from the website contact form.
             </p>
           </div>
           <span className="inline-flex w-fit rounded-full bg-orange-50 px-4 py-2 text-sm font-semibold text-orange-700">

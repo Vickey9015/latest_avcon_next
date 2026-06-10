@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { brochureUrl } from "@/lib/site";
 
 export default function FloatingActions() {
@@ -48,12 +49,12 @@ export default function FloatingActions() {
           </svg>
           +91-8423923769
         </a>
-        <a
+        <Link
+          href="/contact"
           className="flex flex-1 items-center justify-center bg-[#f0571f] px-4 py-3 text-sm font-bold text-white"
-          href="#contact"
         >
           Contact Us
-        </a>
+        </Link>
       </div>
       <a
         href={brochureUrl}

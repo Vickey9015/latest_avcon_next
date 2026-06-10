@@ -238,7 +238,7 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
           </nav>
 
           <Link
-            href="/#contact"
+            href="/contact"
             onClick={onClose}
             className="mt-6 inline-flex w-full items-center justify-center gap-2 bg-[#f37021] px-5 py-3.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-[#d96516]"
           >

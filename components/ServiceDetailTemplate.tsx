@@ -222,7 +222,7 @@ export default function ServiceDetailTemplate({
             <h2 className="text-3xl font-extrabold md:text-4xl">{closingTitle}</h2>
             {closingText ? <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-white/90">{closingText}</p> : null}
             <Link
-              href="/#contact"
+              href="/contact"
               className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-bold text-[#f0571f] shadow-xl transition hover:-translate-y-0.5 hover:bg-gray-100"
             >
               {ctaLabel}
