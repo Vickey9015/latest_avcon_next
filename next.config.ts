@@ -4,7 +4,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
-      { source: "/contact.php", destination: "/", permanent: true },
       { source: "/contact-us", destination: "/", permanent: true },
     ];
   },
