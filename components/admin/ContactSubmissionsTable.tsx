@@ -16,6 +16,15 @@ function statusClass(status: ContactSubmissionStatus) {
   return "bg-yellow-100 text-yellow-800";
 }
 
+function displayValue(value: string | null) {
+  return value?.trim() ? value : "—";
+}
+
+function sourceLabel(source: string | null) {
+  if (source === "equipment-spares") return "Equipment & Spares";
+  return "Contact Form";
+}
+
 interface ContactSubmissionsTableProps {
   submissions: ContactSubmissionRow[];
 }
@@ -58,31 +67,46 @@ export default function ContactSubmissionsTable({ submissions }: ContactSubmissi
       ) : null}
 
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[980px]">
+        <table className="w-full min-w-[1400px]">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                 S.No
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Source
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                 Name
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Company
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                 Email
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                 Phone
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Country
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                 Service
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Machinery / Part
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Expected Delivery
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                 Message
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                 Date
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                 Status
               </th>
             </tr>
@@ -90,36 +114,59 @@ export default function ContactSubmissionsTable({ submissions }: ContactSubmissi
           <tbody className="divide-y divide-gray-200">
             {submissions.length === 0 ? (
               <tr>
-                <td colSpan={8} className="px-6 py-10 text-center text-gray-500">
-                  No contact submissions found. Submissions from the website contact form
+                <td colSpan={13} className="px-6 py-10 text-center text-gray-500">
+                  No contact submissions found. Submissions from the website contact form and equipment quote form
                   will appear here.
                 </td>
               </tr>
             ) : (
               submissions.map((submission, index) => (
-                <tr key={submission.id} className="hover:bg-gray-50">
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{index + 1}</td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm font-semibold text-gray-900">
+                <tr key={submission.id} className="align-top hover:bg-gray-50">
+                  <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-900">{index + 1}</td>
+                  <td className="whitespace-nowrap px-4 py-4 text-sm">
+                    <span
+                      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
+                        submission.source === "equipment-spares"
+                          ? "bg-blue-100 text-blue-800"
+                          : "bg-orange-100 text-orange-800"
+                      }`}
+                    >
+                      {sourceLabel(submission.source)}
+                    </span>
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-4 text-sm font-semibold text-gray-900">
                     {submission.name}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-700">
+                  <td className="max-w-[160px] px-4 py-4 text-sm text-gray-700">
+                    {displayValue(submission.company)}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-700">
                     <a className="text-orange-700 hover:underline" href={`mailto:${submission.email}`}>
                       {submission.email}
                     </a>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-700">
+                  <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-700">
                     <a className="text-orange-700 hover:underline" href={`tel:${submission.phone}`}>
                       {submission.phone}
                     </a>
                   </td>
-                  <td className="max-w-[220px] px-6 py-4 text-sm text-gray-700">{submission.service}</td>
-                  <td className="max-w-[320px] px-6 py-4 text-sm leading-6 text-gray-700">
-                    {submission.message}
+                  <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-700">
+                    {displayValue(submission.country)}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-700">
+                  <td className="max-w-[180px] px-4 py-4 text-sm text-gray-700">{submission.service}</td>
+                  <td className="max-w-[220px] px-4 py-4 text-sm leading-6 text-gray-700">
+                    {displayValue(submission.machinery)}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-700">
+                    {displayValue(submission.expected_delivery)}
+                  </td>
+                  <td className="max-w-[240px] px-4 py-4 text-sm leading-6 text-gray-700">
+                    <span className="whitespace-pre-line">{displayValue(submission.message)}</span>
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-700">
                     {formatDate(submission.created_at)}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm">
+                  <td className="whitespace-nowrap px-4 py-4 text-sm">
                     <select
                       value={submission.status}
                       disabled={updatingId === submission.id}

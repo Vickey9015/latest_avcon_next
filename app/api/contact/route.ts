@@ -15,8 +15,20 @@ export async function POST(request: NextRequest) {
     const phone = readText(body.phone);
     const service = readText(body.service);
     const message = readText(body.message);
+    const company = readText(body.company);
+    const country = readText(body.country);
+    const machinery = readText(body.machinery);
+    const expectedDelivery = readText(body.expectedDelivery ?? body.expected_delivery);
+    const source = readText(body.source) || "contact";
 
-    if (!name || !email || !phone || !service || !message) {
+    if (source === "equipment-spares") {
+      if (!name || !email || !phone || !country || !machinery) {
+        return NextResponse.json(
+          { error: "Please fill all required fields." },
+          { status: 400 },
+        );
+      }
+    } else if (!name || !email || !phone || !service || !message) {
       return NextResponse.json(
         { error: "Please fill all required fields." },
         { status: 400 },
@@ -31,8 +43,13 @@ export async function POST(request: NextRequest) {
       name,
       email,
       phone,
-      service,
-      message,
+      service: service || "Industrial Equipment & Spare Parts",
+      message: message || machinery,
+      company: company || null,
+      country: country || null,
+      machinery: machinery || null,
+      expected_delivery: expectedDelivery || null,
+      source,
     });
 
     return NextResponse.json({

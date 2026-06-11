@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import ContactForm from "@/components/ContactForm";
+import EquipmentSparesEnquiryForm from "@/components/EquipmentSparesEnquiryForm";
 import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -205,14 +206,14 @@ export default function EquipmentsSparesPage() {
 
       <section className="bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-            <div>
+          <div className="grid items-stretch gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+            <div className="flex h-full flex-col">
               <div className="rounded-[24px] bg-gradient-to-r from-[#f0571f] to-[#faa419] p-5 text-white shadow-xl sm:p-6">
                 <h2 className="text-2xl font-extrabold sm:text-3xl">
                   Powering Industries with Reliable Electrical Solutions
                 </h2>
               </div>
-              <div className="mt-6 space-y-4 text-justify text-base leading-7 text-[#444]">
+              <div className="mt-5 flex flex-1 flex-col justify-center space-y-4 text-justify text-base leading-7 text-[#444]">
                 <p>
                   AVCONEXPO supplies a comprehensive range of electrical equipment, components, and spare parts for
                   industrial, commercial, infrastructure, utility, and manufacturing applications. Through our global
@@ -226,15 +227,7 @@ export default function EquipmentsSparesPage() {
                 </p>
               </div>
             </div>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] shadow-2xl ring-1 ring-orange-100">
-              <Image
-                src="/equipments-spares/switchgear.png"
-                alt="Electrical switchgear and control systems"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 45vw"
-              />
-            </div>
+            <EquipmentSparesEnquiryForm />
           </div>
         </div>
       </section>

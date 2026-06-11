@@ -7,6 +7,11 @@ export interface ContactSubmission {
   phone: string;
   service: string;
   message: string;
+  company: string | null;
+  country: string | null;
+  machinery: string | null;
+  expected_delivery: string | null;
+  source: string | null;
   status: "Unread" | "Replied";
   created_at: Date;
 }
@@ -17,6 +22,22 @@ export interface NewContactSubmission {
   phone: string;
   service: string;
   message: string;
+  company?: string | null;
+  country?: string | null;
+  machinery?: string | null;
+  expected_delivery?: string | null;
+  source?: string | null;
+}
+
+async function addContactColumn(sql: string) {
+  try {
+    await execute(sql);
+  } catch (error) {
+    const code = (error as { code?: string }).code;
+    if (code !== "ER_DUP_FIELDNAME") {
+      throw error;
+    }
+  }
 }
 
 export async function ensureContactSubmissionsTable() {
@@ -35,20 +56,32 @@ export async function ensureContactSubmissionsTable() {
       INDEX idx_contact_submissions_created_at (created_at)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
   `);
+
+  await addContactColumn("ALTER TABLE contact_submissions ADD COLUMN company VARCHAR(255) NULL");
+  await addContactColumn("ALTER TABLE contact_submissions ADD COLUMN country VARCHAR(120) NULL");
+  await addContactColumn("ALTER TABLE contact_submissions ADD COLUMN machinery TEXT NULL");
+  await addContactColumn("ALTER TABLE contact_submissions ADD COLUMN expected_delivery VARCHAR(255) NULL");
+  await addContactColumn("ALTER TABLE contact_submissions ADD COLUMN source VARCHAR(80) NULL");
 }
 
 export async function createContactSubmission(submission: NewContactSubmission) {
   await ensureContactSubmissionsTable();
 
   return execute(
-    `INSERT INTO contact_submissions (name, email, phone, service, message)
-     VALUES (?, ?, ?, ?, ?)`,
+    `INSERT INTO contact_submissions
+      (name, email, phone, service, message, company, country, machinery, expected_delivery, source)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       submission.name,
       submission.email,
       submission.phone,
       submission.service,
       submission.message,
+      submission.company ?? null,
+      submission.country ?? null,
+      submission.machinery ?? null,
+      submission.expected_delivery ?? null,
+      submission.source ?? "contact",
     ],
   );
 }
@@ -57,7 +90,8 @@ export async function getContactSubmissions() {
   await ensureContactSubmissionsTable();
 
   return query<ContactSubmission>(
-    `SELECT id, name, email, phone, service, message, status, created_at
+    `SELECT id, name, email, phone, service, message, company, country, machinery,
+            expected_delivery, source, status, created_at
      FROM contact_submissions
      ORDER BY created_at DESC`,
   );

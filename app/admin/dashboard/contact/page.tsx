@@ -14,6 +14,11 @@ function serializeSubmissions(
     phone: submission.phone,
     service: submission.service,
     message: submission.message,
+    company: submission.company,
+    country: submission.country,
+    machinery: submission.machinery,
+    expected_delivery: submission.expected_delivery,
+    source: submission.source,
     status: submission.status,
     created_at: new Date(submission.created_at).toISOString(),
   }));
@@ -29,7 +34,7 @@ export default async function ContactPage() {
           <div>
             <h2 className="text-xl font-bold text-gray-800">Contact List</h2>
             <p className="mt-1 text-sm text-gray-500">
-              Enquiries from the website contact form.
+              Enquiries from the contact form and equipment &amp; spare parts quote form.
             </p>
           </div>
           <span className="inline-flex w-fit rounded-full bg-orange-50 px-4 py-2 text-sm font-semibold text-orange-700">
