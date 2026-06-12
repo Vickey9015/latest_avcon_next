@@ -1,12 +1,10 @@
 import ContactSubmissionsTable from "@/components/admin/ContactSubmissionsTable";
 import { getContactSubmissions } from "@/lib/contact-submissions";
-import type { ContactSubmissionRow } from "@/lib/contact-types";
+import type { ContactSubmission, ContactSubmissionRow } from "@/lib/contact-types";
 
 export const dynamic = "force-dynamic";
 
-function serializeSubmissions(
-  submissions: Awaited<ReturnType<typeof getContactSubmissions>>,
-): ContactSubmissionRow[] {
+function serializeSubmissions(submissions: ContactSubmission[]): ContactSubmissionRow[] {
   return submissions.map((submission) => ({
     id: submission.id,
     name: submission.name,

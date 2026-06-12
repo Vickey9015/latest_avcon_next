@@ -12,7 +12,7 @@ const publicPaths = ['/admin', '/api/auth/login', '/api/auth/logout'];
 // Static and public assets
 const publicPrefixes = ['/_next/', '/static/', '/api/', '/brand-logo.png', '/favicon.ico'];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Check if path is public

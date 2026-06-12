@@ -1,33 +1,7 @@
 import { execute, query } from "@/lib/db";
+import type { ContactSubmission, NewContactSubmission } from "@/lib/contact-types";
 
-export interface ContactSubmission {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  service: string;
-  message: string;
-  company: string | null;
-  country: string | null;
-  machinery: string | null;
-  expected_delivery: string | null;
-  source: string | null;
-  status: "Unread" | "Replied";
-  created_at: Date;
-}
-
-export interface NewContactSubmission {
-  name: string;
-  email: string;
-  phone: string;
-  service: string;
-  message: string;
-  company?: string | null;
-  country?: string | null;
-  machinery?: string | null;
-  expected_delivery?: string | null;
-  source?: string | null;
-}
+export type { ContactSubmission, NewContactSubmission } from "@/lib/contact-types";
 
 async function addContactColumn(sql: string) {
   try {
