@@ -104,6 +104,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-033K77JK27');`}</Script>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18231075988"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads-aw" strategy="afterInteractive">{`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'AW-18231075988');`}</Script>
         <Script id="clarity-tag" strategy="afterInteractive">{`(function(c,l,a,r,i,t,y){
     c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
     t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
@@ -134,6 +142,26 @@ fbq('track', 'PageView');`}</Script>
             style={{ display: "none" }}
             alt=""
             src="https://www.facebook.com/tr?id=5012525882307883&ev=PageView&noscript=1"
+          />
+        </noscript>
+        <Script id="linkedin-insight" strategy="afterInteractive">{`_linkedin_partner_id = "10411913";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);`}</Script>
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            alt=""
+            src="https://px.ads.linkedin.com/collect/?pid=10411913&fmt=gif"
           />
         </noscript>
         <ScrollReveal />
