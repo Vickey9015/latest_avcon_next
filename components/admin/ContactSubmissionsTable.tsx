@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import AdminPagination from "@/components/admin/AdminPagination";
+import ScrollableCell from "@/components/admin/ScrollableCell";
+import { useAdminPagination } from "@/hooks/useAdminPagination";
 import type { ContactSubmissionRow, ContactSubmissionStatus } from "@/lib/contact-types";
 
 function formatDate(value: string) {
@@ -33,6 +36,17 @@ export default function ContactSubmissionsTable({ submissions }: ContactSubmissi
   const router = useRouter();
   const [updatingId, setUpdatingId] = useState<number | null>(null);
   const [error, setError] = useState("");
+
+  const {
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
+    paginatedItems: paginatedSubmissions,
+    totalItems,
+    totalPages,
+    startIndex,
+  } = useAdminPagination(submissions);
 
   async function onStatusChange(id: number, status: ContactSubmissionStatus) {
     setError("");
@@ -120,9 +134,9 @@ export default function ContactSubmissionsTable({ submissions }: ContactSubmissi
                 </td>
               </tr>
             ) : (
-              submissions.map((submission, index) => (
+              paginatedSubmissions.map((submission, index) => (
                 <tr key={submission.id} className="align-top hover:bg-gray-50">
-                  <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-900">{index + 1}</td>
+                  <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-900">{startIndex + index + 1}</td>
                   <td className="whitespace-nowrap px-4 py-4 text-sm">
                     <span
                       className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
@@ -138,7 +152,7 @@ export default function ContactSubmissionsTable({ submissions }: ContactSubmissi
                     {submission.name}
                   </td>
                   <td className="max-w-[160px] px-4 py-4 text-sm text-gray-700">
-                    {displayValue(submission.company)}
+                    <ScrollableCell>{displayValue(submission.company)}</ScrollableCell>
                   </td>
                   <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-700">
                     <a className="text-orange-700 hover:underline" href={`mailto:${submission.email}`}>
@@ -153,15 +167,19 @@ export default function ContactSubmissionsTable({ submissions }: ContactSubmissi
                   <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-700">
                     {displayValue(submission.country)}
                   </td>
-                  <td className="max-w-[180px] px-4 py-4 text-sm text-gray-700">{submission.service}</td>
+                  <td className="max-w-[180px] px-4 py-4 text-sm text-gray-700">
+                    <ScrollableCell>{submission.service}</ScrollableCell>
+                  </td>
                   <td className="max-w-[220px] px-4 py-4 text-sm leading-6 text-gray-700">
-                    {displayValue(submission.machinery)}
+                    <ScrollableCell>{displayValue(submission.machinery)}</ScrollableCell>
                   </td>
                   <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-700">
                     {displayValue(submission.expected_delivery)}
                   </td>
                   <td className="max-w-[240px] px-4 py-4 text-sm leading-6 text-gray-700">
-                    <span className="whitespace-pre-line">{displayValue(submission.message)}</span>
+                    <ScrollableCell className="whitespace-pre-line">
+                      {displayValue(submission.message)}
+                    </ScrollableCell>
                   </td>
                   <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-700">
                     {formatDate(submission.created_at)}
@@ -185,6 +203,15 @@ export default function ContactSubmissionsTable({ submissions }: ContactSubmissi
           </tbody>
         </table>
       </div>
+
+      <AdminPagination
+        page={page}
+        pageSize={pageSize}
+        totalItems={totalItems}
+        totalPages={totalPages}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
+      />
     </>
   );
 }

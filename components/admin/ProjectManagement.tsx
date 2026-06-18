@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import AdminPagination from "@/components/admin/AdminPagination";
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import { useAdminPagination } from "@/hooks/useAdminPagination";
 import type {
   Project,
   ProjectLifecycleStatus,
@@ -82,6 +84,17 @@ export default function ProjectManagement({ initialProjects }: ProjectManagement
         .includes(term),
     );
   }, [projects, searchTerm]);
+
+  const {
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
+    paginatedItems: paginatedProjects,
+    totalItems,
+    totalPages,
+    startIndex,
+  } = useAdminPagination(filteredData, searchTerm);
 
   async function refreshProjects() {
     const response = await fetch("/api/admin/projects");
@@ -245,9 +258,9 @@ export default function ProjectManagement({ initialProjects }: ProjectManagement
                 </td>
               </tr>
             ) : (
-              filteredData.map((project, index) => (
-                <tr key={project.id} className="hover:bg-gray-50">
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{index + 1}</td>
+              paginatedProjects.map((project, index) => (
+                <tr key={project.id} className="align-top hover:bg-gray-50">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{startIndex + index + 1}</td>
                   <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                     {project.image ? (
                       <img src={project.image} alt="" className="h-12 w-20 rounded-lg object-cover" />
@@ -310,6 +323,15 @@ export default function ProjectManagement({ initialProjects }: ProjectManagement
           </tbody>
         </table>
       </div>
+
+      <AdminPagination
+        page={page}
+        pageSize={pageSize}
+        totalItems={totalItems}
+        totalPages={totalPages}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
+      />
 
       {showModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">

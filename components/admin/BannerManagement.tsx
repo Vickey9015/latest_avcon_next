@@ -1,7 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import AdminPagination from "@/components/admin/AdminPagination";
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import ScrollableCell from "@/components/admin/ScrollableCell";
+import { useAdminPagination } from "@/hooks/useAdminPagination";
 import type { Banner, BannerStatus } from "@/lib/banner-types";
 import { bannerSubtitle, bannerTitle } from "@/lib/banner-types";
 
@@ -60,12 +63,26 @@ export default function BannerManagement({ initialBanners }: BannerManagementPro
 
   const tableData = useMemo(() => toTableRows(banners), [banners]);
 
-  const filteredData = tableData.filter((item) =>
-    [item.title, item.subtitle, item.status, String(item.order), item.image]
-      .join(" ")
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase()),
-  );
+  const filteredData = useMemo(() => {
+    const term = searchTerm.toLowerCase();
+    return tableData.filter((item) =>
+      [item.title, item.subtitle, item.status, String(item.order), item.image]
+        .join(" ")
+        .toLowerCase()
+        .includes(term),
+    );
+  }, [tableData, searchTerm]);
+
+  const {
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
+    paginatedItems: paginatedData,
+    totalItems,
+    totalPages,
+    startIndex,
+  } = useAdminPagination(filteredData, searchTerm);
 
   async function refreshBanners() {
     const response = await fetch("/api/admin/banners");
@@ -235,13 +252,13 @@ export default function BannerManagement({ initialBanners }: BannerManagementPro
                 </td>
               </tr>
             ) : (
-              filteredData.map((item, index) => {
+              paginatedData.map((item, index) => {
                 const banner = banners.find((entry) => entry.id === item.id);
                 if (!banner) return null;
 
                 return (
-                  <tr key={item.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{index + 1}</td>
+                  <tr key={item.id} className="align-top hover:bg-gray-50">
+                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{startIndex + index + 1}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {item.image ? (
                         <img
@@ -259,7 +276,9 @@ export default function BannerManagement({ initialBanners }: BannerManagementPro
                       )}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900">{item.title}</td>
-                    <td className="px-6 py-4 text-sm text-gray-700">{item.subtitle || "—"}</td>
+                    <td className="max-w-[240px] px-6 py-4 text-sm text-gray-700">
+                      <ScrollableCell>{item.subtitle || "—"}</ScrollableCell>
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <span
                         className={`rounded-full px-2 py-1 text-xs font-medium ${
@@ -303,6 +322,15 @@ export default function BannerManagement({ initialBanners }: BannerManagementPro
           </tbody>
         </table>
       </div>
+
+      <AdminPagination
+        page={page}
+        pageSize={pageSize}
+        totalItems={totalItems}
+        totalPages={totalPages}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
+      />
 
       {showModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">

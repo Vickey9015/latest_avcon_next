@@ -1,6 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import AdminPagination from "@/components/admin/AdminPagination";
+import ScrollableCell from "@/components/admin/ScrollableCell";
+import { useAdminPagination } from "@/hooks/useAdminPagination";
 import type { Job, JobStatus } from "@/lib/job-types";
 import { formatJobDate } from "@/lib/job-types";
 
@@ -78,6 +81,17 @@ export default function JobManagement({ initialJobs }: JobManagementProps) {
         .includes(term),
     );
   }, [jobs, searchTerm]);
+
+  const {
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
+    paginatedItems: paginatedJobs,
+    totalItems,
+    totalPages,
+    startIndex,
+  } = useAdminPagination(filteredData, searchTerm);
 
   async function refreshJobs() {
     const response = await fetch("/api/admin/jobs");
@@ -236,10 +250,12 @@ export default function JobManagement({ initialJobs }: JobManagementProps) {
                 </td>
               </tr>
             ) : (
-              filteredData.map((job, index) => (
-                <tr key={job.id} className="hover:bg-gray-50">
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{index + 1}</td>
-                  <td className="px-6 py-4 text-sm font-semibold text-gray-900">{job.title}</td>
+              paginatedJobs.map((job, index) => (
+                <tr key={job.id} className="align-top hover:bg-gray-50">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{startIndex + index + 1}</td>
+                  <td className="max-w-[220px] px-6 py-4 text-sm font-semibold text-gray-900">
+                    <ScrollableCell className="font-semibold text-gray-900">{job.title}</ScrollableCell>
+                  </td>
                   <td className="px-6 py-4 text-sm text-gray-700">{job.department || "—"}</td>
                   <td className="px-6 py-4 text-sm text-gray-700">{job.location || "—"}</td>
                   <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-700">{job.jobType}</td>
@@ -291,6 +307,15 @@ export default function JobManagement({ initialJobs }: JobManagementProps) {
           </tbody>
         </table>
       </div>
+
+      <AdminPagination
+        page={page}
+        pageSize={pageSize}
+        totalItems={totalItems}
+        totalPages={totalPages}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
+      />
 
       {showModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">

@@ -1,7 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import AdminPagination from "@/components/admin/AdminPagination";
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import ScrollableCell from "@/components/admin/ScrollableCell";
+import { useAdminPagination } from "@/hooks/useAdminPagination";
 import type { Blog, BlogStatus } from "@/lib/blog-types";
 import { blogHref, formatBlogDate } from "@/lib/blog-types";
 
@@ -95,6 +98,17 @@ export default function BlogManagement({ initialBlogs }: BlogManagementProps) {
         .includes(term),
     );
   }, [blogs, searchTerm]);
+
+  const {
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
+    paginatedItems: paginatedBlogs,
+    totalItems,
+    totalPages,
+    startIndex,
+  } = useAdminPagination(filteredData, searchTerm);
 
   async function refreshBlogs() {
     const response = await fetch("/api/admin/blogs");
@@ -270,9 +284,9 @@ export default function BlogManagement({ initialBlogs }: BlogManagementProps) {
                 </td>
               </tr>
             ) : (
-              filteredData.map((blog, index) => (
-                <tr key={blog.id} className="hover:bg-gray-50">
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{index + 1}</td>
+              paginatedBlogs.map((blog, index) => (
+                <tr key={blog.id} className="align-top hover:bg-gray-50">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{startIndex + index + 1}</td>
                   <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                     {blog.image ? (
                       <img src={blog.image} alt="" className="h-12 w-20 rounded-lg object-cover" />
@@ -284,13 +298,17 @@ export default function BlogManagement({ initialBlogs }: BlogManagementProps) {
                       </div>
                     )}
                   </td>
-                  <td className="max-w-[200px] px-6 py-4 text-sm font-semibold text-gray-900">{blog.title}</td>
+                  <td className="max-w-[200px] px-6 py-4 text-sm font-semibold text-gray-900">
+                    <ScrollableCell className="font-semibold text-gray-900">{blog.title}</ScrollableCell>
+                  </td>
                   <td className="max-w-[240px] px-6 py-4 text-sm leading-6 text-gray-600">
-                    {blog.excerpt || "—"}
+                    <ScrollableCell>{blog.excerpt || "—"}</ScrollableCell>
                   </td>
                   <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-700">{blog.author || "—"}</td>
                   <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-700">{blog.category || "—"}</td>
-                  <td className="max-w-[160px] px-6 py-4 text-sm text-gray-700">{blog.tags || "—"}</td>
+                  <td className="max-w-[160px] px-6 py-4 text-sm text-gray-700">
+                    <ScrollableCell>{blog.tags || "—"}</ScrollableCell>
+                  </td>
                   <td className="whitespace-nowrap px-6 py-4 text-sm">
                     <span
                       className={`rounded-full px-2 py-1 text-xs font-medium ${
@@ -336,6 +354,15 @@ export default function BlogManagement({ initialBlogs }: BlogManagementProps) {
           </tbody>
         </table>
       </div>
+
+      <AdminPagination
+        page={page}
+        pageSize={pageSize}
+        totalItems={totalItems}
+        totalPages={totalPages}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
+      />
 
       {showModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">

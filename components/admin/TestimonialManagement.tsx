@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import AdminPagination from "@/components/admin/AdminPagination";
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import { useAdminPagination } from "@/hooks/useAdminPagination";
 import type { Testimonial, TestimonialStatus } from "@/lib/testimonial-types";
 import { formatTestimonialRole } from "@/lib/testimonial-types";
 
@@ -64,6 +66,17 @@ export default function TestimonialManagement({ initialTestimonials }: Testimoni
         .includes(term),
     );
   }, [testimonials, searchTerm]);
+
+  const {
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
+    paginatedItems: paginatedTestimonials,
+    totalItems,
+    totalPages,
+    startIndex,
+  } = useAdminPagination(filteredData, searchTerm);
 
   async function refreshTestimonials() {
     const response = await fetch("/api/admin/testimonials");
@@ -227,9 +240,9 @@ export default function TestimonialManagement({ initialTestimonials }: Testimoni
                 </td>
               </tr>
             ) : (
-              filteredData.map((item, index) => (
-                <tr key={item.id} className="hover:bg-gray-50">
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{index + 1}</td>
+              paginatedTestimonials.map((item, index) => (
+                <tr key={item.id} className="align-top hover:bg-gray-50">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{startIndex + index + 1}</td>
                   <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                     {item.image ? (
                       <img src={item.image} alt="" className="h-12 w-12 rounded-full object-cover" />
@@ -287,6 +300,15 @@ export default function TestimonialManagement({ initialTestimonials }: Testimoni
           </tbody>
         </table>
       </div>
+
+      <AdminPagination
+        page={page}
+        pageSize={pageSize}
+        totalItems={totalItems}
+        totalPages={totalPages}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
+      />
 
       {showModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
