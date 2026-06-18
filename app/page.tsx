@@ -24,6 +24,8 @@ import TopBar from "@/components/TopBar";
 import { seoForRoute } from "@/lib/seo";
 import { faqSchema, reviewSchema, webpageSchema } from "@/lib/structured-data";
 
+export const dynamic = "force-dynamic";
+
 export function generateMetadata(): Metadata {
   return seoForRoute({
     pathname: "/",

@@ -8,6 +8,7 @@ type ImageUploadFieldProps = {
   folder: UploadFolder;
   value: string;
   onChange: (url: string) => void;
+  onUploadingChange?: (uploading: boolean) => void;
   required?: boolean;
   hint?: string;
 };
@@ -17,6 +18,7 @@ export default function ImageUploadField({
   folder,
   value,
   onChange,
+  onUploadingChange,
   required = true,
   hint,
 }: ImageUploadFieldProps) {
@@ -31,6 +33,7 @@ export default function ImageUploadField({
     }
 
     setUploading(true);
+    onUploadingChange?.(true);
     setUploadError("");
 
     const formData = new FormData();
@@ -51,6 +54,7 @@ export default function ImageUploadField({
       setUploadError(error instanceof Error ? error.message : "Unable to upload image.");
     } finally {
       setUploading(false);
+      onUploadingChange?.(false);
       if (inputRef.current) {
         inputRef.current.value = "";
       }

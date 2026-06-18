@@ -55,6 +55,7 @@ export default function BannerManagement({ initialBanners }: BannerManagementPro
   const [formData, setFormData] = useState<FormState>(emptyForm(initialBanners.length + 1));
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [pending, setPending] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
   const [error, setError] = useState("");
 
   const tableData = useMemo(() => toTableRows(banners), [banners]);
@@ -79,6 +80,7 @@ export default function BannerManagement({ initialBanners }: BannerManagementPro
     setModalMode("add");
     setSelectedId(null);
     setFormData(emptyForm(banners.length + 1));
+    setImageUploading(false);
     setError("");
     setShowModal(true);
   }
@@ -87,6 +89,7 @@ export default function BannerManagement({ initialBanners }: BannerManagementPro
     setModalMode("edit");
     setSelectedId(banner.id);
     setFormData(toFormState(banner));
+    setImageUploading(false);
     setError("");
     setShowModal(true);
   }
@@ -100,6 +103,12 @@ export default function BannerManagement({ initialBanners }: BannerManagementPro
     event.preventDefault();
     setPending(true);
     setError("");
+
+    if (imageUploading) {
+      setError("Please wait for the image upload to finish.");
+      setPending(false);
+      return;
+    }
 
     if (!formData.image.trim()) {
       setError("Please upload a banner image.");
@@ -235,7 +244,12 @@ export default function BannerManagement({ initialBanners }: BannerManagementPro
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{index + 1}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {item.image ? (
-                        <img src={item.image} alt="" className="h-12 w-20 rounded-lg object-cover" />
+                        <img
+                          key={item.image}
+                          src={item.image}
+                          alt=""
+                          className="h-12 w-20 rounded-lg object-cover"
+                        />
                       ) : (
                         <div className="flex h-12 w-20 items-center justify-center rounded-lg bg-gray-200">
                           <svg className="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -320,6 +334,7 @@ export default function BannerManagement({ initialBanners }: BannerManagementPro
                 folder="banners"
                 value={formData.image}
                 onChange={(image) => setFormData({ ...formData, image })}
+                onUploadingChange={setImageUploading}
               />
               <label className="block">
                 <span className="mb-1 block text-sm font-medium text-gray-700">Alt text</span>
@@ -380,10 +395,10 @@ export default function BannerManagement({ initialBanners }: BannerManagementPro
                 </button>
                 <button
                   type="submit"
-                  disabled={pending}
+                  disabled={pending || imageUploading}
                   className="rounded-lg bg-orange-600 px-4 py-2 text-white transition-colors hover:bg-orange-700 disabled:opacity-60"
                 >
-                  {pending ? "Saving..." : modalMode === "add" ? "Add Banner" : "Update Banner"}
+                  {imageUploading ? "Uploading image..." : pending ? "Saving..." : modalMode === "add" ? "Add Banner" : "Update Banner"}
                 </button>
               </div>
             </form>
