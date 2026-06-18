@@ -54,6 +54,7 @@ async function sendMail(options: {
   subject: string;
   html: string;
   text: string;
+  replyTo?: string;
   attachments?: MailAttachment[];
 }) {
   const transporter = nodemailer.createTransport(getSmtpConfig());
@@ -61,6 +62,7 @@ async function sendMail(options: {
   await transporter.sendMail({
     from: getMailFrom(),
     to: getMailTo(),
+    replyTo: options.replyTo,
     subject: options.subject,
     html: options.html,
     text: options.text,
@@ -82,11 +84,16 @@ export type ContactEmailPayload = {
   country?: string | null;
   machinery?: string | null;
   expectedDelivery?: string | null;
+  additionalMessage?: string | null;
   source: string;
 };
 
 export async function sendContactFormEmail(payload: ContactEmailPayload) {
-  const sourceLabel = payload.source === "equipment-spares" ? "Equipment & Spares" : "Contact Form";
+  if (payload.source === "equipment-spares") {
+    return sendEquipmentSparesQuoteEmail(payload);
+  }
+
+  const sourceLabel = "Contact Form";
   const subject = `[AVCONEXPO] New ${sourceLabel} enquiry from ${payload.name}`;
 
   const html = `
@@ -100,8 +107,6 @@ export async function sendContactFormEmail(payload: ContactEmailPayload) {
         ${fieldRow("Company", payload.company)}
         ${fieldRow("Country", payload.country)}
         ${fieldRow("Service", payload.service)}
-        ${fieldRow("Machinery / Part", payload.machinery)}
-        ${fieldRow("Expected Delivery", payload.expectedDelivery)}
         ${fieldRow("Message", payload.message)}
       </table>
     </div>
@@ -115,14 +120,57 @@ export async function sendContactFormEmail(payload: ContactEmailPayload) {
     payload.company ? `Company: ${payload.company}` : "",
     payload.country ? `Country: ${payload.country}` : "",
     `Service: ${payload.service}`,
-    payload.machinery ? `Machinery / Part: ${payload.machinery}` : "",
-    payload.expectedDelivery ? `Expected Delivery: ${payload.expectedDelivery}` : "",
     `Message: ${payload.message}`,
   ]
     .filter(Boolean)
     .join("\n");
 
-  await sendMail({ subject, html, text });
+  await sendMail({ subject, html, text, replyTo: payload.email });
+}
+
+export async function sendEquipmentSparesQuoteEmail(payload: ContactEmailPayload) {
+  const subject = `[AVCONEXPO] Equipment & Spares Free Quote from ${payload.name}`;
+  const additionalMessage =
+    payload.additionalMessage?.trim() &&
+    payload.additionalMessage.trim() !== payload.machinery?.trim()
+      ? payload.additionalMessage.trim()
+      : payload.message?.trim() !== payload.machinery?.trim()
+        ? payload.message.trim()
+        : "";
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;color:#111827;max-width:720px;">
+      <h2 style="margin:0 0 8px;">Equipment &amp; Spares — Get a Free Quote</h2>
+      <p style="margin:0 0 16px;color:#6b7280;font-size:14px;">Submitted from avconexpo.com/equipments-spares</p>
+      <table style="border-collapse:collapse;width:100%;font-size:14px;">
+        ${fieldRow("Name", payload.name)}
+        ${fieldRow("Email", payload.email)}
+        ${fieldRow("Phone", payload.phone)}
+        ${fieldRow("Company", payload.company)}
+        ${fieldRow("Country", payload.country)}
+        ${fieldRow("Machinery / Spare Part Required", payload.machinery)}
+        ${fieldRow("Expected Delivery", payload.expectedDelivery)}
+        ${fieldRow("Additional Message", additionalMessage)}
+      </table>
+    </div>
+  `;
+
+  const text = [
+    "Equipment & Spares — Get a Free Quote",
+    "Page: avconexpo.com/equipments-spares",
+    `Name: ${payload.name}`,
+    `Email: ${payload.email}`,
+    `Phone: ${payload.phone}`,
+    payload.company ? `Company: ${payload.company}` : "",
+    `Country: ${payload.country}`,
+    `Machinery / Spare Part Required: ${payload.machinery}`,
+    payload.expectedDelivery ? `Expected Delivery: ${payload.expectedDelivery}` : "",
+    additionalMessage ? `Additional Message: ${additionalMessage}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  await sendMail({ subject, html, text, replyTo: payload.email });
 }
 
 export type CareerEmailPayload = {

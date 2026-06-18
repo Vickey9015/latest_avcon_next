@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
     const country = readText(body.country);
     const machinery = readText(body.machinery);
     const expectedDelivery = readText(body.expectedDelivery ?? body.expected_delivery);
+    const additionalMessage = readText(body.additionalMessage);
     const source = readText(body.source) || "contact";
 
     if (source === "equipment-spares") {
@@ -45,7 +46,7 @@ export async function POST(request: NextRequest) {
       email,
       phone,
       service: service || "Industrial Equipment & Spare Parts",
-      message: message || machinery,
+      message: additionalMessage || message || machinery,
       company: company || null,
       country: country || null,
       machinery: machinery || null,
@@ -59,11 +60,12 @@ export async function POST(request: NextRequest) {
         email,
         phone,
         service: service || "Industrial Equipment & Spare Parts",
-        message: message || machinery,
+        message: additionalMessage || message || machinery,
         company: company || null,
         country: country || null,
         machinery: machinery || null,
         expectedDelivery: expectedDelivery || null,
+        additionalMessage: additionalMessage || null,
         source,
       });
     } catch (mailError) {

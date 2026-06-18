@@ -80,6 +80,7 @@ export default function EquipmentSparesEnquiryForm() {
           country,
           machinery,
           expectedDelivery,
+          additionalMessage,
           service: "Industrial Equipment & Spare Parts",
           message: additionalMessage || machinery,
           source: "equipment-spares",
