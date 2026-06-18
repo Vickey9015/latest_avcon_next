@@ -49,3 +49,8 @@ next-env.d.ts
 # next.js build artifacts (too large for git)
 .next/
 node_modules/
+
+# user-uploaded admin images (served via /uploads API route)
+/uploads/**
+!/uploads/**/
+!/uploads/**/.gitkeep

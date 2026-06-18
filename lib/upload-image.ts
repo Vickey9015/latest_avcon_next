@@ -3,6 +3,7 @@ import "server-only";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
+import { UPLOADS_ROOT } from "@/lib/upload-paths";
 import type { UploadFolder } from "@/lib/upload-types";
 import { isUploadFolder } from "@/lib/upload-types";
 
@@ -44,7 +45,7 @@ export async function saveAdminImage(file: File, folder: UploadFolder): Promise<
     .slice(0, 40);
 
   const filename = `${Date.now()}-${randomUUID()}${safeBase ? `-${safeBase}` : ""}${extension}`;
-  const uploadDir = path.join(process.cwd(), "public", "uploads", folder);
+  const uploadDir = path.join(UPLOADS_ROOT, folder);
 
   await mkdir(uploadDir, { recursive: true });
   await writeFile(path.join(uploadDir, filename), Buffer.from(await file.arrayBuffer()));
