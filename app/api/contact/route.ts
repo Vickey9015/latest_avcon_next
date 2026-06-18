@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createContactSubmission } from "@/lib/contact-submissions";
+import { sendContactFormEmail } from "@/lib/mail";
 
 export const dynamic = "force-dynamic";
 
@@ -51,6 +52,23 @@ export async function POST(request: NextRequest) {
       expected_delivery: expectedDelivery || null,
       source,
     });
+
+    try {
+      await sendContactFormEmail({
+        name,
+        email,
+        phone,
+        service: service || "Industrial Equipment & Spare Parts",
+        message: message || machinery,
+        company: company || null,
+        country: country || null,
+        machinery: machinery || null,
+        expectedDelivery: expectedDelivery || null,
+        source,
+      });
+    } catch (mailError) {
+      console.error("Contact form email error:", mailError);
+    }
 
     return NextResponse.json({
       success: true,

@@ -2,6 +2,7 @@ import { extname } from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 import { createCareerApplication } from "@/lib/career-applications";
 import { getActiveJobs } from "@/lib/jobs";
+import { sendCareerApplicationEmail } from "@/lib/mail";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -71,6 +72,20 @@ export async function POST(request: NextRequest) {
       resumeMimeType: resumeInfo.resumeMimeType,
       resumeName: resumeInfo.resumeName,
     });
+
+    try {
+      await sendCareerApplicationEmail({
+        fullName,
+        email,
+        phone,
+        position,
+        resumeName: resumeInfo.resumeName,
+        resumeData: resumeInfo.resumeData,
+        resumeMimeType: resumeInfo.resumeMimeType,
+      });
+    } catch (mailError) {
+      console.error("Career application email error:", mailError);
+    }
 
     return NextResponse.json({
       success: true,
