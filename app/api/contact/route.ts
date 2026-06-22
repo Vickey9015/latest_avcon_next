@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
           { status: 400 },
         );
       }
-    } else if (!name || !email || !phone || !service || !message) {
+    } else if (!name || !email || !phone || !service) {
       return NextResponse.json(
         { error: "Please fill all required fields." },
         { status: 400 },
