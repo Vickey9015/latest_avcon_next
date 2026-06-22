@@ -42,6 +42,7 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
     ],
     closingText: "Whether it is a Greenfield or Brownfield project, we bring deep expertise, proven processes, and the right people to make it happen.",
     ctaLabel: "Discuss Your Project",
+    contactFormService: "Business and Technical Consultancy",
   },
   projectManagement: {
     title: "Project Management",
@@ -72,6 +73,7 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
       },
     ],
     closingText: "By optimizing resource allocation and adhering to global best practices, Avconexpo helps you achieve seamless execution and long-term success.",
+    contactFormService: "Project Management (Greenfield & Brownfields)",
   },
   architecture: {
     title: "Architecture & Designing",
@@ -111,6 +113,7 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
       ] },
     ],
     closingText: "From factory layouts and process-driven facilities to warehouses and utilities, Avconexpo ensures every design maximizes efficiency, safety, and sustainability.",
+    contactFormService: "Architecture & Design",
   },
   agro: {
     title: "Agro Value Chain",
@@ -130,6 +133,7 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
     ],
     closingText: "We build strong agro ecosystems through modern farming, horticulture, and allied ventures that create value while protecting communities and resources.",
     ctaLabel: "Start Your Agro Project",
+    contactFormService: "Hotel, clubs, resorts, Golf course, Horticulture & landscaping",
   },
   industrial: {
     title: "Industrial Revival & Growth",
@@ -161,6 +165,7 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
     ],
     closingTitle: "We don't just advise!",
     closingText: "We partner, we fix, and we stay till it works.",
+    contactFormService: "Reviving and Running the Sick industries",
   },
   startup: {
     title: "Startup Accelerator",
@@ -184,6 +189,7 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
     ],
     closingText: "From vision to venture, we support startups with structure, technical guidance, and market access to scale faster and sustainably.",
     ctaLabel: "Accelerate Your Startup",
+    contactFormService: "Startups",
   },
   waste: {
     title: "Waste Management",
@@ -211,6 +217,7 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
       },
     ],
     closingText: "Avconexpo provides advanced waste management solutions that save cost, ensure compliance, and protect the environment. ERT transforms yesterday's waste into today's energy, protecting communities while powering progress. With us, waste becomes an opportunity for growth.",
+    contactFormService: "Waste Management",
   },
   talent: {
     title: "Talent Management Services",
@@ -235,6 +242,7 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
     ],
     closingText: "Our Talent Management Services ensure that every project, plant, and organization has the right talent, with the right skills, in the right roles - creating businesses that are resilient, innovative, and ready for the future.",
     ctaLabel: "Get Talent Solutions",
+    contactFormService: "Talent Management",
   },
   supplyChain: {
     title: "Supply-Chain Management",
@@ -257,5 +265,6 @@ export const servicePages: Record<string, ServiceDetailTemplateProps> = {
     ],
     closingText: "Partner with Avconexpo for seamless Supply-Chain Management - from supplier discovery to delivery. Let us handle the complexity, so you can focus on growing your business.",
     ctaLabel: "Optimize Your Supply Chain",
+    contactFormService: "Trading and sourcing",
   },
 };

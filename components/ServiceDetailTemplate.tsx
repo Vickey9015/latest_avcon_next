@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import ContactForm from "@/components/ContactForm";
+import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
@@ -39,6 +41,7 @@ export type ServiceDetailTemplateProps = {
   closingTitle?: string;
   closingText?: string;
   ctaLabel?: string;
+  contactFormService?: string;
 };
 
 function CheckIcon() {
@@ -61,6 +64,7 @@ export default function ServiceDetailTemplate({
   closingTitle = "Serving Clients Worldwide",
   closingText,
   ctaLabel = "Start Your Project",
+  contactFormService,
 }: ServiceDetailTemplateProps) {
   return (
     <>
@@ -80,7 +84,7 @@ export default function ServiceDetailTemplate({
                 Home
               </Link>
               <span>/</span>
-              <Link href="/#services" className="transition-colors hover:text-white">
+              <Link href="/services" className="transition-colors hover:text-white">
                 Services
               </Link>
               <span>/</span>
@@ -215,26 +219,31 @@ export default function ServiceDetailTemplate({
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#f7f7f7] py-14 lg:py-16">
-        <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-[#f0571f]/10 blur-3xl" aria-hidden />
+      <section className="relative overflow-hidden bg-gradient-to-r from-[#f0571f] to-[#faa419] py-14 text-white lg:py-16">
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-extrabold md:text-4xl">{closingTitle}</h2>
+          {closingText ? <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-white/90">{closingText}</p> : null}
+        </div>
+      </section>
+
+      <section className="bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[26px] bg-gradient-to-r from-[#f0571f] to-[#faa419] px-6 py-7 text-center text-white shadow-xl">
-            <h2 className="text-3xl font-extrabold md:text-4xl">{closingTitle}</h2>
-            {closingText ? <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-white/90">{closingText}</p> : null}
-            <Link
-              href="/contact"
-              className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-bold text-[#f0571f] shadow-xl transition hover:-translate-y-0.5 hover:bg-gray-100"
-            >
-              {ctaLabel}
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-14">
+            <div>
+              <p className="mb-2 text-sm font-extrabold uppercase tracking-wide text-[#f0571f]">Get In Touch</p>
+              <h2 className="text-3xl font-extrabold text-[#1e3a5f] sm:text-4xl">{ctaLabel}</h2>
+              <p className="mt-5 text-base leading-7 text-[#555]">
+                Fill out the form and our team will respond with a tailored consultation for your {title.toLowerCase()}{" "}
+                requirements.
+              </p>
+            </div>
+            <ContactForm defaultService={contactFormService} />
           </div>
         </div>
       </section>
 
       <Footer />
+      <FloatingActions />
     </>
   );
 }

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import ContactForm from "@/components/ContactForm";
+import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
@@ -40,6 +42,10 @@ export default function BusinessTechnicalConsultingPhpPage() {
             <nav aria-label="Breadcrumb" className="mt-5 text-sm font-semibold text-white/85">
               <Link href="/" className="hover:text-white">
                 Home
+              </Link>{" "}
+              /{" "}
+              <Link href="/services" className="hover:text-white">
+                Services
               </Link>{" "}
               / <span className="text-white">Business & Technical Consultancy</span>
             </nav>
@@ -151,7 +157,31 @@ export default function BusinessTechnicalConsultingPhpPage() {
         </div>
       </section>
 
+      <section className="relative overflow-hidden bg-gradient-to-r from-[#f0571f] to-[#faa419] py-14 text-white lg:py-16">
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-extrabold md:text-4xl">Serving Clients Worldwide</h2>
+          <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-white/90">{page.closingText}</p>
+        </div>
+      </section>
+
+      <section className="bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-14">
+            <div>
+              <p className="mb-2 text-sm font-extrabold uppercase tracking-wide text-[#f0571f]">Get In Touch</p>
+              <h2 className="text-3xl font-extrabold text-[#1e3a5f] sm:text-4xl">{page.ctaLabel}</h2>
+              <p className="mt-5 text-base leading-7 text-[#555]">
+                Fill out the form and our team will respond with a tailored consultation for your business and technical
+                consultancy requirements.
+              </p>
+            </div>
+            <ContactForm defaultService={page.contactFormService} />
+          </div>
+        </div>
+      </section>
+
       <Footer />
+      <FloatingActions />
     </>
   );
 }

@@ -95,12 +95,14 @@ type ContactFormProps = {
   title?: string;
   subtitle?: string;
   className?: string;
+  defaultService?: string;
 };
 
 export default function ContactForm({
   title = "Contact Us",
   subtitle = "We'd love to hear from you! Please fill out the form below and our team will get back to you soon.",
   className = "",
+  defaultService = "",
 }: ContactFormProps) {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
@@ -272,7 +274,7 @@ export default function ContactForm({
                 />
               </svg>
             </FieldIcon>
-            <select id="service" name="service" required defaultValue="" className={selectClass}>
+            <select id="service" name="service" required defaultValue={defaultService} className={selectClass}>
               <option value="" disabled>
                 Select a service
               </option>

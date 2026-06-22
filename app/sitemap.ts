@@ -38,6 +38,8 @@ const countryLandingPaths = [
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = [
     "/",
+    "/services",
+    "/equipments-spares",
     "/privacy-policy",
     "/terms-and-conditions",
     "/business-technical-consulting",

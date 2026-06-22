@@ -217,6 +217,11 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
                 </button>
                 {servicesOpen ? (
                   <ul className="mt-1 max-h-48 space-y-0.5 overflow-y-auto border-l-2 border-orange-100 pl-3">
+                    <li>
+                      <Link href="/services" onClick={onClose} className={`${drawerLinkClass} text-[13px] font-extrabold text-[#f0571f]`}>
+                        All Services
+                      </Link>
+                    </li>
                     {servicesNavLinks.map((item) => (
                       <li key={item.href}>
                         <Link href={item.href} onClick={onClose} className={`${drawerLinkClass} text-[13px] font-medium`}>

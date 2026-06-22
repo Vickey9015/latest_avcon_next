@@ -52,6 +52,14 @@ export default function Navbar() {
                   <span className="text-white/70">+</span>
                 </button>
                 <ul className="invisible fixed left-1/2 top-[4.5rem] z-[1000] w-[340px] -translate-x-1/2 rounded-b-2xl border border-orange-100 bg-white py-2 opacity-0 shadow-2xl transition-all group-hover:visible group-hover:opacity-100">
+                  <li>
+                    <Link
+                      href="/services"
+                      className="block border-b border-orange-100 bg-orange-50/60 px-4 py-2.5 text-left text-sm font-extrabold text-[#f0571f] transition-colors hover:bg-gradient-to-r hover:from-[#f0571f] hover:to-[#faa419] hover:text-white"
+                    >
+                      All Services
+                    </Link>
+                  </li>
                   {servicesNavLinks.map((item) => (
                     <li key={item.label}>
                       <Link
