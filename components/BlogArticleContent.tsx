@@ -5,22 +5,34 @@ type BlogArticleContentProps = {
   tags?: string;
 };
 
+function looksLikeHtml(content: string) {
+  return /<[a-z][\s\S]*>/i.test(content.trim());
+}
+
 export default function BlogArticleContent({ content, tags }: BlogArticleContentProps) {
-  const paragraphs = content
+  const trimmed = content.trim();
+  const tagList = parseBlogTags(tags ?? "");
+
+  const paragraphs = trimmed
     .split(/\n{2,}/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);
 
-  const tagList = parseBlogTags(tags ?? "");
-
   return (
     <article className="space-y-8">
-      {paragraphs.length > 0 ? (
-        <div className="space-y-5 text-base leading-8 text-gray-700">
-          {paragraphs.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
-        </div>
+      {trimmed ? (
+        looksLikeHtml(trimmed) ? (
+          <div
+            className="blog-article-prose"
+            dangerouslySetInnerHTML={{ __html: trimmed }}
+          />
+        ) : (
+          <div className="space-y-5 text-base leading-8 text-gray-700">
+            {paragraphs.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+        )
       ) : (
         <p className="text-base leading-8 text-gray-600">Full article content will be available soon.</p>
       )}

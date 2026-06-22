@@ -32,11 +32,14 @@ export default function ContactSection() {
       </div>
 
       <div className="mx-auto -mt-10 max-w-7xl px-4 sm:-mt-16 sm:px-6 lg:px-8">
-        <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <ContactForm />
+        <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch">
+          <ContactForm className="h-full" />
 
-          <TiltOnScroll intensity={0.72} className="space-y-0 overflow-hidden rounded-[28px] bg-white shadow-2xl ring-1 ring-zinc-200">
-            <div className="relative h-72 bg-zinc-200 sm:h-80">
+          <TiltOnScroll
+            intensity={0.72}
+            className="flex h-full min-h-[28rem] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-zinc-200"
+          >
+            <div className="relative min-h-48 flex-1 bg-zinc-200">
               <Image
                 src="/slider3.jpg"
                 alt="AVCONEXPO contact"
@@ -45,7 +48,7 @@ export default function ContactSection() {
                 sizes="(max-width: 1024px) 100vw, 40vw"
               />
             </div>
-            <div className="bg-[#101827] p-6 text-white sm:p-8">
+            <div className="shrink-0 bg-[#101827] p-6 text-white sm:p-8">
               <h3 className="mb-5 text-2xl font-extrabold">Contact Info</h3>
               <address className="not-italic text-[#444]">
                 <p className="mb-4 font-medium text-white/90">

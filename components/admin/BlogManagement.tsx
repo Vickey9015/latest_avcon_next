@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import AdminPagination from "@/components/admin/AdminPagination";
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import RichTextEditor from "@/components/admin/RichTextEditor";
 import ScrollableCell from "@/components/admin/ScrollableCell";
 import { useAdminPagination } from "@/hooks/useAdminPagination";
 import type { Blog, BlogStatus } from "@/lib/blog-types";
@@ -366,7 +367,7 @@ export default function BlogManagement({ initialBlogs }: BlogManagementProps) {
 
       {showModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-white">
+          <div className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-xl bg-white">
             <div className="border-b border-gray-200 p-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-bold text-gray-800">
@@ -435,16 +436,17 @@ export default function BlogManagement({ initialBlogs }: BlogManagementProps) {
                     className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange-500 focus:ring-2 focus:ring-orange-500"
                   />
                 </label>
-                <label className="block sm:col-span-2">
+                <div className="sm:col-span-2">
                   <span className="mb-1 block text-sm font-medium text-gray-700">Full content</span>
-                  <textarea
-                    rows={10}
+                  <RichTextEditor
                     value={formData.content}
-                    onChange={(event) => setFormData({ ...formData, content: event.target.value })}
-                    placeholder="Write the full article. Use a blank line between paragraphs."
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 font-mono text-sm focus:border-orange-500 focus:ring-2 focus:ring-orange-500"
+                    onChange={(content) => setFormData({ ...formData, content })}
+                    placeholder="Write the full article. Use the toolbar for fonts, colors, headings, lists, and links."
                   />
-                </label>
+                  <p className="mt-2 text-xs text-gray-500">
+                    Use the formatting toolbar to change font style, color, alignment, headings, lists, and links.
+                  </p>
+                </div>
                 <label className="block sm:col-span-2">
                   <span className="mb-1 block text-sm font-medium text-gray-700">Tags</span>
                   <input

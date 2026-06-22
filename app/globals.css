@@ -231,3 +231,122 @@ input:disabled {
   animation-play-state: paused;
 }
 
+.rich-text-editor__content {
+  min-height: 15rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #374151;
+}
+
+.rich-text-editor__content:focus {
+  outline: none;
+}
+
+.rich-text-editor__content p.is-empty::before {
+  color: #9ca3af;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.rich-text-editor__content p,
+.blog-article-prose p {
+  margin: 0 0 1rem;
+}
+
+.rich-text-editor__content h2,
+.blog-article-prose h2 {
+  margin: 1.5rem 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.rich-text-editor__content h3,
+.blog-article-prose h3 {
+  margin: 1.25rem 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.rich-text-editor__content ul,
+.rich-text-editor__content ol,
+.blog-article-prose ul,
+.blog-article-prose ol {
+  margin: 0 0 1rem 1.25rem;
+  padding: 0;
+}
+
+.rich-text-editor__content li,
+.blog-article-prose li {
+  margin-bottom: 0.35rem;
+}
+
+.rich-text-editor__content a,
+.blog-article-prose a {
+  color: #f37021;
+  text-decoration: underline;
+}
+
+.blog-article-prose {
+  font-size: 1rem;
+  line-height: 2;
+  color: #374151;
+}
+
+.blog-article-prose blockquote {
+  margin: 1rem 0;
+  border-left: 4px solid #f37021;
+  padding-left: 1rem;
+  color: #4b5563;
+  font-style: italic;
+}
+
+.blog-article-prose pre,
+.blog-article-prose code {
+  font-family: "Courier New", Courier, monospace;
+}
+
+.blog-article-prose pre {
+  margin: 1rem 0;
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  background: #f3f4f6;
+  padding: 1rem;
+}
+
+.blog-article-prose table {
+  width: 100%;
+  margin: 1rem 0;
+  border-collapse: collapse;
+}
+
+.blog-article-prose th,
+.blog-article-prose td {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.blog-article-prose img,
+.blog-article-prose video,
+.blog-article-prose iframe {
+  max-width: 100%;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+}
+
+.rich-text-editor-jodit .jodit-container {
+  border: 0 !important;
+}
+
+.rich-text-editor-jodit .jodit-toolbar__box {
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.rich-text-editor-jodit .jodit-workplace {
+  min-height: 22rem;
+}
+
