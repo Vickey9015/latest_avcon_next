@@ -1,5 +1,4 @@
 import "server-only";
-import nodemailer from "nodemailer";
 
 type MailAttachment = {
   filename: string;
@@ -7,27 +6,24 @@ type MailAttachment = {
   contentType?: string;
 };
 
-function getSmtpConfig() {
-  const host = process.env.SMTP_HOST || "smtp.office365.com";
-  const port = Number(process.env.SMTP_PORT || 587);
-  const user = process.env.SMTP_USER || "solutions@avconexpo.com";
-  const pass = process.env.SMTP_PASS || "174498241004oh";
+type GraphTokenCache = {
+  token: string;
+  expiresAt: number;
+};
 
-  if (!user || !pass) {
-    throw new Error("SMTP credentials are not configured.");
+let graphTokenCache: GraphTokenCache | null = null;
+
+function getGraphConfig() {
+  const tenantId = process.env.AZURE_TENANT_ID;
+  const clientId = process.env.AZURE_CLIENT_ID;
+  const clientSecret = process.env.AZURE_CLIENT_SECRET;
+  const mailUser = process.env.GRAPH_MAIL_USER || process.env.MAIL_FROM || "solutions@avconexpo.com";
+
+  if (!tenantId || !clientId || !clientSecret) {
+    throw new Error("Microsoft Graph credentials are not configured.");
   }
 
-  return {
-    host,
-    port,
-    secure: port === 465,
-    requireTLS: port === 587,
-    auth: { user, pass },
-  };
-}
-
-function getMailFrom() {
-  return process.env.MAIL_FROM || process.env.SMTP_USER || "solutions@avconexpo.com";
+  return { tenantId, clientId, clientSecret, mailUser };
 }
 
 function getMailTo() {
@@ -36,6 +32,44 @@ function getMailTo() {
   }
 
   return process.env.MAIL_TO || "solutions@avconexpo.com";
+}
+
+async function getGraphAccessToken(): Promise<string> {
+  const now = Date.now();
+  if (graphTokenCache && graphTokenCache.expiresAt > now + 60_000) {
+    return graphTokenCache.token;
+  }
+
+  const { tenantId, clientId, clientSecret } = getGraphConfig();
+
+  const response = await fetch(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      scope: "https://graph.microsoft.com/.default",
+      grant_type: "client_credentials",
+    }),
+  });
+
+  const data = (await response.json()) as {
+    access_token?: string;
+    expires_in?: number;
+    error?: string;
+    error_description?: string;
+  };
+
+  if (!response.ok || !data.access_token) {
+    throw new Error(data.error_description || data.error || "Failed to obtain Microsoft Graph access token.");
+  }
+
+  graphTokenCache = {
+    token: data.access_token,
+    expiresAt: now + (data.expires_in ?? 3600) * 1000,
+  };
+
+  return graphTokenCache.token;
 }
 
 function escapeHtml(value: string) {
@@ -58,21 +92,50 @@ async function sendMail(options: {
   replyTo?: string;
   attachments?: MailAttachment[];
 }) {
-  const transporter = nodemailer.createTransport(getSmtpConfig());
+  const { mailUser } = getGraphConfig();
+  const token = await getGraphAccessToken();
 
-  await transporter.sendMail({
-    from: getMailFrom(),
-    to: getMailTo(),
-    replyTo: options.replyTo,
+  const message: Record<string, unknown> = {
     subject: options.subject,
-    html: options.html,
-    text: options.text,
-    attachments: options.attachments?.map((attachment) => ({
-      filename: attachment.filename,
-      content: attachment.content,
-      contentType: attachment.contentType,
-    })),
-  });
+    body: {
+      contentType: "HTML",
+      content: options.html,
+    },
+    toRecipients: [{ emailAddress: { address: getMailTo() } }],
+  };
+
+  if (options.replyTo) {
+    message.replyTo = [{ emailAddress: { address: options.replyTo } }];
+  }
+
+  if (options.attachments?.length) {
+    message.attachments = options.attachments.map((attachment) => ({
+      "@odata.type": "#microsoft.graph.fileAttachment",
+      name: attachment.filename,
+      contentType: attachment.contentType || "application/octet-stream",
+      contentBytes: attachment.content.toString("base64"),
+    }));
+  }
+
+  const response = await fetch(
+    `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(mailUser)}/sendMail`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message,
+        saveToSentItems: true,
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    throw new Error(`Graph sendMail failed (${response.status}): ${errorBody}`);
+  }
 }
 
 export type ContactEmailPayload = {
@@ -218,5 +281,5 @@ export async function sendCareerApplicationEmail(payload: CareerEmailPayload) {
     });
   }
 
-  await sendMail({ subject, html, text, attachments });
+  await sendMail({ subject, html, text, replyTo: payload.email, attachments });
 }
