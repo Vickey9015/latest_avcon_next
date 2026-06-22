@@ -8,10 +8,10 @@ type MailAttachment = {
 };
 
 function getSmtpConfig() {
-  const host = process.env.SMTP_HOST || "smtp.hostinger.com";
-  const port = Number(process.env.SMTP_PORT || 465);
-  const user = process.env.SMTP_USER || "";
-  const pass = process.env.SMTP_PASS || "";
+  const host = process.env.SMTP_HOST || "smtp.office365.com";
+  const port = Number(process.env.SMTP_PORT || 587);
+  const user = process.env.SMTP_USER || "solutions@avconexpo.com";
+  const pass = process.env.SMTP_PASS || "174498241004oh";
 
   if (!user || !pass) {
     throw new Error("SMTP credentials are not configured.");
@@ -21,12 +21,13 @@ function getSmtpConfig() {
     host,
     port,
     secure: port === 465,
+    requireTLS: port === 587,
     auth: { user, pass },
   };
 }
 
 function getMailFrom() {
-  return process.env.MAIL_FROM || process.env.SMTP_USER || "contact@pglinker.com";
+  return process.env.MAIL_FROM || process.env.SMTP_USER || "solutions@avconexpo.com";
 }
 
 function getMailTo() {
