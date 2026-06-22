@@ -6,6 +6,7 @@ import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ServicesConsultationForm from "@/components/ServicesConsultationForm";
+import ServicesIndustriesSection from "@/components/ServicesIndustriesSection";
 import TopBar from "@/components/TopBar";
 import {
   servicesCatalog,
@@ -198,6 +199,8 @@ export default function ServicesPage() {
           </p>
         </div>
       </section>
+
+      <ServicesIndustriesSection />
 
       <section className="bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
