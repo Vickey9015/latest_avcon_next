@@ -27,10 +27,6 @@ function getGraphConfig() {
 }
 
 function getMailTo() {
-  if (process.env.MAIL_TEST_MODE === "true") {
-    return process.env.MAIL_TEST_TO || "lucky.vickey126@gmail.com";
-  }
-
   return process.env.MAIL_TO || "solutions@avconexpo.com";
 }
 
