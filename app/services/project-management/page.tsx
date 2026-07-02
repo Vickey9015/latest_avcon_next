@@ -13,5 +13,5 @@ export function generateMetadata() {
 }
 
 export default function ProjectManagementPage() {
-  return <ServiceDetailTemplate {...servicePages.projectManagement} />;
+  return <ServiceDetailTemplate {...servicePages.projectManagement} pathname="/services/project-management" />;
 }

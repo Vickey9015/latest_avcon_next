@@ -4,7 +4,9 @@ import { SITE } from "@/lib/site";
 
 export function toAbsoluteUrl(url: string): string {
   if (!url) return SITE;
-  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return url.replace(/^https?:\/\/www\./i, (match) => match.replace("www.", ""));
+  }
   // Treat as app-relative path
   if (url.startsWith("/")) return `${SITE}${url}`;
   return `${SITE}/${url}`;

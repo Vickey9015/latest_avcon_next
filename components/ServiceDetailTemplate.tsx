@@ -3,8 +3,13 @@ import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import Navbar from "@/components/Navbar";
+import PageFaqSection from "@/components/PageFaqSection";
 import TopBar from "@/components/TopBar";
+import type { FaqItem } from "@/lib/faq-types";
+import { getServiceFaqs } from "@/lib/service-faqs";
+import { buildFaqSchema, buildWebPageSchema } from "@/lib/structured-data";
 
 type DetailBlock = {
   title: string;
@@ -42,6 +47,11 @@ export type ServiceDetailTemplateProps = {
   closingText?: string;
   ctaLabel?: string;
   contactFormService?: string;
+  faqs?: FaqItem[];
+};
+
+export type ServiceDetailPageProps = ServiceDetailTemplateProps & {
+  pathname: string;
 };
 
 function CheckIcon() {
@@ -65,9 +75,23 @@ export default function ServiceDetailTemplate({
   closingText,
   ctaLabel = "Start Your Project",
   contactFormService,
-}: ServiceDetailTemplateProps) {
+  pathname,
+  faqs,
+}: ServiceDetailPageProps) {
+  const pageFaqs = faqs?.length ? faqs : getServiceFaqs(pathname);
+  const pageDescription = subtitle;
+  const webpageSchema = buildWebPageSchema({
+    pathname,
+    name: `${title} | AVCONEXPO`,
+    description: pageDescription,
+    imageUrl: image,
+  });
+  const faqSchema = buildFaqSchema(pageFaqs);
+
   return (
     <>
+      <JsonLd data={webpageSchema} />
+      {faqSchema ? <JsonLd data={faqSchema} /> : null}
       <TopBar />
       <div className="relative">
         <section className="relative min-h-[62vh] overflow-hidden">
@@ -218,6 +242,8 @@ export default function ServiceDetailTemplate({
           </div>
         </div>
       </section>
+
+      <PageFaqSection items={pageFaqs} className="bg-white py-14 sm:py-16" />
 
       <section className="relative overflow-hidden bg-gradient-to-r from-[#f0571f] to-[#faa419] py-14 text-white lg:py-16">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">

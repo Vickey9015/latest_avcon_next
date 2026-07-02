@@ -3,11 +3,14 @@
 import { useMemo, useState } from "react";
 import AdminPagination from "@/components/admin/AdminPagination";
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import FaqEditor from "@/components/admin/FaqEditor";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import ScrollableCell from "@/components/admin/ScrollableCell";
 import { useAdminPagination } from "@/hooks/useAdminPagination";
 import type { Blog, BlogStatus } from "@/lib/blog-types";
 import { blogHref, formatBlogDate } from "@/lib/blog-types";
+import type { FaqItem } from "@/lib/faq-types";
+import { parseFaqItems } from "@/lib/faq-types";
 
 type BlogManagementProps = {
   initialBlogs: Blog[];
@@ -26,6 +29,7 @@ type FormState = {
   status: BlogStatus;
   publishDate: string;
   order: string;
+  faqs: FaqItem[];
 };
 
 const emptyForm = (order: number): FormState => ({
@@ -41,6 +45,7 @@ const emptyForm = (order: number): FormState => ({
   status: "Draft",
   publishDate: new Date().toISOString().slice(0, 10),
   order: String(order),
+  faqs: [],
 });
 
 function slugify(title: string) {
@@ -65,6 +70,7 @@ function toFormState(blog: Blog): FormState {
     status: blog.status,
     publishDate: blog.publishDate,
     order: String(blog.order),
+    faqs: blog.faqs,
   };
 }
 
@@ -173,6 +179,7 @@ export default function BlogManagement({ initialBlogs }: BlogManagementProps) {
       status: formData.status,
       publishDate: formData.publishDate,
       order: Number(formData.order),
+      faqs: parseFaqItems(formData.faqs),
     };
 
     try {
@@ -446,6 +453,12 @@ export default function BlogManagement({ initialBlogs }: BlogManagementProps) {
                   <p className="mt-2 text-xs text-gray-500">
                     Use the formatting toolbar to change font style, color, alignment, headings, lists, and links.
                   </p>
+                </div>
+                <div className="sm:col-span-2">
+                  <FaqEditor
+                    value={formData.faqs}
+                    onChange={(faqs) => setFormData({ ...formData, faqs })}
+                  />
                 </div>
                 <label className="block sm:col-span-2">
                   <span className="mb-1 block text-sm font-medium text-gray-700">Tags</span>

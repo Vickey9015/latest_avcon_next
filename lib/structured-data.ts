@@ -1,4 +1,5 @@
 import { SITE } from "@/lib/site";
+import type { FaqItem } from "@/lib/faq-types";
 
 const LOGO_URL = `${SITE}/brand-logo.png`;
 const HOME_BANNER_URL = `${SITE}/slider2.jpg`;
@@ -219,3 +220,105 @@ export const faqSchema = {
     },
   })),
 };
+
+type WebPageSchemaParams = {
+  pathname: string;
+  name: string;
+  description: string;
+  imageUrl?: string;
+  datePublished?: string;
+  dateModified?: string;
+};
+
+export function buildWebPageSchema(params: WebPageSchemaParams) {
+  const url = `${SITE}${params.pathname.startsWith("/") ? params.pathname : `/${params.pathname}`}`;
+  const image = params.imageUrl?.startsWith("http")
+    ? params.imageUrl.replace(/^https?:\/\/www\./i, (match) => match.replace("www.", ""))
+    : `${SITE}${params.imageUrl || "/favicon.png"}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    url,
+    name: params.name,
+    description: params.description,
+    inLanguage: "en",
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${SITE}/#website`,
+      name: "AVCONEXPO",
+      url: SITE,
+    },
+    about: {
+      "@id": `${SITE}/#organization`,
+    },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: image,
+    },
+    datePublished: params.datePublished || "2016-01-01",
+    dateModified: params.dateModified || new Date().toISOString().slice(0, 10),
+    publisher: {
+      "@id": `${SITE}/#organization`,
+    },
+  };
+}
+
+export function buildFaqSchema(items: FaqItem[]) {
+  if (!items.length) {
+    return null;
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
+
+type BlogPostingSchemaParams = {
+  pathname: string;
+  headline: string;
+  description: string;
+  imageUrl: string;
+  author: string;
+  datePublished: string;
+  dateModified?: string;
+};
+
+export function buildBlogPostingSchema(params: BlogPostingSchemaParams) {
+  const url = `${SITE}${params.pathname.startsWith("/") ? params.pathname : `/${params.pathname}`}`;
+  const image = params.imageUrl.startsWith("http")
+    ? params.imageUrl.replace(/^https?:\/\/www\./i, (match) => match.replace("www.", ""))
+    : `${SITE}${params.imageUrl}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    headline: params.headline,
+    description: params.description,
+    image,
+    url,
+    datePublished: params.datePublished,
+    dateModified: params.dateModified || params.datePublished,
+    author: {
+      "@type": "Person",
+      name: params.author || "AVCONEXPO Team",
+    },
+    publisher: {
+      "@id": `${SITE}/#organization`,
+    },
+    mainEntityOfPage: {
+      "@id": `${url}#webpage`,
+    },
+  };
+}

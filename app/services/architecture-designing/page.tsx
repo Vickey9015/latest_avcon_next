@@ -13,5 +13,5 @@ export function generateMetadata() {
 }
 
 export default function ArchitectureDesigningPage() {
-  return <ServiceDetailTemplate {...servicePages.architecture} />;
+  return <ServiceDetailTemplate {...servicePages.architecture} pathname="/services/architecture-designing" />;
 }

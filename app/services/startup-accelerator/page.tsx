@@ -13,5 +13,5 @@ export function generateMetadata() {
 }
 
 export default function StartupAcceleratorPage() {
-  return <ServiceDetailTemplate {...servicePages.startup} />;
+  return <ServiceDetailTemplate {...servicePages.startup} pathname="/services/startup-accelerator" />;
 }

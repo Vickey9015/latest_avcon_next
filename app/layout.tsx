@@ -13,7 +13,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.avconexpo.com"),
+  metadataBase: new URL("https://avconexpo.com"),
   alternates: {
     languages: {
       "x-default": "/",

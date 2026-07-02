@@ -143,7 +143,7 @@ export default function ServicesPage() {
                     href={service.href}
                     className="inline-flex w-fit items-center justify-center rounded-md bg-gradient-to-r from-[#f0571f] to-[#faa419] px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-white shadow transition hover:brightness-105"
                   >
-                    Get a Quote Now!
+                    Know More!
                   </Link>
                 </div>
               </article>

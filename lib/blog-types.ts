@@ -1,3 +1,5 @@
+import type { FaqItem } from "@/lib/faq-types";
+
 export type BlogStatus = "Published" | "Draft";
 
 export interface Blog {
@@ -14,6 +16,7 @@ export interface Blog {
   status: BlogStatus;
   publishDate: string;
   order: number;
+  faqs: FaqItem[];
 }
 
 export interface BlogInput {
@@ -29,6 +32,7 @@ export interface BlogInput {
   status: BlogStatus;
   publishDate: string;
   order: number;
+  faqs: FaqItem[];
 }
 
 export function formatBlogDate(value: string | Date): string {

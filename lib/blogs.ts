@@ -2,6 +2,7 @@ import "server-only";
 
 import type { Blog, BlogInput, BlogStatus } from "@/lib/blog-types";
 import { blogHref } from "@/lib/blog-types";
+import { deserializeFaqItems, parseFaqItems, serializeFaqItems } from "@/lib/faq-types";
 import { execute, query } from "@/lib/db";
 import { acquireSeedLock, parseCount } from "@/lib/seed-lock";
 
@@ -18,6 +19,7 @@ interface BlogRow {
   excerpt: string | null;
   content: string | null;
   tags: string | null;
+  faqs: string | null;
   link_url: string;
   status: BlogStatus;
   publish_date: Date | string;
@@ -27,7 +29,7 @@ interface BlogRow {
 }
 
 const BLOG_SELECT = `
-  id, title, image, author, category, slug, excerpt, content, tags,
+  id, title, image, author, category, slug, excerpt, content, tags, faqs,
   link_url, status, publish_date, sort_order, created_at, updated_at
 `;
 
@@ -56,6 +58,7 @@ const DEFAULT_BLOGS: BlogInput[] = [
     status: "Published",
     publishDate: "2026-01-19",
     order: 1,
+    faqs: [],
   },
   {
     title: "Business Technical Consultants in Kenya—Why Avconexpo Is Your Growth Partner",
@@ -70,6 +73,7 @@ const DEFAULT_BLOGS: BlogInput[] = [
     status: "Published",
     publishDate: "2025-05-29",
     order: 2,
+    faqs: [],
   },
   {
     title: "Industrial Plant Setup & Consultancy in Africa | Avconexpo",
@@ -84,6 +88,7 @@ const DEFAULT_BLOGS: BlogInput[] = [
     status: "Published",
     publishDate: "2025-05-21",
     order: 3,
+    faqs: [],
   },
   {
     title: "Industrial Trends 2024",
@@ -98,6 +103,7 @@ const DEFAULT_BLOGS: BlogInput[] = [
     status: "Published",
     publishDate: "2024-01-15",
     order: 4,
+    faqs: [],
   },
   {
     title: "Future of Industry 4.0",
@@ -112,6 +118,7 @@ const DEFAULT_BLOGS: BlogInput[] = [
     status: "Draft",
     publishDate: "2024-01-01",
     order: 5,
+    faqs: [],
   },
 ];
 
@@ -148,6 +155,7 @@ function mapBlog(row: BlogRow): Blog {
     status: row.status,
     publishDate: toDateString(row.publish_date),
     order: row.sort_order,
+    faqs: deserializeFaqItems(row.faqs),
   };
 }
 
@@ -187,6 +195,7 @@ export async function ensureBlogsTable() {
   await addBlogColumn("ALTER TABLE blogs ADD COLUMN excerpt TEXT NULL");
   await addBlogColumn("ALTER TABLE blogs ADD COLUMN content LONGTEXT NULL");
   await addBlogColumn("ALTER TABLE blogs ADD COLUMN tags VARCHAR(500) NOT NULL DEFAULT ''");
+  await addBlogColumn("ALTER TABLE blogs ADD COLUMN faqs JSON NULL");
 
   await execute(
     `UPDATE blogs SET excerpt = ? WHERE excerpt IS NULL OR TRIM(excerpt) = ''`,
@@ -226,8 +235,8 @@ async function seedDefaultBlogs() {
   for (const blog of DEFAULT_BLOGS) {
     await execute(
       `INSERT INTO blogs
-        (title, image, author, category, slug, excerpt, content, tags, link_url, status, publish_date, sort_order)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        (title, image, author, category, slug, excerpt, content, tags, faqs, link_url, status, publish_date, sort_order)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         blog.title,
         blog.image,
@@ -237,6 +246,7 @@ async function seedDefaultBlogs() {
         blog.excerpt,
         blog.content,
         blog.tags,
+        serializeFaqItems(blog.faqs),
         blog.linkUrl,
         blog.status,
         blog.publishDate,
@@ -311,8 +321,8 @@ export async function createBlog(input: BlogInput): Promise<number> {
 
   const result = await execute(
     `INSERT INTO blogs
-      (title, image, author, category, slug, excerpt, content, tags, link_url, status, publish_date, sort_order)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (title, image, author, category, slug, excerpt, content, tags, faqs, link_url, status, publish_date, sort_order)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       input.title,
       input.image,
@@ -322,6 +332,7 @@ export async function createBlog(input: BlogInput): Promise<number> {
       input.excerpt,
       input.content,
       input.tags,
+      serializeFaqItems(input.faqs),
       input.linkUrl,
       input.status,
       input.publishDate,
@@ -337,7 +348,7 @@ export async function updateBlog(id: number, input: BlogInput): Promise<boolean>
 
   const result = await execute(
     `UPDATE blogs
-     SET title = ?, image = ?, author = ?, category = ?, slug = ?, excerpt = ?, content = ?, tags = ?,
+     SET title = ?, image = ?, author = ?, category = ?, slug = ?, excerpt = ?, content = ?, tags = ?, faqs = ?,
          link_url = ?, status = ?, publish_date = ?, sort_order = ?
      WHERE id = ?`,
     [
@@ -349,6 +360,7 @@ export async function updateBlog(id: number, input: BlogInput): Promise<boolean>
       input.excerpt,
       input.content,
       input.tags,
+      serializeFaqItems(input.faqs),
       input.linkUrl,
       input.status,
       input.publishDate,
@@ -401,6 +413,8 @@ export function normalizeBlogInput(body: Record<string, unknown>): BlogInput | n
     return null;
   }
 
+  const faqs = parseFaqItems(body.faqs);
+
   return {
     title,
     image,
@@ -414,5 +428,6 @@ export function normalizeBlogInput(body: Record<string, unknown>): BlogInput | n
     status,
     publishDate,
     order: Math.floor(order),
+    faqs,
   };
 }

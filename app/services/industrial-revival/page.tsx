@@ -13,5 +13,5 @@ export function generateMetadata() {
 }
 
 export default function IndustrialRevivalPage() {
-  return <ServiceDetailTemplate {...servicePages.industrial} />;
+  return <ServiceDetailTemplate {...servicePages.industrial} pathname="/services/industrial-revival" />;
 }

@@ -13,6 +13,13 @@ const publicPaths = ['/admin', '/api/auth/login', '/api/auth/logout'];
 const publicPrefixes = ['/_next/', '/static/', '/api/', '/brand-logo.png', '/favicon.ico'];
 
 export async function proxy(request: NextRequest) {
+  const host = request.headers.get("host") ?? "";
+  if (host.startsWith("www.")) {
+    const url = request.nextUrl.clone();
+    url.host = host.slice(4);
+    return NextResponse.redirect(url, 301);
+  }
+
   const { pathname } = request.nextUrl;
 
   // Check if path is public
@@ -51,7 +58,6 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/admin/:path*',
-    '/api/admin/:path*',
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|pdf)$).*)",
   ],
 };

@@ -3,5 +3,5 @@ Disallow:
 Crawl-delay: 10
 Disallow: /cgi-bin/
 Disallow: /admin/
-Sitemap: https://www.avconexpo.com/sitemap.xml
-LLMs.txt file: https://www.avconexpo.com/llms.txt
+Sitemap: https://avconexpo.com/sitemap.xml
+LLMs.txt file: https://avconexpo.com/llms.txt

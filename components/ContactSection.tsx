@@ -1,8 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import { TiltOnScroll } from "@/components/motion";
+
+const contactHighlights = [
+  "25+ countries served across Africa, GCC, and India",
+  "End-to-end engineering, EPC, and industrial consultancy",
+  "Dedicated experts for greenfield and brownfield projects",
+];
 
 export default function ContactSection() {
   return (
@@ -10,7 +17,7 @@ export default function ContactSection() {
       <div className="relative overflow-hidden bg-[#101827] py-16 text-white sm:py-20 lg:py-24">
         <Image src="/slider4.jpg" alt="" fill className="object-cover opacity-30" sizes="100vw" />
         <div className="absolute inset-0 bg-[#101827]/80" aria-hidden />
-        <div className="relative mx-auto grid max-w-7xl gap-6 px-4 py-12 sm:gap-8 sm:px-6 sm:py-16 lg:grid-cols-[1.1fr_0.9fr] lg:px-8 lg:py-24">
+        <div className="relative mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8 lg:py-20">
           <div>
             <p className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15">
@@ -23,11 +30,49 @@ export default function ContactSection() {
             <h2 id="contact-heading" className="text-3xl font-extrabold sm:text-4xl">
               Feel Free To Contact Us
             </h2>
+            <p className="mt-5 max-w-xl text-base leading-7 text-white/85">
+              Looking for expert engineering solutions? AVCONEXPO delivers excellence with innovative technology and
+              unmatched expertise. Let&apos;s build something great together.
+            </p>
+            <ul className="mt-6 space-y-3">
+              {contactHighlights.map((item) => (
+                <li key={item} className="flex items-start gap-3 text-sm font-medium text-white/90">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f0571f] text-white">
+                    <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <Link
+              href="/services"
+              className="mt-8 inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-[#f0571f] to-[#faa419] px-6 py-3 text-sm font-extrabold text-white shadow-lg transition hover:brightness-105"
+            >
+              Explore Our Services
+            </Link>
           </div>
-          <p className="max-w-xl text-base leading-7 text-white/80 lg:pt-10">
-            Looking for expert engineering solutions? AVCONEXPO delivers excellence with innovative
-            technology and unmatched expertise. Let&apos;s build something great together!
-          </p>
+
+          <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-sm">
+            <div className="relative aspect-[16/11] min-h-[240px]">
+              <Image
+                src="/contact_img.jpg"
+                alt="AVCONEXPO industrial engineering team"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 45vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#101827] via-[#101827]/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
+                <p className="text-sm font-bold uppercase tracking-wide text-[#faa419]">Serving Clients Worldwide</p>
+                <p className="mt-2 text-lg font-extrabold text-white">Talk to our consultants today</p>
+                <p className="mt-2 text-sm leading-6 text-white/80">
+                  From feasibility to execution, we help industries plan, build, and scale with confidence.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

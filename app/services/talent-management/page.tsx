@@ -13,5 +13,5 @@ export function generateMetadata() {
 }
 
 export default function TalentManagementPage() {
-  return <ServiceDetailTemplate {...servicePages.talent} />;
+  return <ServiceDetailTemplate {...servicePages.talent} pathname="/services/talent-management" />;
 }

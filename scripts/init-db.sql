@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS blogs (
   excerpt TEXT NULL,
   content LONGTEXT NULL,
   tags VARCHAR(500) NOT NULL DEFAULT '',
+  faqs JSON NULL,
   link_url VARCHAR(500) NOT NULL DEFAULT '#',
   status ENUM('Published', 'Draft') DEFAULT 'Draft',
   publish_date DATE NOT NULL,

@@ -13,5 +13,5 @@ export function generateMetadata() {
 }
 
 export default function AgroValueChainPage() {
-  return <ServiceDetailTemplate {...servicePages.agro} />;
+  return <ServiceDetailTemplate {...servicePages.agro} pathname="/services/agro-value-chain" />;
 }

@@ -13,5 +13,5 @@ export function generateMetadata() {
 }
 
 export default function SupplyChainPage() {
-  return <ServiceDetailTemplate {...servicePages.supplyChain} />;
+  return <ServiceDetailTemplate {...servicePages.supplyChain} pathname="/services/supply-chain" />;
 }

@@ -3,11 +3,17 @@ import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import Navbar from "@/components/Navbar";
+import PageFaqSection from "@/components/PageFaqSection";
 import TopBar from "@/components/TopBar";
+import { getServiceFaqs } from "@/lib/service-faqs";
 import { servicePages } from "@/lib/service-pages";
+import { buildFaqSchema, buildWebPageSchema } from "@/lib/structured-data";
 
 const page = servicePages.businessTechnical;
+const pathname = "/services/business-technical-consulting";
+const pageFaqs = getServiceFaqs(pathname);
 const processBlocks = page.sections[0]?.blocks ?? [];
 const integrationBlocks = page.sections[1]?.blocks ?? [];
 
@@ -20,8 +26,18 @@ function CheckIcon() {
 }
 
 export default function BusinessTechnicalConsultingPhpPage() {
+  const webpageSchema = buildWebPageSchema({
+    pathname,
+    name: `${page.title} | AVCONEXPO`,
+    description: page.subtitle,
+    imageUrl: page.image,
+  });
+  const faqSchema = buildFaqSchema(pageFaqs);
+
   return (
     <>
+      <JsonLd data={webpageSchema} />
+      {faqSchema ? <JsonLd data={faqSchema} /> : null}
       <TopBar />
       <div className="relative">
         <section className="relative min-h-[62vh] overflow-hidden">
@@ -156,6 +172,8 @@ export default function BusinessTechnicalConsultingPhpPage() {
           </div>
         </div>
       </section>
+
+      <PageFaqSection items={pageFaqs} className="bg-white py-14 sm:py-16" />
 
       <section className="relative overflow-hidden bg-gradient-to-r from-[#f0571f] to-[#faa419] py-14 text-white lg:py-16">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">

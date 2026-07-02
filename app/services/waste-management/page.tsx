@@ -13,5 +13,5 @@ export function generateMetadata() {
 }
 
 export default function WasteManagementPage() {
-  return <ServiceDetailTemplate {...servicePages.waste} />;
+  return <ServiceDetailTemplate {...servicePages.waste} pathname="/services/waste-management" />;
 }
