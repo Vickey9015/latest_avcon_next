@@ -19,7 +19,7 @@ export default function BlogArticleContent({ content, tags }: BlogArticleContent
     .filter(Boolean);
 
   return (
-    <article className="space-y-8">
+    <article className="space-y-8" data-no-reveal>
       {trimmed ? (
         looksLikeHtml(trimmed) ? (
           <div

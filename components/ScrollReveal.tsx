@@ -5,7 +5,9 @@ import { useEffect } from "react";
 export default function ScrollReveal() {
   useEffect(() => {
     const elements = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-reveal], article")
+      document.querySelectorAll<HTMLElement>(
+        "[data-reveal], article:not([data-no-reveal])"
+      )
     );
 
     if (!elements.length) return;
@@ -19,7 +21,7 @@ export default function ScrollReveal() {
           }
         }
       },
-      { threshold: 0.14, rootMargin: "0px 0px -6% 0px" }
+      { threshold: 0.05, rootMargin: "0px 0px -4% 0px" }
     );
 
     const groups = new Map<HTMLElement, HTMLElement[]>();
