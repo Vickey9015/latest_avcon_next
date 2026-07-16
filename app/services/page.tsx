@@ -230,6 +230,25 @@ export default function ServicesPage() {
                   </li>
                 ))}
               </ul>
+              <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-100 bg-zinc-50">
+                <div className="relative aspect-[16/10]">
+                  <Image
+                    src="/contact_img.jpg"
+                    alt="AVCONEXPO industrial consulting team"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority={false}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/70 via-zinc-900/15 to-transparent" aria-hidden />
+                </div>
+                <div className="p-5">
+                  <p className="text-sm font-bold uppercase tracking-wide text-[#f0571f]">
+                    Serving Clients Worldwide
+                  </p>
+                  <p className="mt-2 text-base font-extrabold text-[#1e3a5f]">Talk to our consultants today</p>
+                </div>
+              </div>
             </div>
             <ContactForm />
           </div>
