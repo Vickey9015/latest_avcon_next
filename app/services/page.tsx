@@ -204,8 +204,8 @@ export default function ServicesPage() {
 
       <section className="bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-14">
-            <div>
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-14">
+            <div className="flex h-full flex-col">
               <p className="mb-2 text-sm font-extrabold uppercase tracking-wide text-[#f0571f]">Contact Us</p>
               <h2 className="text-3xl font-extrabold text-[#1e3a5f] sm:text-4xl">
                 Ready to Start Your Next Industrial Project?
@@ -230,8 +230,8 @@ export default function ServicesPage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-100 bg-zinc-50">
-                <div className="relative aspect-[16/10]">
+              <div className="mt-8 flex min-h-[16rem] flex-1 flex-col overflow-hidden rounded-2xl border border-zinc-100 bg-zinc-50">
+                <div className="relative min-h-[12rem] flex-1">
                   <Image
                     src="/contact_img.jpg"
                     alt="AVCONEXPO industrial consulting team"
@@ -242,7 +242,7 @@ export default function ServicesPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/70 via-zinc-900/15 to-transparent" aria-hidden />
                 </div>
-                <div className="p-5">
+                <div className="shrink-0 p-5">
                   <p className="text-sm font-bold uppercase tracking-wide text-[#f0571f]">
                     Serving Clients Worldwide
                   </p>
@@ -250,7 +250,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </div>
-            <ContactForm />
+            <ContactForm className="h-full" />
           </div>
         </div>
       </section>

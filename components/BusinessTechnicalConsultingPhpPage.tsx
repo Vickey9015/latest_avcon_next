@@ -184,16 +184,48 @@ export default function BusinessTechnicalConsultingPhpPage() {
 
       <section className="bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-14">
-            <div>
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-14">
+            <div className="flex h-full flex-col">
               <p className="mb-2 text-sm font-extrabold uppercase tracking-wide text-[#f0571f]">Get In Touch</p>
               <h2 className="text-3xl font-extrabold text-[#1e3a5f] sm:text-4xl">{page.ctaLabel}</h2>
               <p className="mt-5 text-base leading-7 text-[#555]">
                 Fill out the form and our team will respond with a tailored consultation for your business and technical
                 consultancy requirements.
               </p>
+              <ul className="mt-6 space-y-3">
+                {[
+                  "Free initial consultation for qualified projects",
+                  "Dedicated experts across engineering and operations",
+                  "Support across Africa, GCC, India, and beyond",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm font-medium text-[#444]">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f0571f] text-white">
+                      <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 flex min-h-[16rem] flex-1 flex-col overflow-hidden rounded-2xl border border-zinc-100 bg-zinc-50">
+                <div className="relative min-h-[12rem] flex-1">
+                  <Image
+                    src="/contact_img.jpg"
+                    alt="AVCONEXPO business and technical consultancy team"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/70 via-zinc-900/15 to-transparent" aria-hidden />
+                </div>
+                <div className="shrink-0 p-5">
+                  <p className="text-sm font-bold uppercase tracking-wide text-[#f0571f]">Serving Clients Worldwide</p>
+                  <p className="mt-2 text-base font-extrabold text-[#1e3a5f]">Talk to our consultants today</p>
+                </div>
+              </div>
             </div>
-            <ContactForm defaultService={page.contactFormService} />
+            <ContactForm className="h-full" defaultService={page.contactFormService} />
           </div>
         </div>
       </section>
