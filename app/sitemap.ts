@@ -10,31 +10,6 @@ function toAbsoluteUrl(pathname: string): string {
   return `${SITE}${pathname}`;
 }
 
-const countryLandingPaths = [
-  "/egypt/",
-  "/kenya/",
-  "/niger/",
-  "/nigeria/",
-  "/guinea/",
-  "/ghana/",
-  "/sierra-leone/",
-  "/burundi/",
-  "/rwanda/",
-  "/tanzania/",
-  "/ethiopia/",
-  "/uganda/",
-  "/qatar/en/",
-  "/qatar/ar/",
-  "/bahrain/en/",
-  "/bahrain/ar/",
-  "/uae/en/",
-  "/uae/ar/",
-  "/oman/en/",
-  "/oman/ar/",
-  "/kuwait/en/",
-  "/kuwait/ar/",
-];
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = [
     "/",
@@ -46,7 +21,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...aboutNavLinks.map((l) => l.href),
     ...servicesNavLinks.map((l) => l.href),
     ...primaryNavLinks.map((l) => l.href),
-    ...countryLandingPaths,
   ];
 
   const uniqueStaticPaths = Array.from(new Set(staticPaths));
@@ -54,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = uniqueStaticPaths.map((pathname) => ({
     url: toAbsoluteUrl(pathname),
     changeFrequency: pathname === "/" ? "daily" : "weekly",
-    priority: pathname === "/" ? 1 : countryLandingPaths.includes(pathname) ? 0.9 : 0.8,
+    priority: pathname === "/" ? 1 : 0.8,
   }));
 
   // Add published blog posts from DB

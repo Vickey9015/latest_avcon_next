@@ -15,31 +15,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL("https://avconexpo.com"),
   alternates: {
-    languages: {
-      "x-default": "/",
-      "en-eg": "/egypt/",
-      "en-ke": "/kenya/",
-      "en-ne": "/niger/",
-      "en-ng": "/nigeria/",
-      "en-gn": "/guinea/",
-      "en-gh": "/ghana/",
-      "en-sl": "/sierra-leone/",
-      "en-bi": "/burundi/",
-      "en-rw": "/rwanda/",
-      "en-tz": "/tanzania/",
-      "en-et": "/ethiopia/",
-      "en-ug": "/uganda/",
-      "en-qa": "/qatar/en/",
-      "en-bh": "/bahrain/en/",
-      "en-ae": "/uae/en/",
-      "en-om": "/oman/en/",
-      "en-kw": "/kuwait/en/",
-      "ar-qa": "/qatar/ar/",
-      "ar-bh": "/bahrain/ar/",
-      "ar-ae": "/uae/ar/",
-      "ar-om": "/oman/ar/",
-      "ar-kw": "/kuwait/ar/",
-    },
+    canonical: "https://avconexpo.com",
   },
   title: "AVCONEXPO | Global Engineering, EPC & Sourcing Solutions",
   description:
@@ -57,6 +33,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
+    url: "https://avconexpo.com",
     title: "AVCONEXPO | Global Engineering, EPC & Sourcing Solutions",
     description:
       "Engineering-Technology, Supply-Chain Management, Architecture-Design, EPC, and industrial solutions — concept to consumer, scratch to shelf.",
