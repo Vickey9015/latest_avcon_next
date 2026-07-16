@@ -1,4 +1,5 @@
 import SectionHeading from "@/components/SectionHeading";
+import { whatsappUrl } from "@/lib/site";
 import { faqItems } from "@/lib/structured-data";
 
 export default function FaqSection() {
@@ -53,7 +54,7 @@ export default function FaqSection() {
             <li>
               WhatsApp:{" "}
               <a
-                href="https://wa.me/918423923769"
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#f0571f] hover:underline"

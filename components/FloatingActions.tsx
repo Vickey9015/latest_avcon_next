@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { brochureUrl } from "@/lib/site";
+import { brochureUrl, whatsappUrl } from "@/lib/site";
 
 export default function FloatingActions() {
   return (
@@ -26,7 +26,7 @@ export default function FloatingActions() {
           </span>
         </a>
         <a
-          href="https://wa.me/918423923769"
+          href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-xl ring-1 ring-black/10 transition-transform hover:scale-105"
@@ -45,7 +45,7 @@ export default function FloatingActions() {
           Contact Us
         </Link>
         <a
-          href="https://wa.me/918423923769"
+          href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-1 items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-[#111827]"
