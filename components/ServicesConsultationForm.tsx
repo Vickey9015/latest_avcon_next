@@ -1,24 +1,12 @@
 "use client";
 
 import { FormEvent, useState, type ReactNode } from "react";
+import {
+  countryDialCodes,
+  DEFAULT_COUNTRY_ISO,
+  getDialCodeByIso,
+} from "@/lib/country-codes";
 import { servicesCatalog } from "@/lib/services-catalog";
-
-const countryCodes = [
-  { code: "+91", flag: "🇮🇳" },
-  { code: "+1", flag: "🇺🇸" },
-  { code: "+44", flag: "🇬🇧" },
-  { code: "+971", flag: "🇦🇪" },
-  { code: "+966", flag: "🇸🇦" },
-  { code: "+974", flag: "🇶🇦" },
-  { code: "+973", flag: "🇧🇭" },
-  { code: "+968", flag: "🇴🇲" },
-  { code: "+965", flag: "🇰🇼" },
-  { code: "+254", flag: "🇰🇪" },
-  { code: "+234", flag: "🇳🇬" },
-  { code: "+27", flag: "🇿🇦" },
-  { code: "+20", flag: "🇪🇬" },
-  { code: "+49", flag: "🇩🇪" },
-];
 
 function FieldIcon({ children }: { children: ReactNode }) {
   return (
@@ -42,14 +30,14 @@ export default function ServicesConsultationForm() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [countryCode, setCountryCode] = useState("+91");
+  const [countryIso, setCountryIso] = useState(DEFAULT_COUNTRY_ISO);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
     const phoneNumber = String(formData.get("phone") ?? "").trim();
-    const fullPhone = phoneNumber ? `${countryCode} ${phoneNumber}` : "";
+    const fullPhone = phoneNumber ? `${getDialCodeByIso(countryIso)} ${phoneNumber}` : "";
     const company = String(formData.get("company") ?? "").trim();
     const message = String(formData.get("message") ?? "").trim();
     const service = String(formData.get("service") ?? "").trim();
@@ -77,7 +65,7 @@ export default function ServicesConsultationForm() {
       }
 
       form.reset();
-      setCountryCode("+91");
+      setCountryIso(DEFAULT_COUNTRY_ISO);
       setSent(true);
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Unable to submit your enquiry right now.");
@@ -125,14 +113,14 @@ export default function ServicesConsultationForm() {
 
           <div className="flex gap-2">
             <select
-              value={countryCode}
-              onChange={(event) => setCountryCode(event.target.value)}
-              className="h-10 w-[6.5rem] shrink-0 appearance-none rounded-lg border border-zinc-200 bg-white px-2 text-xs outline-none focus:border-[#f0571f] focus:ring-2 focus:ring-[#f0571f]/20 sm:w-28 sm:text-sm"
+              value={countryIso}
+              onChange={(event) => setCountryIso(event.target.value)}
+              className="h-10 min-w-[8.5rem] shrink-0 appearance-none rounded-lg border border-zinc-200 bg-white px-2 text-xs outline-none focus:border-[#f0571f] focus:ring-2 focus:ring-[#f0571f]/20 sm:min-w-[9.5rem] sm:text-sm"
               aria-label="Country code"
             >
-              {countryCodes.map((item) => (
-                <option key={item.code} value={item.code}>
-                  {item.flag} {item.code}
+              {countryDialCodes.map((item) => (
+                <option key={item.iso} value={item.iso}>
+                  {item.flag} {item.iso} {item.code}
                 </option>
               ))}
             </select>

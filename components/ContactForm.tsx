@@ -1,6 +1,12 @@
 "use client";
 
 import { FormEvent, useState, type ReactNode } from "react";
+import {
+  countryDialCodes,
+  countryNames,
+  DEFAULT_COUNTRY_ISO,
+  getDialCodeByIso,
+} from "@/lib/country-codes";
 
 const serviceOptions = [
   "Business and Technical Consultancy",
@@ -15,53 +21,6 @@ const serviceOptions = [
   "Reviving and Running the Sick industries",
   "Waste Management",
   "Wellness Equipment",
-];
-
-const countryCodes = [
-  { code: "+91", flag: "🇮🇳", label: "India" },
-  { code: "+1", flag: "🇺🇸", label: "United States" },
-  { code: "+44", flag: "🇬🇧", label: "United Kingdom" },
-  { code: "+971", flag: "🇦🇪", label: "UAE" },
-  { code: "+966", flag: "🇸🇦", label: "Saudi Arabia" },
-  { code: "+974", flag: "🇶🇦", label: "Qatar" },
-  { code: "+973", flag: "🇧🇭", label: "Bahrain" },
-  { code: "+968", flag: "🇴🇲", label: "Oman" },
-  { code: "+965", flag: "🇰🇼", label: "Kuwait" },
-  { code: "+254", flag: "🇰🇪", label: "Kenya" },
-  { code: "+234", flag: "🇳🇬", label: "Nigeria" },
-  { code: "+27", flag: "🇿🇦", label: "South Africa" },
-  { code: "+20", flag: "🇪🇬", label: "Egypt" },
-  { code: "+49", flag: "🇩🇪", label: "Germany" },
-  { code: "+33", flag: "🇫🇷", label: "France" },
-  { code: "+61", flag: "🇦🇺", label: "Australia" },
-  { code: "+65", flag: "🇸🇬", label: "Singapore" },
-];
-
-const countries = [
-  "India",
-  "United Arab Emirates",
-  "Qatar",
-  "Bahrain",
-  "Oman",
-  "Kuwait",
-  "Kenya",
-  "Nigeria",
-  "Ghana",
-  "Egypt",
-  "Ethiopia",
-  "Tanzania",
-  "Uganda",
-  "Rwanda",
-  "Guinea",
-  "Sierra Leone",
-  "Burundi",
-  "South Sudan",
-  "Somalia",
-  "United States",
-  "United Kingdom",
-  "Germany",
-  "Saudi Arabia",
-  "Other",
 ];
 
 function FieldIcon({ children }: { children: ReactNode }) {
@@ -107,14 +66,14 @@ export default function ContactForm({
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [countryCode, setCountryCode] = useState("+91");
+  const [countryIso, setCountryIso] = useState(DEFAULT_COUNTRY_ISO);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
     const phoneNumber = String(formData.get("phone") ?? "").trim();
-    const fullPhone = phoneNumber ? `${countryCode} ${phoneNumber}` : "";
+    const fullPhone = phoneNumber ? `${getDialCodeByIso(countryIso)} ${phoneNumber}` : "";
 
     setError("");
     setIsSubmitting(true);
@@ -141,7 +100,7 @@ export default function ContactForm({
       }
 
       form.reset();
-      setCountryCode("+91");
+      setCountryIso(DEFAULT_COUNTRY_ISO);
       setSent(true);
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Unable to submit your enquiry right now.");
@@ -220,16 +179,16 @@ export default function ContactForm({
         <div>
           <Label required>Country Code + Phone Number</Label>
           <div className="flex gap-2">
-            <div className="relative w-[7.5rem] shrink-0 sm:w-32">
+            <div className="relative min-w-[8.5rem] shrink-0 sm:min-w-[9.5rem]">
               <select
-                value={countryCode}
-                onChange={(event) => setCountryCode(event.target.value)}
+                value={countryIso}
+                onChange={(event) => setCountryIso(event.target.value)}
                 className="h-11 w-full appearance-none rounded-lg border border-zinc-200 bg-white py-2 pl-2 pr-7 text-sm text-[#333] outline-none transition focus:border-[#1e3a5f] focus:ring-2 focus:ring-[#1e3a5f]/15"
                 aria-label="Country code"
               >
-                {countryCodes.map((item) => (
-                  <option key={item.code} value={item.code}>
-                    {item.flag} {item.code}
+                {countryDialCodes.map((item) => (
+                  <option key={item.iso} value={item.iso}>
+                    {item.flag} {item.iso} {item.code}
                   </option>
                 ))}
               </select>
@@ -307,7 +266,7 @@ export default function ContactForm({
             </FieldIcon>
             <select name="country" defaultValue="" className={selectClass}>
               <option value="">Select your country</option>
-              {countries.map((country) => (
+              {countryNames.map((country) => (
                 <option key={country} value={country}>
                   {country}
                 </option>
