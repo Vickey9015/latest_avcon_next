@@ -153,6 +153,10 @@ export async function sendContactFormEmail(payload: ContactEmailPayload) {
     return sendEquipmentSparesQuoteEmail(payload);
   }
 
+  if (payload.source === "industrial-equipment-supplier") {
+    return sendIndustrialSupplierQuoteEmail(payload);
+  }
+
   const sourceLabel = "Contact Form";
   const subject = `[AVCONEXPO] New ${sourceLabel} enquiry from ${payload.name}`;
 
@@ -181,6 +185,38 @@ export async function sendContactFormEmail(payload: ContactEmailPayload) {
     payload.country ? `Country: ${payload.country}` : "",
     `Service: ${payload.service}`,
     `Message: ${payload.message}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  await sendMail({ subject, html, text, replyTo: payload.email });
+}
+
+export async function sendIndustrialSupplierQuoteEmail(payload: ContactEmailPayload) {
+  const subject = `[AVCONEXPO] Industrial Equipment enquiry from ${payload.name}`;
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;color:#111827;max-width:720px;">
+      <h2 style="margin:0 0 8px;">Industrial Equipment Supplier Enquiry</h2>
+      <p style="margin:0 0 16px;color:#6b7280;font-size:14px;">Submitted from avconexpo.com/industrial-equipment-supplier</p>
+      <table style="border-collapse:collapse;width:100%;font-size:14px;">
+        ${fieldRow("Name", payload.name)}
+        ${fieldRow("Email", payload.email)}
+        ${fieldRow("Phone", payload.phone)}
+        ${fieldRow("Category / Product", payload.machinery)}
+        ${fieldRow("Requirements", payload.message)}
+      </table>
+    </div>
+  `;
+
+  const text = [
+    "Industrial Equipment Supplier Enquiry",
+    "Page: avconexpo.com/industrial-equipment-supplier",
+    `Name: ${payload.name}`,
+    `Email: ${payload.email}`,
+    `Phone: ${payload.phone}`,
+    payload.machinery ? `Category / Product: ${payload.machinery}` : "",
+    `Requirements: ${payload.message}`,
   ]
     .filter(Boolean)
     .join("\n");

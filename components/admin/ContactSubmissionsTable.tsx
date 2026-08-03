@@ -25,6 +25,7 @@ function displayValue(value: string | null) {
 
 function sourceLabel(source: string | null) {
   if (source === "equipment-spares") return "Equipment & Spares";
+  if (source === "industrial-equipment-supplier") return "Equipment Supplier";
   return "Contact Form";
 }
 
@@ -140,7 +141,8 @@ export default function ContactSubmissionsTable({ submissions }: ContactSubmissi
                   <td className="whitespace-nowrap px-4 py-4 text-sm">
                     <span
                       className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
-                        submission.source === "equipment-spares"
+                        submission.source === "equipment-spares" ||
+                        submission.source === "industrial-equipment-supplier"
                           ? "bg-blue-100 text-blue-800"
                           : "bg-orange-100 text-orange-800"
                       }`}
