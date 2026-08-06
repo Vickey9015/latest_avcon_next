@@ -8,26 +8,31 @@ import ProductContactModal from "@/components/industrial/ProductContactModal";
 import ShortEnquiryForm from "@/components/industrial/ShortEnquiryForm";
 import {
   equipmentCategories,
-  equipmentProducts,
   getCategoryLabel,
-  getFeaturedProducts,
   productHref,
   type EquipmentCategoryId,
   type EquipmentProduct,
 } from "@/lib/industrial-equipment";
 
-export default function IndustrialEquipmentCatalog() {
+type IndustrialEquipmentCatalogProps = {
+  products: EquipmentProduct[];
+};
+
+export default function IndustrialEquipmentCatalog({ products }: IndustrialEquipmentCatalogProps) {
   const [activeCategory, setActiveCategory] = useState<EquipmentCategoryId | "all">("all");
   const [contactProduct, setContactProduct] = useState<EquipmentProduct | null>(null);
 
-  const featured = useMemo(() => getFeaturedProducts(), []);
+  const featured = useMemo(
+    () => products.filter((product) => product.featured),
+    [products],
+  );
 
   const topProducts = useMemo(() => {
     if (activeCategory === "all") return featured;
     const inCategory = featured.filter((product) => product.categoryId === activeCategory);
     if (inCategory.length > 0) return inCategory;
-    return equipmentProducts.filter((product) => product.categoryId === activeCategory).slice(0, 4);
-  }, [activeCategory, featured]);
+    return products.filter((product) => product.categoryId === activeCategory).slice(0, 4);
+  }, [activeCategory, featured, products]);
 
   return (
     <>
@@ -38,7 +43,7 @@ export default function IndustrialEquipmentCatalog() {
             Industrial Equipment &amp; Spare Parts for Industrial Factories and plants
           </h1>
           <p className="mt-2 text-xs text-[#555] sm:text-sm lg:text-base">
-            {equipmentProducts.length}+ products available · Global sourcing for factories &amp; plants
+            {products.length}+ products available · Global sourcing for factories &amp; plants
           </p>
 
           <div
@@ -133,19 +138,24 @@ export default function IndustrialEquipmentCatalog() {
 
           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4">
             {equipmentCategories.map((category) => {
-              const count = equipmentProducts.filter((product) => product.categoryId === category.id).length;
+              const count = products.filter((product) => product.categoryId === category.id).length;
               const sample =
-                equipmentProducts.find((product) => product.categoryId === category.id) ??
-                equipmentProducts[0];
+                products.find((product) => product.categoryId === category.id) ?? products[0];
+              const href =
+                count > 0 && sample
+                  ? productHref(sample.slug)
+                  : "/industrial-equipment-supplier";
+              const imageSrc = sample?.images[0] ?? "/equipments-spares/hero-compressors.png";
+
               return (
                 <Link
                   key={category.id}
-                  href={productHref(sample.slug)}
+                  href={href}
                   className="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-md"
                 >
                   <div className="relative h-28 sm:h-36 lg:h-40">
                     <Image
-                      src={sample.images[0]}
+                      src={imageSrc}
                       alt={category.label}
                       fill
                       className="object-cover transition duration-300 group-hover:scale-105"

@@ -3,7 +3,8 @@ import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site";
 import { aboutNavLinks, primaryNavLinks, servicesNavLinks } from "@/lib/nav-links";
 import { blogHref, getPublishedBlogs } from "@/lib/blogs";
-import { equipmentProducts, productHref } from "@/lib/industrial-equipment";
+import { getPublishedEquipmentProducts } from "@/lib/equipment";
+import { productHref } from "@/lib/industrial-equipment";
 
 function toAbsoluteUrl(pathname: string): string {
   if (pathname.startsWith("http://") || pathname.startsWith("https://")) return pathname;
@@ -33,6 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: pathname === "/" ? 1 : 0.8,
   }));
 
+  const equipmentProducts = await getPublishedEquipmentProducts();
   const equipmentEntries: MetadataRoute.Sitemap = equipmentProducts.map((product) => ({
     url: toAbsoluteUrl(productHref(product.slug)),
     changeFrequency: "weekly",

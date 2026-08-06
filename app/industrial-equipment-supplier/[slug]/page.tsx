@@ -9,24 +9,21 @@ import Navbar from "@/components/Navbar";
 import ShortEnquiryForm from "@/components/industrial/ShortEnquiryForm";
 import TopBar from "@/components/TopBar";
 import {
-  equipmentProducts,
-  getCategoryLabel,
-  getProductBySlug,
-  productHref,
-} from "@/lib/industrial-equipment";
+  getPublishedEquipmentByCategory,
+  getPublishedEquipmentProductBySlug,
+} from "@/lib/equipment";
+import { getCategoryLabel, productHref } from "@/lib/industrial-equipment";
 import { seoForRoute } from "@/lib/seo";
+
+export const dynamic = "force-dynamic";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return equipmentProducts.map((product) => ({ slug: product.slug }));
-}
-
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getPublishedEquipmentProductBySlug(slug);
   if (!product) {
     return seoForRoute({
       pathname: "/industrial-equipment-supplier",
@@ -46,11 +43,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function IndustrialEquipmentDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getPublishedEquipmentProductBySlug(slug);
   if (!product) notFound();
 
-  const related = equipmentProducts
-    .filter((item) => item.categoryId === product.categoryId && item.slug !== product.slug)
+  const related = (await getPublishedEquipmentByCategory(product.categoryId))
+    .filter((item) => item.slug !== product.slug)
     .slice(0, 4);
 
   return (

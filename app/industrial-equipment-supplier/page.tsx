@@ -5,7 +5,10 @@ import Footer from "@/components/Footer";
 import IndustrialEquipmentCatalog from "@/components/industrial/IndustrialEquipmentCatalog";
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
+import { getPublishedEquipmentProducts } from "@/lib/equipment";
 import { seoForRoute } from "@/lib/seo";
+
+export const dynamic = "force-dynamic";
 
 export function generateMetadata(): Metadata {
   return seoForRoute({
@@ -17,7 +20,9 @@ export function generateMetadata(): Metadata {
   });
 }
 
-export default function IndustrialEquipmentSupplierPage() {
+export default async function IndustrialEquipmentSupplierPage() {
+  const products = await getPublishedEquipmentProducts();
+
   return (
     <>
       <TopBar />
@@ -44,7 +49,7 @@ export default function IndustrialEquipmentSupplierPage() {
         </section>
       </div>
 
-      <IndustrialEquipmentCatalog />
+      <IndustrialEquipmentCatalog products={products} />
       <Footer />
       <FloatingActions />
     </>
