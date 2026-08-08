@@ -126,11 +126,11 @@ export default function ProductCard({ product, onContact, compact = false }: Pro
         </button>
 
         {!compact && product.specs.length > 0 ? (
-          <dl className="mt-2.5 hidden overflow-hidden rounded-lg border border-zinc-100 text-xs sm:mt-3 sm:block">
+          <dl className="mt-2.5 overflow-hidden rounded-lg border border-zinc-100 text-[10px] leading-snug sm:mt-3 sm:text-xs sm:leading-normal">
             {product.specs.slice(0, 3).map((spec) => (
               <div key={spec.label} className="grid grid-cols-2 border-b border-zinc-100 last:border-b-0">
-                <dt className="bg-zinc-50 px-2.5 py-1.5 font-semibold text-[#555]">{spec.label}</dt>
-                <dd className="px-2.5 py-1.5 text-[#333]">{spec.value}</dd>
+                <dt className="bg-zinc-50 px-1.5 py-1.5 font-semibold text-[#555] sm:px-2.5">{spec.label}</dt>
+                <dd className="px-1.5 py-1.5 text-[#333] sm:px-2.5">{spec.value}</dd>
               </div>
             ))}
           </dl>
