@@ -138,10 +138,10 @@ export default function EquipmentManagement({ initialProducts }: EquipmentManage
   }
 
   function addImageSlot() {
-    setFormData((current) => {
-      if (current.images.length >= 6) return current;
-      return { ...current, images: [...current.images, ""] };
-    });
+    setFormData((current) => ({
+      ...current,
+      images: [...current.images, ""],
+    }));
   }
 
   function removeImageSlot(index: number) {
@@ -538,12 +538,11 @@ export default function EquipmentManagement({ initialProducts }: EquipmentManage
 
                 <div className="sm:col-span-2 space-y-3">
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-gray-700">Images (1–6)</p>
+                    <p className="text-sm font-medium text-gray-700">Images</p>
                     <button
                       type="button"
                       onClick={addImageSlot}
-                      disabled={formData.images.length >= 6}
-                      className="text-sm font-medium text-orange-600 hover:text-orange-700 disabled:opacity-40"
+                      className="text-sm font-medium text-orange-600 hover:text-orange-700"
                     >
                       + Add image
                     </button>

@@ -1,9 +1,11 @@
 import path from "node:path";
+import { UPLOAD_FOLDERS } from "@/lib/upload-types";
 
 export const UPLOADS_ROOT = path.join(process.cwd(), "uploads");
 export const LEGACY_UPLOADS_ROOT = path.join(process.cwd(), "public", "uploads");
 
-const UPLOAD_ROUTE_FOLDERS = new Set(["banners", "blogs", "projects", "testimonials", "careers"]);
+/** Folders that `/uploads/[...path]` is allowed to serve (upload folders + careers PDFs). */
+const UPLOAD_ROUTE_FOLDERS = new Set<string>([...UPLOAD_FOLDERS, "careers"]);
 
 export function isUploadRouteFolder(folder: string): boolean {
   return UPLOAD_ROUTE_FOLDERS.has(folder);

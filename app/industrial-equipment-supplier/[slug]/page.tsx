@@ -54,7 +54,7 @@ export default async function IndustrialEquipmentDetailPage({ params }: PageProp
     <>
       <TopBar />
       <div className="relative">
-        <section className="relative min-h-[34vh] overflow-hidden">
+        <section className="relative min-h-[200px] overflow-hidden sm:min-h-[34vh]">
           <Image
             src={product.images[0]}
             alt={product.title}
@@ -65,38 +65,38 @@ export default async function IndustrialEquipmentDetailPage({ params }: PageProp
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#101827]/92 via-[#101827]/75 to-[#101827]/40" />
           <Navbar />
-          <div className="relative z-10 mx-auto flex min-h-[34vh] w-full max-w-7xl flex-col justify-end px-4 pb-10 pt-32 sm:px-6 lg:px-8">
-            <p className="mb-2 text-sm font-extrabold uppercase tracking-[0.18em] text-[#faa419]">
+          <div className="relative z-10 mx-auto flex min-h-[200px] w-full max-w-7xl flex-col justify-end px-4 pb-5 pt-24 sm:min-h-[34vh] sm:px-6 sm:pb-10 sm:pt-32 lg:px-8">
+            <p className="mb-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#faa419] sm:mb-2 sm:text-sm sm:tracking-[0.18em]">
               {getCategoryLabel(product.categoryId)}
             </p>
-            <h1 className="max-w-4xl text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <h1 className="max-w-4xl text-xl font-extrabold tracking-tight text-white sm:text-4xl">
               {product.title}
             </h1>
           </div>
         </section>
       </div>
 
-      <section className="bg-[#f7f8fa] py-10 sm:py-12">
+      <section className="bg-[#f7f8fa] py-5 pb-[calc(5.5rem+env(safe-area-inset-bottom))] sm:py-12 sm:pb-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="mb-6 text-sm text-[#555]">
+          <p className="mb-4 text-xs text-[#555] sm:mb-6 sm:text-sm">
             <Link href="/industrial-equipment-supplier" className="font-semibold text-[#f0571f] hover:underline">
               Industrial Equipment Supplier
             </Link>
             <span className="mx-2">/</span>
-            <span>{product.title}</span>
+            <span className="line-clamp-1 inline">{product.title}</span>
           </p>
 
-          <div className="grid gap-8 lg:grid-cols-12">
+          <div className="grid gap-5 sm:gap-8 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <ProductDetailClient product={product} />
-              <div className="mt-6 rounded-2xl border border-zinc-200 bg-white p-5 sm:p-6">
-                <h2 className="text-xl font-extrabold text-[#1a1a1a]">Product Overview</h2>
-                <p className="mt-3 text-sm leading-7 text-[#555] sm:text-base">{product.description}</p>
-                <dl className="mt-5 overflow-hidden rounded-xl border border-zinc-100">
+              <div className="mt-4 rounded-2xl border border-zinc-200 bg-white p-4 sm:mt-6 sm:p-6">
+                <h2 className="text-lg font-extrabold text-[#1a1a1a] sm:text-xl">Product Overview</h2>
+                <p className="mt-2.5 text-sm leading-6 text-[#555] sm:mt-3 sm:leading-7 sm:text-base">{product.description}</p>
+                <dl className="mt-4 overflow-hidden rounded-xl border border-zinc-100 sm:mt-5">
                   {product.specs.map((spec) => (
                     <div key={spec.label} className="grid grid-cols-2 border-b border-zinc-100 last:border-b-0">
-                      <dt className="bg-zinc-50 px-4 py-3 text-sm font-semibold text-[#555]">{spec.label}</dt>
-                      <dd className="px-4 py-3 text-sm text-[#333]">{spec.value}</dd>
+                      <dt className="bg-zinc-50 px-3 py-2.5 text-xs font-semibold text-[#555] sm:px-4 sm:py-3 sm:text-sm">{spec.label}</dt>
+                      <dd className="px-3 py-2.5 text-xs text-[#333] sm:px-4 sm:py-3 sm:text-sm">{spec.value}</dd>
                     </div>
                   ))}
                 </dl>
@@ -113,20 +113,20 @@ export default async function IndustrialEquipmentDetailPage({ params }: PageProp
           </div>
 
           {related.length > 0 ? (
-            <div className="mt-12">
-              <h2 className="mb-5 text-2xl font-extrabold text-[#1a1a1a]">Related Products</h2>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 sm:mt-12">
+              <h2 className="mb-3 text-lg font-extrabold text-[#1a1a1a] sm:mb-5 sm:text-2xl">Related Products</h2>
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
                 {related.map((item) => (
                   <Link
                     key={item.slug}
                     href={productHref(item.slug)}
-                    className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                    className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:rounded-2xl"
                   >
-                    <div className="relative h-28">
-                      <Image src={item.images[0]} alt={item.title} fill className="object-cover" sizes="25vw" />
+                    <div className="relative h-24 sm:h-28">
+                      <Image src={item.images[0]} alt={item.title} fill className="object-cover" sizes="50vw" />
                     </div>
-                    <div className="p-3">
-                      <p className="line-clamp-2 text-sm font-bold text-[#1e3a5f]">{item.title}</p>
+                    <div className="p-2.5 sm:p-3">
+                      <p className="line-clamp-2 text-xs font-bold text-[#1e3a5f] sm:text-sm">{item.title}</p>
                     </div>
                   </Link>
                 ))}

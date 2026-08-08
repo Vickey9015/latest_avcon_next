@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import ProductCard from "@/components/industrial/ProductCard";
 import ProductContactModal from "@/components/industrial/ProductContactModal";
@@ -9,7 +8,6 @@ import ShortEnquiryForm from "@/components/industrial/ShortEnquiryForm";
 import {
   equipmentCategories,
   getCategoryLabel,
-  productHref,
   type EquipmentCategoryId,
   type EquipmentProduct,
 } from "@/lib/industrial-equipment";
@@ -31,81 +29,96 @@ export default function IndustrialEquipmentCatalog({ products }: IndustrialEquip
     if (activeCategory === "all") return featured;
     const inCategory = featured.filter((product) => product.categoryId === activeCategory);
     if (inCategory.length > 0) return inCategory;
-    return products.filter((product) => product.categoryId === activeCategory).slice(0, 4);
+    return products.filter((product) => product.categoryId === activeCategory).slice(0, 8);
   }, [activeCategory, featured, products]);
+
+  const categoryProducts = useMemo(() => {
+    if (activeCategory === "all") return products;
+    return products.filter((product) => product.categoryId === activeCategory);
+  }, [activeCategory, products]);
+
+  const chipClass = (active: boolean) =>
+    `shrink-0 snap-start rounded-full px-3 py-2 text-xs font-semibold transition touch-manipulation sm:px-4 sm:py-2 sm:text-sm ${
+      active
+        ? "bg-[#f0571f] text-white shadow-sm"
+        : "bg-zinc-100 text-[#333] hover:bg-orange-50 hover:text-[#f0571f]"
+    }`;
 
   return (
     <>
       {/* 1. H1 + category filters */}
-      <section className="border-b border-zinc-200 bg-white py-5 sm:py-8 lg:py-10">
+      <section className="border-b border-zinc-200 bg-white py-4 sm:py-8 lg:py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="text-[1.35rem] font-extrabold leading-snug tracking-tight text-[#1a1a1a] sm:text-3xl sm:leading-tight lg:text-[2.6rem]">
-            Industrial Equipment &amp; Spare Parts for Industrial Factories and plants
+          <h1 className="text-[1.2rem] font-extrabold leading-snug tracking-tight text-[#1a1a1a] sm:text-3xl sm:leading-tight lg:text-[2.6rem]">
+            <span className="sm:hidden">Industrial Equipment &amp; Spare Parts</span>
+            <span className="hidden sm:inline">
+              Industrial Equipment &amp; Spare Parts for Industrial Factories and plants
+            </span>
           </h1>
-          <p className="mt-2 text-xs text-[#555] sm:text-sm lg:text-base">
-            {products.length}+ products available · Global sourcing for factories &amp; plants
+          <p className="mt-1.5 text-xs text-[#555] sm:mt-2 sm:text-sm lg:text-base">
+            {products.length}+ products · Global sourcing for factories &amp; plants
           </p>
+        </div>
 
-          <div
-            className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:mx-0 sm:mt-5 sm:px-0 [&::-webkit-scrollbar]:hidden"
-            role="tablist"
-            aria-label="Filter products by category"
-          >
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeCategory === "all"}
-              onClick={() => setActiveCategory("all")}
-              className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold transition sm:px-4 sm:py-2 sm:text-sm ${
-                activeCategory === "all"
-                  ? "bg-[#f0571f] text-white"
-                  : "bg-zinc-100 text-[#333] hover:bg-orange-50 hover:text-[#f0571f]"
-              }`}
+        <div className="sticky top-0 z-30 mt-3 border-y border-zinc-100 bg-white/95 backdrop-blur sm:static sm:mt-5 sm:border-0 sm:bg-transparent sm:backdrop-blur-none">
+          <div className="mx-auto max-w-7xl">
+            <div
+              className="flex gap-2 overflow-x-auto px-4 py-2.5 [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory sm:px-6 sm:py-0 lg:px-8 [&::-webkit-scrollbar]:hidden"
+              role="tablist"
+              aria-label="Filter products by category"
             >
-              All Categories
-            </button>
-            {equipmentCategories.map((category) => (
               <button
-                key={category.id}
                 type="button"
                 role="tab"
-                aria-selected={activeCategory === category.id}
-                onClick={() => setActiveCategory(category.id)}
-                className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold transition sm:px-4 sm:py-2 sm:text-sm ${
-                  activeCategory === category.id
-                    ? "bg-[#f0571f] text-white"
-                    : "bg-zinc-100 text-[#333] hover:bg-orange-50 hover:text-[#f0571f]"
-                }`}
+                aria-selected={activeCategory === "all"}
+                onClick={() => setActiveCategory("all")}
+                className={chipClass(activeCategory === "all")}
               >
-                {category.label}
+                All
               </button>
-            ))}
+              {equipmentCategories.map((category) => (
+                <button
+                  key={category.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeCategory === category.id}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={chipClass(activeCategory === category.id)}
+                >
+                  {category.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* 2. Top high-requirement equipment */}
-      <section className="bg-[#f7f8fa] py-6 sm:py-10 lg:py-12">
+      <section className="bg-[#f7f8fa] py-5 sm:py-10 lg:py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-4 sm:mb-6">
-            <p className="text-xs font-extrabold uppercase tracking-wide text-[#f0571f] sm:text-sm">
+          <div className="mb-3 sm:mb-6">
+            <p className="text-[11px] font-extrabold uppercase tracking-wide text-[#f0571f] sm:text-sm">
               High Demand
             </p>
-            <h2 className="mt-1 text-xl font-extrabold text-[#1a1a1a] sm:text-2xl lg:text-3xl">
-              Top Required Industrial Equipment
+            <h2 className="mt-1 text-lg font-extrabold text-[#1a1a1a] sm:text-2xl lg:text-3xl">
+              {activeCategory === "all"
+                ? "Top Required Industrial Equipment"
+                : getCategoryLabel(activeCategory)}
             </h2>
-            <p className="mt-1.5 max-w-3xl text-xs leading-5 text-[#555] sm:mt-2 sm:text-sm sm:leading-6 lg:text-base">
-              Frequently requested equipment and spare parts for factories, utilities, and process plants.
+            <p className="mt-1 max-w-3xl text-xs leading-5 text-[#555] sm:mt-2 sm:text-sm sm:leading-6 lg:text-base">
+              {activeCategory === "all"
+                ? "Frequently requested equipment and spare parts for factories, utilities, and process plants."
+                : `${categoryProducts.length} product${categoryProducts.length === 1 ? "" : "s"} in this category.`}
             </p>
           </div>
 
-          {topProducts.length === 0 ? (
-            <p className="rounded-xl border border-dashed border-zinc-300 bg-white p-6 text-center text-sm text-[#555] sm:p-8">
-              No featured products in this category.
+          {(activeCategory === "all" ? topProducts : categoryProducts).length === 0 ? (
+            <p className="rounded-xl border border-dashed border-zinc-300 bg-white p-5 text-center text-sm text-[#555] sm:p-8">
+              No products in this category yet.
             </p>
           ) : (
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
-              {topProducts.map((product) => (
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+              {(activeCategory === "all" ? topProducts : categoryProducts).map((product) => (
                 <ProductCard key={product.slug} product={product} onContact={setContactProduct} />
               ))}
             </div>
@@ -114,7 +127,7 @@ export default function IndustrialEquipmentCatalog({ products }: IndustrialEquip
       </section>
 
       {/* 3. Short enquiry form */}
-      <section className="bg-white py-6 sm:py-10 lg:py-12">
+      <section className="bg-white py-5 sm:py-10 lg:py-12">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <ShortEnquiryForm
             title="Request a Quick Quote"
@@ -129,31 +142,31 @@ export default function IndustrialEquipmentCatalog({ products }: IndustrialEquip
       </section>
 
       {/* 4. Browse categories — links to product details */}
-      <section className="bg-[#f7f8fa] py-6 sm:py-8 lg:py-10">
+      <section className="bg-[#f7f8fa] py-5 sm:py-8 lg:py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-4 sm:mb-5">
-            <p className="text-xs font-extrabold uppercase tracking-wide text-[#f0571f]">Categories</p>
-            <h2 className="mt-0.5 text-xl font-extrabold text-[#1a1a1a] sm:text-2xl">Browse Categories</h2>
+          <div className="mb-3 sm:mb-5">
+            <p className="text-[11px] font-extrabold uppercase tracking-wide text-[#f0571f]">Categories</p>
+            <h2 className="mt-0.5 text-lg font-extrabold text-[#1a1a1a] sm:text-2xl">Browse Categories</h2>
           </div>
 
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4">
             {equipmentCategories.map((category) => {
               const count = products.filter((product) => product.categoryId === category.id).length;
               const sample =
                 products.find((product) => product.categoryId === category.id) ?? products[0];
-              const href =
-                count > 0 && sample
-                  ? productHref(sample.slug)
-                  : "/industrial-equipment-supplier";
               const imageSrc = sample?.images[0] ?? "/equipments-spares/hero-compressors.png";
 
               return (
-                <Link
+                <button
                   key={category.id}
-                  href={href}
-                  className="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-md"
+                  type="button"
+                  onClick={() => {
+                    setActiveCategory(category.id);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                  className="group overflow-hidden rounded-xl border border-zinc-200 bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-md touch-manipulation"
                 >
-                  <div className="relative h-28 sm:h-36 lg:h-40">
+                  <div className="relative h-24 sm:h-36 lg:h-40">
                     <Image
                       src={imageSrc}
                       alt={category.label}
@@ -162,17 +175,17 @@ export default function IndustrialEquipmentCatalog({ products }: IndustrialEquip
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 p-2.5 sm:p-3">
-                      <p className="line-clamp-2 text-xs font-bold leading-snug text-white sm:text-sm lg:text-base">
+                    <div className="absolute inset-x-0 bottom-0 p-2 sm:p-3">
+                      <p className="line-clamp-2 text-[11px] font-bold leading-snug text-white sm:text-sm lg:text-base">
                         {category.label}
                       </p>
                       <p className="mt-0.5 text-[10px] font-semibold text-[#faa419] sm:mt-1 sm:text-xs">
                         <span className="sm:hidden">{count} items</span>
-                        <span className="hidden sm:inline">{count} products · View details →</span>
+                        <span className="hidden sm:inline">{count} products · View →</span>
                       </p>
                     </div>
                   </div>
-                </Link>
+                </button>
               );
             })}
           </div>
@@ -180,10 +193,10 @@ export default function IndustrialEquipmentCatalog({ products }: IndustrialEquip
       </section>
 
       {/* 5. About AVCONEXPO — before footer */}
-      <section className="bg-white py-8 sm:py-12 lg:py-16">
+      <section className="bg-white py-6 sm:py-12 lg:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-6 sm:gap-10 lg:grid-cols-2 lg:items-center">
-            <div className="relative h-48 overflow-hidden rounded-2xl sm:h-64 sm:rounded-[28px] lg:min-h-[280px] lg:h-auto">
+          <div className="grid gap-5 sm:gap-10 lg:grid-cols-2 lg:items-center">
+            <div className="relative h-40 overflow-hidden rounded-2xl sm:h-64 sm:rounded-[28px] lg:min-h-[280px] lg:h-auto">
               <Image
                 src="/equipments-spares/global-logistics.png"
                 alt="AVCONEXPO global industrial supply"
@@ -193,34 +206,34 @@ export default function IndustrialEquipmentCatalog({ products }: IndustrialEquip
               />
             </div>
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-wide text-[#f0571f] sm:text-sm">
+              <p className="text-[11px] font-extrabold uppercase tracking-wide text-[#f0571f] sm:text-sm">
                 About AVCONEXPO
               </p>
-              <h2 className="mt-1.5 text-2xl font-extrabold text-[#1a1a1a] sm:mt-2 sm:text-3xl">
+              <h2 className="mt-1 text-xl font-extrabold text-[#1a1a1a] sm:mt-2 sm:text-3xl">
                 Your trusted industrial equipment supplier
               </h2>
-              <p className="mt-3 text-sm leading-6 text-[#555] sm:mt-4 sm:leading-7 sm:text-base">
+              <p className="mt-2.5 text-sm leading-6 text-[#555] sm:mt-4 sm:leading-7 sm:text-base">
                 AVCONEXPO supplies a comprehensive range of electrical equipment, components, and spare parts for
                 industrial, commercial, infrastructure, utility, and manufacturing applications. Through our global
                 sourcing network and strong supplier partnerships, we deliver high-quality electrical products that
                 ensure operational reliability, safety, and efficiency.
               </p>
-              <div className="mt-4 grid grid-cols-2 gap-2 sm:mt-6 sm:gap-3">
+              <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-6 sm:gap-3">
                 {[
                   { value: "25+", label: "Countries Served" },
                   { value: "30+", label: "Years of Experience" },
                   { value: "End-to-End", label: "Supply Solutions" },
                   { value: "Africa · GCC · India", label: "Regions Covered" },
                 ].map((stat) => (
-                  <div key={stat.label} className="rounded-xl border border-orange-100 bg-orange-50/50 p-3 sm:rounded-2xl sm:p-4">
-                    <p className="text-base font-extrabold text-[#f0571f] sm:text-lg lg:text-xl">{stat.value}</p>
-                    <p className="mt-0.5 text-[11px] font-semibold text-[#333] sm:mt-1 sm:text-xs lg:text-sm">
+                  <div key={stat.label} className="rounded-xl border border-orange-100 bg-orange-50/50 p-2.5 sm:rounded-2xl sm:p-4">
+                    <p className="text-sm font-extrabold text-[#f0571f] sm:text-lg lg:text-xl">{stat.value}</p>
+                    <p className="mt-0.5 text-[10px] font-semibold leading-snug text-[#333] sm:mt-1 sm:text-xs lg:text-sm">
                       {stat.label}
                     </p>
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-xs font-semibold text-[#1e3a5f] sm:mt-5 sm:text-sm">
+              <p className="mt-3 text-xs font-semibold text-[#1e3a5f] sm:mt-5 sm:text-sm">
                 Serving Industries Across Africa, GCC &amp; India
               </p>
             </div>
@@ -229,15 +242,15 @@ export default function IndustrialEquipmentCatalog({ products }: IndustrialEquip
       </section>
 
       {/* 6. Pre-footer CTA form + contact details */}
-      <section className="border-t border-orange-100 bg-gradient-to-br from-[#fff7f2] via-white to-orange-50/40 py-8 pb-24 sm:py-12 sm:pb-14 lg:py-14">
+      <section className="border-t border-orange-100 bg-gradient-to-br from-[#fff7f2] via-white to-orange-50/40 py-6 pb-[calc(5.5rem+env(safe-area-inset-bottom))] sm:py-12 sm:pb-14 lg:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-6 sm:gap-8 lg:grid-cols-12">
+          <div className="grid gap-5 sm:gap-8 lg:grid-cols-12">
             <div className="lg:col-span-5">
-              <h2 className="text-xl font-extrabold text-[#1a1a1a] sm:text-2xl">Ready to source equipment?</h2>
+              <h2 className="text-lg font-extrabold text-[#1a1a1a] sm:text-2xl">Ready to source equipment?</h2>
               <p className="mt-2 text-sm leading-6 text-[#555] sm:leading-7">
                 Contact AVCONEXPO for industrial equipment, electrical systems, and critical spare parts supply.
               </p>
-              <div className="mt-4 space-y-2 text-sm text-[#333] sm:mt-5">
+              <div className="mt-3 space-y-2 text-sm text-[#333] sm:mt-5">
                 <p>
                   <span className="font-semibold">Phone:</span>{" "}
                   <a className="text-[#f0571f] hover:underline" href="tel:+917007729873">

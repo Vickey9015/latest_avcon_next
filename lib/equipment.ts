@@ -359,7 +359,7 @@ export function normalizeEquipmentInput(
     shortDescription,
     description,
     specs,
-    images: images.slice(0, 6),
+    images,
     featured,
     status,
     order: Math.floor(order),

@@ -33,7 +33,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        <div className="relative aspect-[16/9] bg-zinc-50 sm:aspect-[5/3]">
+        <div className="relative aspect-[4/3] bg-zinc-50 sm:aspect-[5/3]">
           <Image
             src={images[index % images.length]}
             alt={product.title}
@@ -47,24 +47,24 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <button
                 type="button"
                 onClick={() => setIndex((value) => (value - 1 + images.length) % images.length)}
-                className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow"
+                className="absolute left-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 shadow touch-manipulation sm:left-3 sm:h-10 sm:w-10"
                 aria-label="Previous image"
               >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
               <button
                 type="button"
                 onClick={() => setIndex((value) => (value + 1) % images.length)}
-                className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow"
+                className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 shadow touch-manipulation sm:right-3 sm:h-10 sm:w-10"
                 aria-label="Next image"
               >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
-              <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
+              <div className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 gap-1.5 sm:bottom-3">
                 {images.map((image, imageIndex) => (
                   <button
                     key={`${product.slug}-dot-${imageIndex}`}

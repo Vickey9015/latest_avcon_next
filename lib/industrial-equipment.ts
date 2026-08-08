@@ -90,7 +90,7 @@ export const equipmentCategories: EquipmentCategory[] = [
   { id: "cables-wiring", label: "Cables & Wiring" },
   { id: "motors-rotating", label: "Motors & Rotating Equipment" },
   { id: "lighting-accessories", label: "Lighting & Accessories" },
-  { id: "spare-parts", label: "Critical Spare Parts" },
+  { id: "spare-parts", label: "Utilities" },
   { id: "others", label: "Others" },
 ];
 
