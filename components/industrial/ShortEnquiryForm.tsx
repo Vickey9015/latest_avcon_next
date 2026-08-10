@@ -71,7 +71,7 @@ export default function ShortEnquiryForm({
   }
 
   return (
-    <div className={`rounded-xl border border-orange-100 bg-white p-4 shadow-sm sm:rounded-2xl sm:p-5 lg:p-6 ${className}`}>
+    <div className={`min-w-0 w-full rounded-xl border border-orange-100 bg-white p-4 shadow-sm sm:rounded-2xl sm:p-5 lg:p-6 ${className}`}>
       <h3 className="text-lg font-extrabold text-[#1a1a1a] sm:text-xl">{title}</h3>
       <p className="mt-1 text-xs text-[#555] sm:text-sm">{subtitle}</p>
 

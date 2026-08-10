@@ -29,11 +29,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   return (
     <>
       <div
-        className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm"
+        className="min-w-0 w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        <div className="relative aspect-[4/3] bg-zinc-50 sm:aspect-[5/3]">
+        <div className="relative aspect-[4/3] w-full bg-zinc-50 sm:aspect-[5/3]">
           <Image
             src={images[index % images.length]}
             alt={product.title}
@@ -64,13 +64,13 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
-              <div className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 gap-1.5 sm:bottom-3">
+              <div className="absolute bottom-2.5 left-1/2 flex max-w-[calc(100%-3rem)] -translate-x-1/2 gap-1 overflow-x-auto sm:bottom-3 sm:gap-1.5">
                 {images.map((image, imageIndex) => (
                   <button
                     key={`${product.slug}-dot-${imageIndex}`}
                     type="button"
                     onClick={() => setIndex(imageIndex)}
-                    className={`h-1.5 rounded-full transition ${
+                    className={`h-1.5 shrink-0 rounded-full transition ${
                       imageIndex === index % images.length ? "w-5 bg-[#f0571f]" : "w-1.5 bg-white/80"
                     }`}
                     aria-label={`Show image ${imageIndex + 1}`}
@@ -82,13 +82,13 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         </div>
 
         {images.length > 1 ? (
-          <div className="flex gap-2 overflow-x-auto p-3">
+          <div className="flex min-w-0 gap-2 overflow-x-auto overscroll-x-contain p-2.5 [-ms-overflow-style:none] [scrollbar-width:none] sm:p-3 [&::-webkit-scrollbar]:hidden">
             {images.map((image, imageIndex) => (
               <button
                 key={`${product.slug}-thumb-${imageIndex}`}
                 type="button"
                 onClick={() => setIndex(imageIndex)}
-                className={`relative h-16 w-20 shrink-0 overflow-hidden rounded-lg border-2 ${
+                className={`relative h-14 w-[4.5rem] shrink-0 overflow-hidden rounded-lg border-2 touch-manipulation sm:h-16 sm:w-20 ${
                   index === imageIndex ? "border-[#f0571f]" : "border-transparent"
                 }`}
               >
@@ -98,12 +98,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           </div>
         ) : null}
 
-        <div className="border-t border-zinc-100 p-4 sm:p-5">
+        <div className="border-t border-zinc-100 p-3.5 sm:p-5">
           <p className="text-sm leading-6 text-[#555]">{product.shortDescription}</p>
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#f0571f] text-sm font-bold text-white hover:bg-[#d94818]"
+            className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#f0571f] text-sm font-bold text-white touch-manipulation hover:bg-[#d94818] sm:mt-4"
           >
             Contact Us
           </button>
