@@ -28,7 +28,7 @@ export default function BlogSidebar({ posts, currentPostId, currentTags }: BlogS
                 className="flex gap-3 rounded-xl p-3 transition hover:bg-orange-50/60"
               >
                 <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-zinc-100">
-                  <Image src={post.image} alt={post.title} fill className="object-cover" sizes="80px" />
+                  <Image src={post.image} alt={post.title} fill className="object-contain" sizes="80px" />
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs font-bold uppercase tracking-wide text-[#f0571f]">
