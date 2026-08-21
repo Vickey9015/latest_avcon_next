@@ -44,13 +44,13 @@ export default function BlogSection({ posts }: BlogSectionProps) {
               const href = blogHref(post);
               return (
                 <HoverTiltCard3D key={post.id} className="h-full min-w-0" maxTilt={8}>
-                  <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-zinc-200 transition hover:-translate-y-1 hover:shadow-xl">
-                    <Link href={href} className="relative aspect-[16/10] overflow-hidden">
+                  <article data-no-reveal className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-zinc-200 transition hover:-translate-y-1 hover:shadow-xl">
+                    <Link href={href} className="relative aspect-video overflow-hidden bg-zinc-100">
                       <Image
                         src={post.image}
                         alt={post.title}
                         fill
-                        className="object-cover transition duration-500 group-hover:scale-105"
+                        className="object-contain transition duration-500 group-hover:scale-[1.02]"
                         sizes="(max-width: 1024px) 100vw, 33vw"
                       />
                     </Link>

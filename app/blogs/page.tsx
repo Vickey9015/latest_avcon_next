@@ -74,18 +74,18 @@ export default async function BlogsPage() {
                 return (
                   <article
                     key={post.id}
+                    data-no-reveal
                     className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-orange-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-[#f0571f]/60 hover:shadow-2xl"
                   >
-                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100">
+                    <div className="relative aspect-video w-full overflow-hidden bg-zinc-100">
                       <Link href={href} className="relative block h-full w-full" aria-label={post.title}>
                         <Image
                           src={post.image}
                           alt={post.title}
                           fill
-                          className="object-cover transition duration-500 group-hover:scale-105"
+                          className="object-contain transition duration-500 group-hover:scale-[1.02]"
                           sizes="(max-width: 1280px) 100vw, 33vw"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#101827]/55 via-transparent to-transparent" />
                       </Link>
                     </div>
                     <div className="flex flex-1 flex-col border-t-4 border-[#f0571f] bg-gradient-to-br from-white to-orange-50/45 p-6">

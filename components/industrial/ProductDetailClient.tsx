@@ -99,14 +99,14 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         ) : null}
 
         <div className="border-t border-zinc-100 p-3.5 sm:p-5">
-          <p className="text-sm leading-6 text-[#555]">{product.shortDescription}</p>
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#f0571f] text-sm font-bold text-white touch-manipulation hover:bg-[#d94818] sm:mt-4"
+            className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#f0571f] text-sm font-bold text-white touch-manipulation hover:bg-[#d94818]"
           >
             Contact Us
           </button>
+          <p className="mt-3 text-sm leading-6 text-[#555] sm:mt-4">{product.shortDescription}</p>
         </div>
       </div>
 

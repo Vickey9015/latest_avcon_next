@@ -136,12 +136,12 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
             <div className="min-w-0">
               <div className="overflow-hidden rounded-[28px] border border-orange-100 bg-white shadow-xl">
-                <div className="relative aspect-[16/9] w-full bg-zinc-100">
+                <div className="relative aspect-video w-full bg-zinc-100">
                   <Image
                     src={post.image}
                     alt={post.title}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     sizes="(max-width: 1024px) 100vw, 760px"
                   />
                 </div>
